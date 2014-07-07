@@ -2,7 +2,8 @@ package de.uks.challenger.model;
 
 import java.util.Date;
 
-public class UserData {
+public class Progress {
+	private long id;
 
 	/**
 	 * The date when the user data was created
@@ -14,20 +15,13 @@ public class UserData {
 	 */
 	private int age;
 
-	/**
-	 * Height of the user
-	 */
-	private int height;
-
+	
 	/**
 	 * Weight of the user
 	 */
 	private Double weight;
 
-	/**
-	 * Gender of the user
-	 */
-	private GENDER gender;
+	
 
 	public Date getCreationDate() {
 		return creationDate;
@@ -45,13 +39,7 @@ public class UserData {
 		this.age = age;
 	}
 
-	public int getHeight() {
-		return height;
-	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
 
 	public Double getWeight() {
 		return weight;
@@ -61,12 +49,12 @@ public class UserData {
 		this.weight = weight;
 	}
 
-	public GENDER getGender() {
-		return gender;
+	public long getId() {
+		return id;
 	}
 
-	public void setGender(GENDER gender) {
-		this.gender = gender;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

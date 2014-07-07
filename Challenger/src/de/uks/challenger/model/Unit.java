@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Unit {
+	private long id;
 	
 	/**
 	 * The creation date of the unit
@@ -14,17 +15,17 @@ public class Unit {
 	/**
 	 * The different sets of the unit
 	 */
-	private List<WorkSet> workSets;
+	private List<Workset> workSets;
 
-	public List<WorkSet> getWorkSets() {
+	public List<Workset> getWorkSets() {
 		if(workSets == null){
-			return new ArrayList<WorkSet>();
+			workSets = new ArrayList<Workset>();
 		}
 		
 		return workSets;
 	}
 
-	public void setWorkSets(List<WorkSet> sets) {
+	public void setWorkSets(List<Workset> sets) {
 		this.workSets = sets;
 	}
 
@@ -34,5 +35,13 @@ public class Unit {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

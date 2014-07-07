@@ -5,7 +5,8 @@ package de.uks.challenger.model;
  * @author philipp
  *
  */
-public class WorkSet {
+public class Workset {
+	private long id;
 
 	/**
 	 * Count of the repeats
@@ -18,5 +19,13 @@ public class WorkSet {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

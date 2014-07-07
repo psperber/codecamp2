@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class User {	
+public class User {
+	private long id;
 	
 	/**
 	 * History of units
@@ -14,7 +15,17 @@ public class User {
 	/**
 	 * History of user data
 	 */
-	private List<UserData> userDatas;
+	private List<Progress> userDatas;
+	
+	/**
+	 * Height of the user
+	 */
+	private int height;
+
+	/**
+	 * Gender of the user
+	 */
+	private GENDER gender;
 	
 	/**
 	 * Returns the history of units
@@ -28,15 +39,13 @@ public class User {
 		return units;
 	}
 	
-	
-	
 	/**
 	 * Returns the history of user data
 	 * @return
 	 */
-	public List<UserData> getUserDatas(){
+	public List<Progress> getUserDatas(){
 		if(userDatas == null){
-			userDatas = new ArrayList<UserData>();
+			userDatas = new ArrayList<Progress>();
 		}
 		
 		return userDatas;
@@ -46,9 +55,34 @@ public class User {
 		this.units = units;
 	}
 
-	public void setUserDatas(List<UserData> userDatas) {
+	public void setUserDatas(List<Progress> userDatas) {
 		this.userDatas = userDatas;
 	}
+	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	public GENDER getGender() {
+		return gender;
+	}
+
+	public void setGender(GENDER gender) {
+		this.gender = gender;
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	
 	
 }
