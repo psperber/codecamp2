@@ -1,6 +1,14 @@
 package de.uks.challenger.ui;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import de.uks.challenger.R;
+import de.uks.challenger.model.Challenger;
+import de.uks.challenger.model.Unit;
+import de.uks.challenger.model.User;
+import de.uks.challenger.model.WorkSet;
 import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
@@ -40,7 +48,42 @@ public class MainActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		// DUMMYMODEL
+		Challenger challenger = Challenger.getInstance();
+		User user = new User();
+		
+		List<Unit> units = new ArrayList<Unit>();
+		Unit unit = new Unit();
+		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60));
+		List<WorkSet> worksets = new ArrayList<WorkSet>();
+		WorkSet workSet = new WorkSet();
+		workSet.setCount(25);
+		worksets.add(workSet);
+		workSet = new WorkSet();
+		workSet.setCount(50);
+		worksets.add(workSet);
+		unit.setWorkSets(worksets);
+		units.add(unit);
+		
+		unit = new Unit();;
+		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 20));
+		worksets = new ArrayList<WorkSet>();
+		worksets.add(workSet);
+		units.add(unit);
+		
+		unit = new Unit();;
+		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 150));
+		worksets = new ArrayList<WorkSet>();
+		workSet = new WorkSet();
+		workSet.setCount(10);
+		worksets.add(workSet);
+		units.add(unit);
+		
+		user.setUnits(units);
 
+		challenger.setUser(user);
+		
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
