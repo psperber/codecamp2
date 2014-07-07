@@ -1,5 +1,9 @@
-package de.uks.challenger;
+package de.uks.challenger.ui;
 
+import de.uks.challenger.R;
+import de.uks.challenger.ui.graph.GraphFragment;
+import de.uks.challenger.ui.history.HistoryFragment;
+import de.uks.challenger.ui.settings.SettingsFragment;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
