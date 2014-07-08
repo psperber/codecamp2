@@ -18,9 +18,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/section_label"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="62dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="76dp"
         android:layout_toRightOf="@+id/section_label"
         android:text="Button" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/section_label"
+        android:layout_marginLeft="16dp"
+        android:text="Setup"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
