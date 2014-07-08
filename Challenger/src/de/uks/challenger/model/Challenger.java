@@ -1,7 +1,5 @@
 package de.uks.challenger.model;
 
-import de.uks.challenger.persistence.UnitSource;
-
 public class Challenger {
 	
 	private static Challenger instance;

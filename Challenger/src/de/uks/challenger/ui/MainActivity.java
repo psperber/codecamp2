@@ -8,7 +8,7 @@ import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.User;
-import de.uks.challenger.model.WorkSet;
+import de.uks.challenger.model.Workset;
 import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
@@ -53,35 +53,27 @@ public class MainActivity extends Activity implements
 		Challenger challenger = Challenger.getInstance();
 		User user = new User();
 		
-		List<Unit> units = new ArrayList<Unit>();
 		Unit unit = new Unit();
 		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60));
-		List<WorkSet> worksets = new ArrayList<WorkSet>();
-		WorkSet workSet = new WorkSet();
-		workSet.setCount(25);
-		worksets.add(workSet);
-		workSet = new WorkSet();
-		workSet.setCount(50);
-		worksets.add(workSet);
-		unit.setWorkSets(worksets);
-		units.add(unit);
+		Workset workset = new Workset();
+		workset.setCount(25);
+		unit.addWorkset(workset);
+		workset = new Workset();
+		workset.setCount(50);
+		unit.addWorkset(workset);
+		user.addUnit(unit);
 		
 		unit = new Unit();;
 		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 20));
-		worksets = new ArrayList<WorkSet>();
-		worksets.add(workSet);
-		units.add(unit);
+		user.addUnit(unit);
 		
 		unit = new Unit();;
 		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 150));
-		worksets = new ArrayList<WorkSet>();
-		workSet = new WorkSet();
-		workSet.setCount(10);
-		worksets.add(workSet);
-		units.add(unit);
+		workset = new Workset();
+		workset.setCount(10);
+		unit.addWorkset(workset);
+		user.addUnit(unit);
 		
-		user.setUnits(units);
-
 		challenger.setUser(user);
 		
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()

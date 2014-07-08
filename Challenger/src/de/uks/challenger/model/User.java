@@ -63,7 +63,11 @@ public class User {
 	public Unit removeUnit(int index) {
 		return getUnits().remove(index);
 	}
-
+	
+	public int countOfUnits() {
+		return this.units == null ? 0 : getUnits().size();
+	}
+	
 	/**
 	 * Returns the history of user data
 	 * 
