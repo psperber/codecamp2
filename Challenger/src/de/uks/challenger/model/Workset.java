@@ -8,7 +8,7 @@ package de.uks.challenger.model;
  */
 public class Workset {
 	private long id;
-
+	
 	/**
 	 * Count of the repeats
 	 */
@@ -18,7 +18,7 @@ public class Workset {
 	 * The amount of repeats to do
 	 */
 	int todo;
-
+	
 	public int getTodo() {
 		return todo;
 	}

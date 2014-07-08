@@ -16,6 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String TABLE_UNITS = "units";
 	public static final String UNITS_COLUMN_ID = "id";
 	public static final String UNITS_COLUMN_ID_USER = "id_user";
+	public static final String UNITS_COLUMN_UNIT_TYPE = "unit_type";
 	
 	public static final String UNITS_COLUMN_CREATION_DATE = "creation_date";
 
@@ -24,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String WORKSETS_COLUMN_ID = "id";
 	public static final String WORKSETS_COLUMN_ID_UNIT = "id_unit";
 	public static final String WORKSETS_COLUMN_COUNT = "count";
+	public static final String WORKSETS_COLUMN_TODO = "todo";
 
 	// table for user progress
 	public static final String TABLE_PROGRESS = "progress";
@@ -31,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String PROGRESS_COLUMN_CREATION_DATE = "creation_date";
 	public static final String PROGRESS_COLUMN_AGE = "age";
 	public static final String PROGRESS_COLUMN_WEIGHT = "weight";
+	public static final String PROGRESS_COLUMN_ID_USER = "id_user";
 
 	// table for user data
 	public static final String TABLE_USER = "user";
@@ -39,12 +42,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String USER_COLUMN_HEIGHT = "height";
 
 	private static final String DATABASE_NAME = "challenger.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 6;
 
-	private static final String DATABASE_UNITS_CREATE = "create table " + TABLE_UNITS + "(" + UNITS_COLUMN_ID + " integer primary key autoincrement, " + UNITS_COLUMN_ID_USER + " integer not null, " + UNITS_COLUMN_CREATION_DATE + " datetime not null);";
-	private static final String DATABASE_WORKSETS_CREATE = "create table " + TABLE_WORKSETS + "(" + WORKSETS_COLUMN_ID + " integer primary key autoincrement, " + WORKSETS_COLUMN_ID_UNIT + " integer not null, " + WORKSETS_COLUMN_COUNT + " integer);";
+	private static final String DATABASE_UNITS_CREATE = "create table " + TABLE_UNITS + "(" + UNITS_COLUMN_ID + " integer primary key autoincrement, " + UNITS_COLUMN_ID_USER + " integer not null, " + UNITS_COLUMN_CREATION_DATE + " datetime not null, " + UNITS_COLUMN_UNIT_TYPE + " integer);";
+	private static final String DATABASE_WORKSETS_CREATE = "create table " + TABLE_WORKSETS + "(" + WORKSETS_COLUMN_ID + " integer primary key autoincrement, " + WORKSETS_COLUMN_ID_UNIT + " integer not null, " + WORKSETS_COLUMN_COUNT + " integer, " + WORKSETS_COLUMN_TODO + " integer);";
 	private static final String DATABASE_PROGRESS_CREATE = "create table " + TABLE_PROGRESS + "(" + PROGRESS_COLUMN_ID + " integer primary key autoincrement, " + PROGRESS_COLUMN_CREATION_DATE + " datetime not null, " + PROGRESS_COLUMN_AGE
-			+ " integer not null,  " + PROGRESS_COLUMN_WEIGHT + " double not null);";
+			+ " integer not null,  " + PROGRESS_COLUMN_WEIGHT + " double not null, " + PROGRESS_COLUMN_ID_USER + " integer);";
 	private static final String DATABASE_USER_CREATE = "create table " + TABLE_USER + "(" + USER_COLUMN_ID + " integer primary key autoincrement, " + USER_COLUMN_GENDER + " integer not null, " + USER_COLUMN_HEIGHT + " integer not null);";
 
 	public DatabaseHelper(Context context) {

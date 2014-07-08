@@ -3,6 +3,7 @@ package de.uks.challenger.persistence;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,13 +13,21 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import de.uks.challenger.model.Progress;
 import de.uks.challenger.model.Unit;
+import de.uks.challenger.model.Unit.UNIT_TYPE;
 import de.uks.challenger.model.User;
 import de.uks.challenger.model.User.GENDER;
 import de.uks.challenger.model.Workset;
 
 public class Source {
 	private static final String TAG = "Challenger.Source";
+	private static final String[] UNIT_COLLUMNS = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE, DatabaseHelper.UNITS_COLUMN_UNIT_TYPE };
+	private static final String[] USER_COLLUMNS = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT };
+	private static final String[] WORKSET_COLLUMNS = { DatabaseHelper.WORKSETS_COLUMN_ID, DatabaseHelper.WORKSETS_COLUMN_COUNT, DatabaseHelper.WORKSETS_COLUMN_TODO };
+	private static final String[] PROGRESS_COLLUMNS = { DatabaseHelper.PROGRESS_COLUMN_ID, DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE, DatabaseHelper.PROGRESS_COLUMN_AGE, DatabaseHelper.PROGRESS_COLUMN_WEIGHT, DatabaseHelper.PROGRESS_COLUMN_ID_USER };
+
+	private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
@@ -51,6 +60,8 @@ public class Source {
 	/**
 	 * Persists the unit. Run iteturns the persisted unit.
 	 * 
+	 * Returns null if something bad happened
+	 * 
 	 * @param unit
 	 * @return
 	 */
@@ -59,11 +70,17 @@ public class Source {
 
 		// format the date
 		if (unit.getCreationDate() != null) {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String formattedDate = formatter.format(unit.getCreationDate());
+			String formattedDate = datetimeFormat.format(unit.getCreationDate());
 			values.put(DatabaseHelper.UNITS_COLUMN_CREATION_DATE, formattedDate);
 		} else {
 			Log.e(TAG, "Can't create unit. No creation date given");
+			return null;
+		}
+
+		if (unit.getUnitType() != null) {
+			values.put(DatabaseHelper.UNITS_COLUMN_UNIT_TYPE, unit.getUnitType().ordinal());
+		} else {
+			Log.e(TAG, "Can't create unit. No unit type");
 			return null;
 		}
 
@@ -79,8 +96,7 @@ public class Source {
 		if (insertId >= 0) {
 			// successfull insertion
 
-			String[] collumns = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE };
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, collumns, DatabaseHelper.UNITS_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, DatabaseHelper.UNITS_COLUMN_ID + " = " + insertId, null, null, null, null);
 
 			cursor.moveToFirst();
 			Unit fetchedUnit = curserToUnit(cursor);
@@ -97,6 +113,8 @@ public class Source {
 				} else {
 					// error while creating workset, delete inserted elements
 					deleteUnit(fetchedUnit);
+					Log.e(TAG, "Error while creating unit. Could not create workset. Delete");
+					return null;
 				}
 			}
 
@@ -115,8 +133,7 @@ public class Source {
 	public List<Unit> getUnitsFromUser(User user) {
 		List<Unit> units = new ArrayList<Unit>();
 
-		String[] collumns = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE };
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, collumns, DatabaseHelper.UNITS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, DatabaseHelper.UNITS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
@@ -145,8 +162,7 @@ public class Source {
 	public List<Unit> getAllUnits() {
 		List<Unit> units = new ArrayList<Unit>();
 
-		String[] collumns = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE };
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, collumns, null, null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, null, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
@@ -174,6 +190,13 @@ public class Source {
 		getDatabase().delete(DatabaseHelper.TABLE_UNITS, null, null);
 
 		deleteAllWorksets();
+	}
+
+	/**
+	 * Deletes the whole progress data
+	 */
+	public void deleteAllProgressData(){
+		getDatabase().delete(DatabaseHelper.TABLE_PROGRESS, null, null);
 	}
 
 	/**
@@ -209,11 +232,19 @@ public class Source {
 		Unit unit = new Unit();
 		unit.setId(cursor.getLong(0));
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
-			unit.setCreationDate(formatter.parse(cursor.getString(1)));
+			unit.setCreationDate(datetimeFormat.parse(cursor.getString(1)));
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}
+
+		int unitType = cursor.getInt(2);
+		if (unitType == 0) {
+			unit.setUnitType(UNIT_TYPE.PUSH_UPS);
+		} else if (unitType == 1) {
+			unit.setUnitType(UNIT_TYPE.SIT_UPS);
+		} else {
+			unit.setUnitType(UNIT_TYPE.JUMPING_JACK);
 		}
 
 		return unit;
@@ -221,7 +252,9 @@ public class Source {
 	}
 
 	/**
-	 * Returns
+	 * Persists user to database and returns persisted user.
+	 * 
+	 * Returns null if something bad happened
 	 * 
 	 * @param user
 	 * @return
@@ -248,8 +281,7 @@ public class Source {
 		long insertId = getDatabase().insert(DatabaseHelper.TABLE_USER, null, values);
 		if (insertId >= 0) {
 			// successfull insertion
-			String[] collumns = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT };
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER, collumns, DatabaseHelper.USER_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER, USER_COLLUMNS, DatabaseHelper.USER_COLUMN_ID + " = " + insertId, null, null, null, null);
 
 			cursor.moveToFirst();
 			User fetchedUser = cursorToUser(cursor);
@@ -259,14 +291,93 @@ public class Source {
 			for (Iterator<Unit> it = user.getUnitIterator(); it.hasNext();) {
 				Unit unit = it.next();
 
-				createUnit(unit, fetchedUser);
+				Unit createdUnit = createUnit(unit, fetchedUser);
+				if(createdUnit == null){
+					//something bad happened, delete
+					Log.e(TAG, "Error while creating user. Could not create unit. Delete");
+					deleteUser();	
+					return null;
+				}else{
+					fetchedUser.addUnit(createdUnit);
+				}
 			}
 
-			// TODO create progress data
+			//create progress data
+			for(Iterator<Progress> it = user.getProgressIterator(); it.hasNext();){
+				Progress progress = it.next();
+				
+				Progress createdProgress = createProgress(progress, fetchedUser);
+				if(createdProgress == null){
+					//something bad happened, delete
+					Log.e(TAG, "Error while creating user. Could not create progress. Delete");
+					deleteUser();
+					return null;
+				}else{
+					fetchedUser.addProgress(createdProgress);
+				}
+			}
 
 			return fetchedUser;
 		} else {
 			Log.e(TAG, "Coul'd not insert user to database.");
+			return null;
+		}
+	}
+
+	/**
+	 * Writes given progress and returns the persisted progress.
+	 * 
+	 * Returns null if something bad happened
+	 * 
+	 * @param progress
+	 * @param user 
+	 * @return
+	 */
+	public Progress createProgress(Progress progress, User user) {
+		ContentValues values = new ContentValues();
+
+		// validate
+		if (progress.getCreationDate() != null) {
+			values.put(DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE, datetimeFormat.format(progress.getCreationDate()));
+		} else {
+			Log.e(TAG, "Can't create progress. No creation date given");
+			return null;
+		}
+
+		if (progress.getAge() != 0) {
+			values.put(DatabaseHelper.PROGRESS_COLUMN_AGE, progress.getAge());
+		} else {
+			Log.e(TAG, "Can't create progress. No age given");
+			return null;
+		}
+
+		if (!new Double(0.).equals(progress.getWeight())) {
+			values.put(DatabaseHelper.PROGRESS_COLUMN_WEIGHT, progress.getWeight());
+		} else {
+			Log.e(TAG, "Can't create progress. No weight given");
+			return null;
+		}
+		
+		if(user.getId() != 0){
+			values.put(DatabaseHelper.PROGRESS_COLUMN_ID_USER, user.getId());
+		}else{
+			Log.e(TAG, "Can't create progress. No user id given");
+			return null;
+		}
+
+		// everything fine here, persist
+		long insertId = getDatabase().insert(DatabaseHelper.TABLE_PROGRESS, null, values);
+		if (insertId >= 0) {
+			// successfull insertion
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS, PROGRESS_COLLUMNS, DatabaseHelper.PROGRESS_COLUMN_ID + " = " + insertId, null, null, null, null);
+
+			cursor.moveToFirst();
+			Progress fetchedProgress = cursorToProgress(cursor);
+			cursor.close();
+
+			return fetchedProgress;
+		} else {
+			Log.e(TAG, "Coul'd not insert progress to database.");
 			return null;
 		}
 	}
@@ -298,8 +409,7 @@ public class Source {
 	 * @return
 	 */
 	public User getUser() {
-		String[] collumns = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT };
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER, collumns, null, null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER, USER_COLLUMNS, null, null, null, null, null);
 
 		cursor.moveToFirst();
 		User fetchedUser = cursorToUser(cursor);
@@ -325,7 +435,8 @@ public class Source {
 		// delete units
 		deleteAllUnits();
 
-		// TODO delete progress
+		//delete the progress data
+		deleteAllProgressData();
 	}
 
 	/**
@@ -345,8 +456,7 @@ public class Source {
 	public List<Workset> getWorksets(Unit unit) {
 		List<Workset> worksets = new ArrayList<Workset>();
 
-		String[] collumns = { DatabaseHelper.WORKSETS_COLUMN_ID, DatabaseHelper.WORKSETS_COLUMN_COUNT };
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS, collumns, DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(), null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS, WORKSET_COLLUMNS, DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(), null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
@@ -364,6 +474,8 @@ public class Source {
 	/**
 	 * Persists a workset. Returns persisted workset.
 	 * 
+	 * Returns null if something bad happened
+	 * 
 	 * @param workSet
 	 * @param unit
 	 * @return
@@ -375,16 +487,22 @@ public class Source {
 
 		if (unit.getId() != 0) {
 			values.put(DatabaseHelper.WORKSETS_COLUMN_ID_UNIT, unit.getId());
-		}else{
+		} else {
 			Log.e(TAG, "Can't create workset. No id_unit given");
+			return null;
+		}
+		
+		if(workSet.getTodo() != 0){
+			values.put(DatabaseHelper.WORKSETS_COLUMN_TODO, workSet.getTodo());
+		}else{
+			Log.e(TAG, "Can't create workset. No todo given");
 			return null;
 		}
 
 		long insertId = getDatabase().insert(DatabaseHelper.TABLE_WORKSETS, null, values);
 		if (insertId >= 0) {
 			// successfull insertion
-			String[] collumns = { DatabaseHelper.WORKSETS_COLUMN_ID, DatabaseHelper.WORKSETS_COLUMN_COUNT };
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS, collumns, DatabaseHelper.WORKSETS_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS, WORKSET_COLLUMNS, DatabaseHelper.WORKSETS_COLUMN_ID + " = " + insertId, null, null, null, null);
 
 			cursor.moveToFirst();
 
@@ -404,12 +522,39 @@ public class Source {
 	 * @param cursor
 	 * @return
 	 */
-	public Workset cursorToWorkSet(Cursor cursor) {
+	private Workset cursorToWorkSet(Cursor cursor) {
 		Workset workSet = new Workset();
 		workSet.setId(cursor.getLong(0));
 		workSet.setCount(cursor.getInt(1));
+		workSet.setTodo(cursor.getInt(2));
 
 		return workSet;
+	}
+
+	/**
+	 * Converts cursor to progress instance.
+	 * 
+	 * @param cursor
+	 * @return
+	 */
+	private Progress cursorToProgress(Cursor cursor) {
+		Progress progress = new Progress();
+		progress.setId(cursor.getLong(0));
+
+		String dateAsString = cursor.getString(1);
+		Date creationDate;
+
+		try {
+			creationDate = datetimeFormat.parse(dateAsString);
+			progress.setCreationDate(creationDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		progress.setAge(cursor.getInt(2));
+		progress.setWeight(cursor.getDouble(3));
+
+		return progress;
 	}
 
 }

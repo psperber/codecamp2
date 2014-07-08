@@ -48,23 +48,23 @@ public class Unit {
 		return workSets;
 	}
 
-	public Iterator<Workset> getWorksetIterator(){
+	public Iterator<Workset> getWorksetIterator() {
 		return getWorkSets().iterator();
 	}
-	
-	public boolean addWorkset(Workset workset){
+
+	public boolean addWorkset(Workset workset) {
 		return getWorkSets().add(workset);
 	}
-	
-	public boolean removeWorkset(Workset workset){
+
+	public boolean removeWorkset(Workset workset) {
 		return getWorkSets().remove(workset);
 	}
-	
-	public Workset getWorkset(int index){
+
+	public Workset getWorkset(int index) {
 		return getWorkSets().get(index);
 	}
-	
-	public Workset removeUnit(int index){
+
+	public Workset removeUnit(int index) {
 		return getWorkSets().remove(index);
 	}
 
