@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:id="@+id/setTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:text="Set X"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/overallCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/setTextView"
+        android:layout_below="@+id/setTextView"
+        android:layout_marginTop="64dp"
+        android:text="overall count: XX"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/currentCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/overallCountTextView"
+        android:layout_below="@+id/overallCountTextView"
+        android:layout_marginTop="42dp"
+        android:text="current count: XX"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/waitTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/currentCountTextView"
+        android:layout_below="@+id/currentCountTextView"
+        android:layout_marginTop="53dp"
+        android:text="time: 00:00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/waitTimeTextView"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:text="start" />
+
+    <Button
+        android:id="@+id/nextRoundButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startButton"
+        android:layout_alignBottom="@+id/startButton"
+        android:layout_marginLeft="27dp"
+        android:layout_toRightOf="@+id/currentCountTextView"
+        android:text="next round" />
+    
+</RelativeLayout>
