@@ -34,17 +34,19 @@ public final class R {
     public static final class id {
         public static final int ageEditText=0x7f090014;
         public static final int ageTextView=0x7f090013;
-        public static final int amountEditText=0x7f09001e;
-        public static final int amountTextView=0x7f09001b;
         public static final int breakTextView=0x7f090022;
         public static final int clearDataButton=0x7f090012;
         public static final int container=0x7f090001;
+        public static final int countEditText=0x7f09001e;
+        public static final int countTextView=0x7f09001b;
         public static final int currentCountTextView=0x7f090005;
         public static final int drawView=0x7f090009;
         public static final int drawer_layout=0x7f090000;
         public static final int finishButton=0x7f09001d;
         public static final int genderSpinner=0x7f090017;
         public static final int genderTextView=0x7f090015;
+        public static final int heightEditText=0x7f090019;
+        public static final int heightTextView=0x7f090016;
         public static final int historyList=0x7f09000a;
         public static final int navigation_drawer=0x7f090002;
         public static final int nextButton=0x7f09000c;
@@ -53,8 +55,6 @@ public final class R {
         public static final int progressBar=0x7f090021;
         public static final int section_label=0x7f09000b;
         public static final int setTextView=0x7f090003;
-        public static final int sizeEditText=0x7f090019;
-        public static final int sizeTextView=0x7f090016;
         public static final int skipButton=0x7f09001c;
         public static final int startButton=0x7f090007;
         public static final int timeEditText=0x7f090020;

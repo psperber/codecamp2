@@ -8,20 +8,20 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/amountTextView"
+        android:id="@+id/countTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="70dp"
-        android:text="amount"
+        android:text="count"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:id="@+id/skipButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/amountTextView"
+        android:layout_alignLeft="@+id/countTextView"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="18dp"
         android:text="skip" />
@@ -37,11 +37,11 @@
         android:text="finish" />
 
     <EditText
-        android:id="@+id/amountEditText"
+        android:id="@+id/countEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/amountTextView"
+        android:layout_alignTop="@+id/countTextView"
         android:ems="10"
         android:inputType="number" />
 
@@ -49,8 +49,8 @@
         android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/amountTextView"
-        android:layout_below="@+id/amountEditText"
+        android:layout_alignLeft="@+id/countTextView"
+        android:layout_below="@+id/countEditText"
         android:layout_marginTop="71dp"
         android:text="time"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -59,7 +59,7 @@
         android:id="@+id/timeEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/amountEditText"
+        android:layout_alignLeft="@+id/countEditText"
         android:layout_alignTop="@+id/timeTextView"
         android:ems="10"
         android:inputType="number" />

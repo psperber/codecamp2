@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements
 			Challenger challenger = Challenger.getInstance();
 
 			User user = new User();
-			challenger.setUser(user);
+//			challenger.setUser(user);
 
 			Unit unit = new Unit();
 			unit.setCreationDate(new Date(

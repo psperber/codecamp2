@@ -41,13 +41,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/sizeTextView"
+        android:id="@+id/heightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/ageTextView"
         android:layout_alignTop="@+id/genderTextView"
         android:layout_marginTop="65dp"
-        android:text="size"
+        android:text="height"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Spinner
@@ -63,20 +63,20 @@
         android:id="@+id/weightTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/sizeTextView"
-        android:layout_below="@+id/sizeTextView"
+        android:layout_alignLeft="@+id/heightTextView"
+        android:layout_below="@+id/heightTextView"
         android:layout_marginTop="71dp"
         android:text="weight"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/sizeEditText"
+        android:id="@+id/heightEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/sizeTextView"
+        android:layout_alignTop="@+id/heightTextView"
         android:ems="10"
-        android:inputType="numberDecimal" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/weightEditText"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/weightTextView"
         android:layout_alignBottom="@+id/weightTextView"
-        android:layout_alignLeft="@+id/sizeEditText"
+        android:layout_alignLeft="@+id/heightEditText"
         android:ems="10"
         android:inputType="numberDecimal" />
 
