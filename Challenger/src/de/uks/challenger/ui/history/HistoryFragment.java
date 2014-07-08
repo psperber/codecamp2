@@ -46,7 +46,7 @@ public class HistoryFragment extends Fragment {
 		super.onAttach(activity);
 
 	}
-
+	
 	/**
 	 * Returns a new instance of this fragment for the given section number.
 	 */
@@ -61,6 +61,9 @@ public class HistoryFragment extends Fragment {
 	private class HistoryAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
+			if (Challenger.getInstance().getUser() == null) {
+				return 0;
+			}
 			return Challenger.getInstance().getUser().countOfUnits();
 		}
 
