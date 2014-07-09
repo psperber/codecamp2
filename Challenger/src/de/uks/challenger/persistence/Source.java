@@ -10,6 +10,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -23,7 +24,7 @@ import de.uks.challenger.model.Workset;
 public class Source {
 	private static final String TAG = "Challenger.Source";
 	private static final String[] UNIT_COLLUMNS = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE, DatabaseHelper.UNITS_COLUMN_UNIT_TYPE };
-	private static final String[] USER_COLLUMNS = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT };
+	private static final String[] USER_COLLUMNS = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT, DatabaseHelper.USER_COLUMN_RESTING_TIME };
 	private static final String[] WORKSET_COLLUMNS = { DatabaseHelper.WORKSETS_COLUMN_ID, DatabaseHelper.WORKSETS_COLUMN_COUNT, DatabaseHelper.WORKSETS_COLUMN_TODO };
 	private static final String[] PROGRESS_COLLUMNS = { DatabaseHelper.PROGRESS_COLUMN_ID, DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE, DatabaseHelper.PROGRESS_COLUMN_AGE, DatabaseHelper.PROGRESS_COLUMN_WEIGHT,
 			DatabaseHelper.PROGRESS_COLUMN_ID_USER };
@@ -99,7 +100,7 @@ public class Source {
 
 			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, DatabaseHelper.UNITS_COLUMN_ID + " = " + insertId, null, null, null, null);
 
-			Unit fetchedUnit = curserToUnit(cursor);
+			Unit fetchedUnit = cursorToUnit(cursor);
 			cursor.close();
 
 			// save the worksets
@@ -137,7 +138,7 @@ public class Source {
 		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, DatabaseHelper.UNITS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
 
 		while (!cursor.isAfterLast()) {
-			Unit unit = curserToUnit(cursor);
+			Unit unit = cursorToUnit(cursor);
 			if (unit != null) {
 				// get worksets to the unit
 				List<Workset> worksets = getWorksets(unit);
@@ -154,6 +155,25 @@ public class Source {
 		cursor.close();
 		return units;
 	}
+	
+	public List<Progress> getProgressDataFromUser(User user){
+		List<Progress> progressData = new ArrayList<Progress>();
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS, PROGRESS_COLLUMNS, DatabaseHelper.PROGRESS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
+		
+		while (!cursor.isAfterLast()) {
+			Progress progress = cursorToProgress(cursor);
+			if (progress != null) {
+				progressData.add(progress);
+			}
+
+			cursor.moveToNext();
+		}
+		// make sure to close the cursor
+		cursor.close();
+		
+		return progressData;
+		
+	}
 
 	/**
 	 * Returns all stored units.
@@ -166,7 +186,7 @@ public class Source {
 		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, null, null, null, null, null);
 
 		while (!cursor.isAfterLast()) {
-			Unit unit = curserToUnit(cursor);
+			Unit unit = cursorToUnit(cursor);
 			if (unit != null) {
 				// get worksets to the unit
 				List<Workset> worksets = getWorksets(unit);
@@ -213,6 +233,14 @@ public class Source {
 		deleteWorksetsFromUnit(unit);
 
 	}
+	
+	/**
+	 * Deletes the given progress data
+	 * @param progress
+	 */
+	public void deleteProgress(Progress progress){
+		getDatabase().delete(DatabaseHelper.TABLE_PROGRESS, DatabaseHelper.PROGRESS_COLUMN_ID + " = " + progress.getId(), null);
+	}
 
 	/**
 	 * Deletes the worksets from a unit. }
@@ -229,7 +257,7 @@ public class Source {
 	 * @param cursor
 	 * @return
 	 */
-	private Unit curserToUnit(Cursor cursor) {
+	private Unit cursorToUnit(Cursor cursor) {
 		if (cursor.moveToFirst()) {
 			Unit unit = new Unit();
 			unit.setId(cursor.getLong(0));
@@ -286,6 +314,7 @@ public class Source {
 			Log.e(TAG, "Can't create user. No height given");
 			return null;
 		}
+		
 
 		long insertId = getDatabase().insert(DatabaseHelper.TABLE_USER, null, values);
 		if (insertId >= 0) {
@@ -409,6 +438,8 @@ public class Source {
 			}
 
 			user.setHeight(cursor.getInt(2));
+			user.setRestingTime(cursor.getInt(3));
+			
 
 			return user;
 		} else {

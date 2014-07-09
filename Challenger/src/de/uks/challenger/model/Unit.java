@@ -64,8 +64,12 @@ public class Unit extends ModelElement {
 		return getWorkSets().get(index);
 	}
 
-	public Workset removeUnit(int index) {
+	public Workset removeWorkset(int index) {
 		return getWorkSets().remove(index);
+	}
+	
+	public int countOfWorksets(){
+		return getWorkSets().size();
 	}
 
 	public Date getCreationDate() {

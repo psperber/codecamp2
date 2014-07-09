@@ -12,65 +12,61 @@ import android.content.Context;
 import android.hardware.SensorManager;
 
 public abstract class ChallengerSensor {
-	
+
 	private SensorManager sensorManager;
 	private Context context;
 	public static final String PROP_REPEAT = "prop_repeat";
 	private int repeatCounter = 0;
 	private int worksetCounter = 0;
-	
+
 	protected Unit unit;
 	protected Unit latestUnit;
-	
+
 	public ChallengerSensor(Context context) {
 		this.context = context;
 		this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-		
-		
+
 	}
-	
+
 	public int getWorksetCounter() {
 		return worksetCounter;
 	}
-	
+
 	public void setWorksetCounter(int worksetCounter) {
 		this.worksetCounter = worksetCounter;
 	}
-	
-	
+
 	public abstract void start();
+
 	public abstract void stop();
-	
-	
-	
+
 	public Unit getUnit() {
 		return unit;
 	}
-	
+
 	protected Context getContext() {
 		return context;
 	}
-	
+
 	protected SensorManager getSensorManager() {
 		return sensorManager;
 	}
-	
 
 	private PropertyChangeSupport propertyChange = new PropertyChangeSupport(this);
-	
-	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener){
+
+	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		getPropertyChangeSupport().addPropertyChangeListener(propertyName, listener);
 	}
-	
-	public void removePropertyChangeListener(PropertyChangeListener listener){
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		getPropertyChangeSupport().removePropertyChangeListener(listener);
 	}
-	
-	protected PropertyChangeSupport getPropertyChangeSupport(){
-		if(propertyChange == null){
+
+	protected PropertyChangeSupport getPropertyChangeSupport() {
+		if (propertyChange == null) {
 			propertyChange = new PropertyChangeSupport(this);
 		}
-		
+
 		return propertyChange;
 	}
 
@@ -83,11 +79,25 @@ public abstract class ChallengerSensor {
 	}
 
 	public void doNext() {
+		// create the workset instance
 		Workset workset = new Workset();
 		workset.setCount(this.repeatCounter);
-		workset.setTodo(this.latestUnit.getWorkset(this.worksetCounter).getCount()+1);
+
+		int todo = 0;
+		
+		if (worksetCounter < getLatestUnit().countOfWorksets()) {
+			todo = getLatestUnit().getWorkset(worksetCounter).getCount() + 1;
+		} else {
+			todo = 1;
+		}
+		
+		workset.setTodo(todo);
 		unit.addWorkset(workset);
+
+		// update values
 		this.worksetCounter++;
+		this.repeatCounter = 0;
+
 	}
 
 	public Unit getLatestUnit() {
@@ -96,13 +106,9 @@ public abstract class ChallengerSensor {
 
 	public void pushModel() {
 		this.worksetCounter = 0;
-		unit.setCreationDate(new Date());		
+		unit.setCreationDate(new Date());
 		Challenger.getInstance().getUser().addUnit(this.unit);
 
 	}
-	
-	
-	
-	
-	
+
 }

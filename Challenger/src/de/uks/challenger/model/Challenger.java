@@ -1,7 +1,5 @@
 package de.uks.challenger.model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 
 public class Challenger extends ModelElement{
@@ -24,20 +22,6 @@ public class Challenger extends ModelElement{
 		}
 		
 		return instance;
-	}
-	
-	/**
-	 * Returns the next unit for the user to do
-	 * @return
-	 */
-	public Unit getNextUnit(){
-		//theoretisch ist durch eingangstest immer eine erste unit da
-		
-		//wenn keine units unit mit default wert
-		
-		//sonst letzt unit holen, anzahl der wiederholungnen + 1
-		
-		return null;
 	}
 
 	public User getUser() {

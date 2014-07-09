@@ -38,7 +38,13 @@ public class User extends ModelElement {
 	 * Gender of the user
 	 */
 	private GENDER gender;
+	
+	/**
+	 * The user prefered resting time in ms beetween worksets 
+	 */
+	private int restingTime;
 
+	
 	/**
 	 * Returns the history of units
 	 * 
@@ -195,6 +201,19 @@ public class User extends ModelElement {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public int getRestingTime() {
+		if(restingTime == 0){
+			//set one minute as default resting time
+			restingTime = 60 * 1000;
+		}
+		return restingTime;
+	}
+
+	public void setRestingTime(int restingTime) {
+		this.restingTime = restingTime;
+	}
+
 
 	@Override
 	public boolean equals(Object o) {

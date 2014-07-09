@@ -68,7 +68,9 @@ public class Setup2Fragment extends Fragment implements View.OnClickListener {
 			}
 			
 			int count = Integer.valueOf(countString);
+			//TODO convert time to ms
 			int time = Integer.valueOf(timeString);
+			
 			
 			Unit unit = new Unit();
 			unit.setCreationDate(new Date());

@@ -1,36 +1,20 @@
 package de.uks.challenger.ui;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
-import de.uks.challenger.model.Progress;
-import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.User;
-import de.uks.challenger.model.Workset;
 import de.uks.challenger.ui.attack.AttackFragment;
 import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
 import de.uks.challenger.ui.setup.Setup1Fragment;
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 public class MainActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
