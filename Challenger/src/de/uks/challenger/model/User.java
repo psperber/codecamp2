@@ -64,6 +64,10 @@ public class User {
 		return getUnits().remove(index);
 	}
 
+	public int countOfUnits() {
+		return this.units == null ? 0 : getUnits().size();
+	}
+
 	/**
 	 * Returns the history of user data
 	 * 
@@ -81,11 +85,18 @@ public class User {
 		return getProgress().iterator();
 	}
 
-	public boolean addProgress(Progress progress) {
-		return getProgress().add(progress);
+	public void addProgress(Progress progress) {
+		int index = 0;
+		for (int i = 0; i < countOfProgress(); i++) {
+			Progress tmpProgress = getProgress(i);
+			if (progress.getCreationDate().after(tmpProgress.getCreationDate())) {
+				index = i;
+			}
+		}
+		getProgress().add(index, progress);
 	}
 
-	public boolean removeProgress(Progress Progress) {
+	public boolean removeProgress(Progress progress) {
 		return getProgress().remove(progress);
 	}
 
@@ -95,6 +106,10 @@ public class User {
 
 	public Progress removeProgress(int index) {
 		return getProgress().remove(index);
+	}
+
+	public int countOfProgress() {
+		return this.progress == null ? 0 : getProgress().size();
 	}
 
 	public int getHeight() {

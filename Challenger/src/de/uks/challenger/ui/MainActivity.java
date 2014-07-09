@@ -6,12 +6,14 @@ import java.util.List;
 
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
+import de.uks.challenger.model.Progress;
 import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.User;
-import de.uks.challenger.model.WorkSet;
+import de.uks.challenger.model.Workset;
 import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
+import de.uks.challenger.ui.setup.Setup1Fragment;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -48,49 +50,79 @@ public class MainActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		// DUMMYMODEL
-		Challenger challenger = Challenger.getInstance();
-		User user = new User();
-		
-		List<Unit> units = new ArrayList<Unit>();
-		Unit unit = new Unit();
-		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60));
-		List<WorkSet> worksets = new ArrayList<WorkSet>();
-		WorkSet workSet = new WorkSet();
-		workSet.setCount(25);
-		worksets.add(workSet);
-		workSet = new WorkSet();
-		workSet.setCount(50);
-		worksets.add(workSet);
-		unit.setWorkSets(worksets);
-		units.add(unit);
-		
-		unit = new Unit();;
-		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 20));
-		worksets = new ArrayList<WorkSet>();
-		worksets.add(workSet);
-		units.add(unit);
-		
-		unit = new Unit();;
-		unit.setCreationDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 150));
-		worksets = new ArrayList<WorkSet>();
-		workSet = new WorkSet();
-		workSet.setCount(10);
-		worksets.add(workSet);
-		units.add(unit);
-		
-		user.setUnits(units);
 
-		challenger.setUser(user);
-		
+		{// DUMMYMODEL
+			Challenger challenger = Challenger.getInstance();
+
+			User user = new User();
+//			challenger.setUser(user);
+
+			Unit unit = new Unit();
+			unit.setCreationDate(new Date(
+					System.currentTimeMillis() - 1000 * 60 * 60));
+			Workset workset = new Workset();
+			workset.setCount(25);
+			unit.addWorkset(workset);
+			workset = new Workset();
+			workset.setCount(50);
+			unit.addWorkset(workset);
+			user.addUnit(unit);
+
+			unit = new Unit();
+			;
+			unit.setCreationDate(new Date(System.currentTimeMillis() - 1000
+					* 60 * 60 * 20));
+			user.addUnit(unit);
+
+			unit = new Unit();
+			;
+			unit.setCreationDate(new Date(System.currentTimeMillis() - 1000
+					* 60 * 60 * 150));
+			workset = new Workset();
+			workset.setCount(10);
+			unit.addWorkset(workset);
+			user.addUnit(unit);
+
+			Progress progress = new Progress();
+			progress.setCreationDate(new Date(System.currentTimeMillis() - 1000
+					* 60 * 60 * 24 * 3));
+			progress.setAge(25);
+			progress.setWeight(68.2);
+			user.addProgress(progress);
+
+			progress = new Progress();
+			progress.setCreationDate(new Date(System.currentTimeMillis() - 1000
+					* 60 * 60 * 24 * 5));
+			progress.setAge(25);
+			progress.setWeight(69.5);
+			user.addProgress(progress);
+
+			progress = new Progress();
+			progress.setCreationDate(new Date(System.currentTimeMillis() - 1000
+					* 60 * 60 * 24 * 20));
+			progress.setAge(25);
+			progress.setWeight(72.5);
+			user.addProgress(progress);
+		}
+
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
+		String[] titles = getResources().getStringArray(R.array.title_section);
+		mTitle = titles[0];
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
+		User user = Challenger.getInstance().getUser();
+		if (user == null) {
+			mTitle = getString(R.string.title_setup);
+			restoreActionBar();
+			Fragment fragment = Setup1Fragment.newInstance();
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, fragment).commit();
+		}
 	}
 
 	@Override
@@ -108,18 +140,14 @@ public class MainActivity extends Activity implements
 			fragment = SettingsFragment.newInstance();
 			break;
 		}
-		
-		if (fragment != null) {
-			String[] titles = getResources().getStringArray(R.array.title_section);
-			mTitle = titles[position];
 
-			// update the main content by replacing fragments
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction().replace(R.id.container, fragment)
-					.commit();
-		} else {
-			mTitle = "unselected";
-		}
+		String[] titles = getResources().getStringArray(R.array.title_section);
+		mTitle = titles[position];
+
+		// update the main content by replacing fragments
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.container, fragment)
+				.commit();
 	}
 
 	public void restoreActionBar() {
@@ -142,15 +170,15 @@ public class MainActivity extends Activity implements
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// // Handle action bar item clicks here. The action bar will
+	// // automatically handle clicks on the Home/Up button, so long
+	// // as you specify a parent activity in AndroidManifest.xml.
+	// int id = item.getItemId();
+	// if (id == R.id.action_settings) {
+	// return true;
+	// }
+	// return super.onOptionsItemSelected(item);
+	// }
 }

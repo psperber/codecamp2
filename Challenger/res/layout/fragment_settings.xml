@@ -5,32 +5,65 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.uks.challenger.ui.MainActivity$PlaceholderFragment" >
+    android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/workouttimeTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:text="time"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/workouttimeEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/workouttimeTextView"
+        android:ems="10"
+        android:inputType="time" />
+
+    <TextView
+        android:id="@+id/twitterTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/workouttimeEditText"
+        android:layout_marginTop="53dp"
+        android:text="twitter"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/twitterEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/twitterTextView"
+        android:layout_below="@+id/twitterTextView"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/twitterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/section_label"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="76dp"
-        android:layout_toRightOf="@+id/section_label"
-        android:text="Button" />
+        android:layout_alignRight="@+id/workouttimeEditText"
+        android:layout_alignTop="@+id/twitterEditText"
+        android:text="login" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/clearDataButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/section_label"
-        android:layout_marginLeft="16dp"
-        android:text="Setup"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_below="@+id/twitterButton"
+        android:layout_marginTop="80dp"
+        android:layout_toLeftOf="@+id/twitterButton"
+        android:text="clearData" />
 
 </RelativeLayout>
