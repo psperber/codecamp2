@@ -10,6 +10,7 @@ import de.uks.challenger.model.Progress;
 import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.User;
 import de.uks.challenger.model.Workset;
+import de.uks.challenger.ui.attack.AttackFragment;
 import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
@@ -48,9 +49,10 @@ public class MainActivity extends Activity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
+		System.out.println("MainActivity.onCreate()");
 		setContentView(R.layout.activity_main);
-
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -58,9 +60,7 @@ public class MainActivity extends Activity implements
 		mTitle = titles[0];
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
-
+		
 		User user = Challenger.getInstance().getUser();
 		if (user == null) {
 			mTitle = getString(R.string.title_setup);
@@ -70,22 +70,35 @@ public class MainActivity extends Activity implements
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();
 		}
+		
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.drawer_layout));
+		
+		
+
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		Fragment fragment = null;
-
 		switch (position) {
-		case 0:
-			fragment = HistoryFragment.newInstance();
-			break;
-		case 1:
-			fragment = GraphFragment.newInstance();
-			break;
-		case 2:
+		case 0: {
 			fragment = SettingsFragment.newInstance();
 			break;
+		}
+		case 1: {
+			fragment = HistoryFragment.newInstance();
+			break;
+		}
+		case 2: {
+			fragment = GraphFragment.newInstance();
+			break;
+			
+		}
+		case 3: {
+			fragment = AttackFragment.newInstance();
+			break;
+		}
 		}
 
 		String[] titles = getResources().getStringArray(R.array.title_section);

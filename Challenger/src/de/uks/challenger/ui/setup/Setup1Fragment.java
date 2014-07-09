@@ -32,6 +32,8 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_setup1, container,
 				false);
+		
+		System.out.println("Setup1Fragment.onCreateView()");
 
 		mAgeEditText = (EditText) rootView.findViewById(R.id.ageEditText);
 		mGenderSpinner = (Spinner) rootView.findViewById(R.id.genderSpinner);

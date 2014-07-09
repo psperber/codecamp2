@@ -119,26 +119,6 @@ public class HistoryFragment extends Fragment {
 					getActivity(), YOUR_PI_REQ_CODE , notificationIntent,
 					PendingIntent.FLAG_CANCEL_CURRENT);
 
-			NotificationManager nm = (NotificationManager) getActivity()
-					.getSystemService(Context.NOTIFICATION_SERVICE);
-
-			Resources res = getActivity().getResources();
-			Notification.Builder builder = new Notification.Builder(
-					getActivity());
-
-			builder.setContentIntent(contentIntent)
-					.setSmallIcon(R.drawable.ic_launcher)
-					.setLargeIcon(
-							BitmapFactory.decodeResource(res,
-									R.drawable.ic_launcher))
-					.setTicker("your_ticker")
-					.setWhen(System.currentTimeMillis()).setAutoCancel(true)
-					.setContentTitle("your_notif_title")
-					.setContentText("your_notif_text");
-			Notification n = builder.build();
-
-			int YOUR_NOTIF_ID = 2303;
-			nm.notify(YOUR_NOTIF_ID , n);
 		}
 	}
 }

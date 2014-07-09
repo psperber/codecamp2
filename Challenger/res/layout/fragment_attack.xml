@@ -65,5 +65,14 @@
         android:layout_marginLeft="27dp"
         android:layout_toRightOf="@+id/currentCountTextView"
         android:text="next round" />
+
+    <TextView
+        android:id="@+id/todoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/setTextView"
+        android:layout_alignBottom="@+id/setTextView"
+        android:layout_alignLeft="@+id/nextRoundButton"
+        android:text="Last Unit Count" />
     
 </RelativeLayout>

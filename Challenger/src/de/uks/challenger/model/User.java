@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class User extends ModelElement{
+import de.uks.challenger.model.Unit.UNIT_TYPE;
+
+public class User extends ModelElement {
 	public static final String PROP_ADD_PROGRESS = "prop_add_progress";
 	public static final String PROP_REMOVE_PROGRESS = "prop_remove_progress";
 	public static final String PROP_ADD_UNIT = "prop_add_unit";
 	public static final String PROP_REMOVE_UNIT = "prop_remove_unit";
-	
+
 	public enum GENDER {
 		MALE, FEMALE;
 	}
@@ -54,13 +56,27 @@ public class User extends ModelElement{
 		return getUnits().iterator();
 	}
 
+	public Iterator<Unit> getUnitIteratorByType(UNIT_TYPE type) {
+		List<Unit> temp = new ArrayList<Unit>();
+
+		for (Unit unit : getUnits()) {
+			if (unit.getUnitType().equals(type)) {
+				temp.add(unit);
+			}
+		}
+
+		return temp.iterator();
+	}
+
 	public boolean addUnit(Unit unit) {
-		getPropertyChangeSupport().firePropertyChange(PROP_ADD_UNIT, null, unit);
+		getPropertyChangeSupport()
+				.firePropertyChange(PROP_ADD_UNIT, null, unit);
 		return getUnits().add(unit);
 	}
 
 	public boolean removeUnit(Unit unit) {
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null, unit);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null,
+				unit);
 		return getUnits().remove(unit);
 	}
 
@@ -70,13 +86,38 @@ public class User extends ModelElement{
 
 	public Unit removeUnit(int index) {
 		Unit unit = getUnits().remove(index);
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null, unit);
-		
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null,
+				unit);
+
 		return unit;
 	}
 
 	public int countOfUnits() {
 		return this.units == null ? 0 : getUnits().size();
+	}
+
+	public Unit getLatestUnit() {
+		if (getUnits().size() > 0) {
+			return getUnits().get(getUnits().size() - 1);
+		} else {
+			return null;
+		}
+	}
+
+	public Unit getLatestUnitByType(UNIT_TYPE type) {
+		if (getUnits().size() > 0) {
+			for (int i = countOfUnits()-1; i >= 0; --i) {
+				Unit unit = getUnit(i);
+				if (unit.getUnitType().equals(type)) {
+					return unit;
+				}
+			}
+
+			return null;
+		} else {
+			return null;
+		}
+
 	}
 
 	/**
@@ -105,12 +146,14 @@ public class User extends ModelElement{
 			}
 		}
 		getProgress().add(index, progress);
-		
-		getPropertyChangeSupport().firePropertyChange(PROP_ADD_PROGRESS, null, progress);
+
+		getPropertyChangeSupport().firePropertyChange(PROP_ADD_PROGRESS, null,
+				progress);
 	}
 
 	public boolean removeProgress(Progress progress) {
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS, null, progress);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS,
+				null, progress);
 		return getProgress().remove(progress);
 	}
 
@@ -120,7 +163,8 @@ public class User extends ModelElement{
 
 	public Progress removeProgress(int index) {
 		Progress progress = getProgress().remove(index);
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS, null, progress);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS,
+				null, progress);
 		return progress;
 	}
 
@@ -151,18 +195,18 @@ public class User extends ModelElement{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
-		if(o == null){
+		if (o == null) {
 			return false;
 		}
-		
+
 		User other = (User) o;
-		
-		if(this.id == other.getId()){
+
+		if (this.id == other.getId()) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

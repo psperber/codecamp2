@@ -8,9 +8,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string-array name="title_section">
+        <item >Settings</item>
         <item >History</item>
         <item >Graph</item>
-        <item >Settings</item>
+        <item >Attack</item>    
     </string-array>
     <string name="title_setup">Setup</string>
     <string-array name="gender">

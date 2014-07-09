@@ -15,7 +15,7 @@ public class Unit extends ModelElement {
 	/**
 	 * The creation date of the unit
 	 */
-	public Date creationDate;
+	private Date creationDate;
 
 	/**
 	 * The different sets of the unit
