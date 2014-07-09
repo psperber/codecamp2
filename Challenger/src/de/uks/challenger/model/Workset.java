@@ -6,7 +6,7 @@ package de.uks.challenger.model;
  * @author philipp
  * 
  */
-public class Workset {
+public class Workset extends ModelElement {
 	private long id;
 	
 	/**

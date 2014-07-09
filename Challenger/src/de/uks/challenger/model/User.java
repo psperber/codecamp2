@@ -1,10 +1,16 @@
 package de.uks.challenger.model;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class User {
+public class User extends ModelElement{
+	public static final String PROP_ADD_PROGRESS = "prop_add_progress";
+	public static final String PROP_REMOVE_PROGRESS = "prop_remove_progress";
+	public static final String PROP_ADD_UNIT = "prop_add_unit";
+	public static final String PROP_REMOVE_UNIT = "prop_remove_unit";
+	
 	public enum GENDER {
 		MALE, FEMALE;
 	}
@@ -49,10 +55,12 @@ public class User {
 	}
 
 	public boolean addUnit(Unit unit) {
+		getPropertyChangeSupport().firePropertyChange(PROP_ADD_UNIT, null, unit);
 		return getUnits().add(unit);
 	}
 
 	public boolean removeUnit(Unit unit) {
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null, unit);
 		return getUnits().remove(unit);
 	}
 
@@ -61,7 +69,10 @@ public class User {
 	}
 
 	public Unit removeUnit(int index) {
-		return getUnits().remove(index);
+		Unit unit = getUnits().remove(index);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null, unit);
+		
+		return unit;
 	}
 
 	public int countOfUnits() {
@@ -94,9 +105,12 @@ public class User {
 			}
 		}
 		getProgress().add(index, progress);
+		
+		getPropertyChangeSupport().firePropertyChange(PROP_ADD_PROGRESS, null, progress);
 	}
 
 	public boolean removeProgress(Progress progress) {
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS, null, progress);
 		return getProgress().remove(progress);
 	}
 
@@ -105,7 +119,9 @@ public class User {
 	}
 
 	public Progress removeProgress(int index) {
-		return getProgress().remove(index);
+		Progress progress = getProgress().remove(index);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS, null, progress);
+		return progress;
 	}
 
 	public int countOfProgress() {
@@ -134,6 +150,21 @@ public class User {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o == null){
+			return false;
+		}
+		
+		User other = (User) o;
+		
+		if(this.id == other.getId()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }

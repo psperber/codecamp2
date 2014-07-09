@@ -2,7 +2,7 @@ package de.uks.challenger.model;
 
 import java.util.Date;
 
-public class Progress {
+public class Progress extends ModelElement{
 	private long id;
 
 	/**

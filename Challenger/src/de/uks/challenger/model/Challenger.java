@@ -1,7 +1,11 @@
 package de.uks.challenger.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-public class Challenger {
+
+public class Challenger extends ModelElement{
+	public static final String PROP_SET_USER = "prop_set_user";
 	
 	private static Challenger instance;
 
@@ -41,6 +45,11 @@ public class Challenger {
 	}
 
 	public void setUser(User user) {
+		
+		User oldUser = this.user;		
 		this.user = user;
+		
+		getPropertyChangeSupport().firePropertyChange(PROP_SET_USER, oldUser, this.user);
 	}
+	
 }

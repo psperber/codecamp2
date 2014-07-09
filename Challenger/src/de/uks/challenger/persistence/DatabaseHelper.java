@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String USER_COLUMN_HEIGHT = "height";
 
 	private static final String DATABASE_NAME = "challenger.db";
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 10;
 
 	private static final String DATABASE_UNITS_CREATE = "create table " + TABLE_UNITS + "(" + UNITS_COLUMN_ID + " integer primary key autoincrement, " + UNITS_COLUMN_ID_USER + " integer not null, " + UNITS_COLUMN_CREATION_DATE + " datetime not null, " + UNITS_COLUMN_UNIT_TYPE + " integer);";
 	private static final String DATABASE_WORKSETS_CREATE = "create table " + TABLE_WORKSETS + "(" + WORKSETS_COLUMN_ID + " integer primary key autoincrement, " + WORKSETS_COLUMN_ID_UNIT + " integer not null, " + WORKSETS_COLUMN_COUNT + " integer, " + WORKSETS_COLUMN_TODO + " integer);";

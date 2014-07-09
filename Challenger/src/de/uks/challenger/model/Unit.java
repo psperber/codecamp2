@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class Unit {
+public class Unit extends ModelElement {
 	public enum UNIT_TYPE {
 		PUSH_UPS, SIT_UPS, JUMPING_JACK;
 	}

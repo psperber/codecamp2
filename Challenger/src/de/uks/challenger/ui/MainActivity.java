@@ -51,59 +51,6 @@ public class MainActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		{// DUMMYMODEL
-			Challenger challenger = Challenger.getInstance();
-
-			User user = new User();
-//			challenger.setUser(user);
-
-			Unit unit = new Unit();
-			unit.setCreationDate(new Date(
-					System.currentTimeMillis() - 1000 * 60 * 60));
-			Workset workset = new Workset();
-			workset.setCount(25);
-			unit.addWorkset(workset);
-			workset = new Workset();
-			workset.setCount(50);
-			unit.addWorkset(workset);
-			user.addUnit(unit);
-
-			unit = new Unit();
-			;
-			unit.setCreationDate(new Date(System.currentTimeMillis() - 1000
-					* 60 * 60 * 20));
-			user.addUnit(unit);
-
-			unit = new Unit();
-			;
-			unit.setCreationDate(new Date(System.currentTimeMillis() - 1000
-					* 60 * 60 * 150));
-			workset = new Workset();
-			workset.setCount(10);
-			unit.addWorkset(workset);
-			user.addUnit(unit);
-
-			Progress progress = new Progress();
-			progress.setCreationDate(new Date(System.currentTimeMillis() - 1000
-					* 60 * 60 * 24 * 3));
-			progress.setAge(25);
-			progress.setWeight(68.2);
-			user.addProgress(progress);
-
-			progress = new Progress();
-			progress.setCreationDate(new Date(System.currentTimeMillis() - 1000
-					* 60 * 60 * 24 * 5));
-			progress.setAge(25);
-			progress.setWeight(69.5);
-			user.addProgress(progress);
-
-			progress = new Progress();
-			progress.setCreationDate(new Date(System.currentTimeMillis() - 1000
-					* 60 * 60 * 24 * 20));
-			progress.setAge(25);
-			progress.setWeight(72.5);
-			user.addProgress(progress);
-		}
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
