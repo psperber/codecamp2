@@ -1,6 +1,7 @@
 package de.uks.challenger.application;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.ModelObserver;
@@ -16,18 +17,22 @@ import de.uks.challenger.persistence.Source;
 public class ChallengerApplication extends Application {
 	private static final String TAG = "Challenger.Application";
 	private ModelObserver modelObserver;
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+
+		// init model
 		initModel();
-		
+
+		// observe model
 		modelObserver = new ModelObserver(getApplicationContext());
 		modelObserver.observeModel(Challenger.getInstance());
-		
-		
-		
+
+		// start notification service
+		Intent service = new Intent(getApplicationContext(), ChallengerService.class);
+		getApplicationContext().startService(service);
+
 	}
 
 	private void initModel() {

@@ -24,7 +24,7 @@ import de.uks.challenger.model.Workset;
 public class Source {
 	private static final String TAG = "Challenger.Source";
 	private static final String[] UNIT_COLLUMNS = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE, DatabaseHelper.UNITS_COLUMN_UNIT_TYPE };
-	private static final String[] USER_COLLUMNS = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT, DatabaseHelper.USER_COLUMN_RESTING_TIME };
+	private static final String[] USER_COLLUMNS = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT, DatabaseHelper.USER_COLUMN_RESTING_TIME, DatabaseHelper.USER_COLUMN_BIRTHDAY, DatabaseHelper.USER_COLUMN_WORKOUT_TIME };
 	private static final String[] WORKSET_COLLUMNS = { DatabaseHelper.WORKSETS_COLUMN_ID, DatabaseHelper.WORKSETS_COLUMN_COUNT, DatabaseHelper.WORKSETS_COLUMN_TODO };
 	private static final String[] PROGRESS_COLLUMNS = { DatabaseHelper.PROGRESS_COLUMN_ID, DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE, DatabaseHelper.PROGRESS_COLUMN_AGE, DatabaseHelper.PROGRESS_COLUMN_WEIGHT,
 			DatabaseHelper.PROGRESS_COLUMN_ID_USER };
@@ -315,6 +315,19 @@ public class Source {
 			return null;
 		}
 		
+		if(user.getBirthday() != null){
+			values.put(DatabaseHelper.USER_COLUMN_BIRTHDAY, datetimeFormat.format(user.getBirthday()));
+		}else{
+			Log.e(TAG, "Can't create user. No birthday given");
+			return null;
+		}
+		
+		if(user.getWorkoutTime() != null){
+			values.put(DatabaseHelper.USER_COLUMN_WORKOUT_TIME, datetimeFormat.format(user.getWorkoutTime()));
+		}else{
+			Log.e(TAG, "Can't create user. No workout time given");
+			return null;
+		}
 
 		long insertId = getDatabase().insert(DatabaseHelper.TABLE_USER, null, values);
 		if (insertId >= 0) {
@@ -439,6 +452,21 @@ public class Source {
 
 			user.setHeight(cursor.getInt(2));
 			user.setRestingTime(cursor.getInt(3));
+			
+			try {
+				user.setBirthday(datetimeFormat.parse(cursor.getString(4)));
+			} catch (ParseException e) {
+				//should never happen
+				e.printStackTrace();
+			}
+			
+			try {
+				user.setBirthday(datetimeFormat.parse(cursor.getString(5)));
+			} catch (ParseException e) {
+				//should never happen
+				e.printStackTrace();
+			}
+			
 			
 
 			return user;
