@@ -34,7 +34,10 @@ public class AttackFragment extends Fragment {
 	
 	ChallengerSensor challengerSensor;
 	TextView currentCountTextView;
-	TextView todoTextView;
+	TextView overAllTextView;
+	TextView setXTextView;
+	TextView unitTypeTextView;
+	
 	Button startButton;
 	Button nextButton;
 	Unit latestUnit;
@@ -51,7 +54,9 @@ public class AttackFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_attack, container, false);
 		this.currentCountTextView = (TextView) rootView.findViewById(R.id.currentCountTextView);
-		this.todoTextView = (TextView) rootView.findViewById(R.id.todoTextView);
+		this.overAllTextView = (TextView) rootView.findViewById(R.id.overallCountTextView);
+		this.setXTextView = (TextView) rootView.findViewById(R.id.setTextView);
+		this.unitTypeTextView = (TextView) rootView.findViewById(R.id.unittypeTextView);
 		this.startButton = (Button) rootView.findViewById(R.id.startButton);
 		this.nextButton = (Button) rootView.findViewById(R.id.nextRoundButton);
 		this.sensors = new ArrayList<ChallengerSensor>();
@@ -70,7 +75,10 @@ public class AttackFragment extends Fragment {
 		this.newUnit = generateNewUnit();
 
 		
-		todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");			
+		overAllTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");	
+		setXTextView.setText(worksetCount + "");	
+		unitTypeTextView.setText(newUnit.getUnitType().toString());
+		
 		
 
 		startButton.setOnClickListener(new OnClickListener() {
@@ -78,6 +86,7 @@ public class AttackFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				challengerSensor.start();
+				startButton.setEnabled(false);
 
 			}
 		});
@@ -90,10 +99,17 @@ public class AttackFragment extends Fragment {
 				newUnit.getWorkset(worksetCount).setCount(counter);
 				newUnit.getWorkset(worksetCount).setTodo(counter++);
 				worksetCount++;
+				setXTextView.setText(worksetCount + "");
+				unitTypeTextView.setText(newUnit.getUnitType().toString());
+				challengerSensor.setRepeatCounter(0);
+				currentCountTextView.setText(challengerSensor.getRepeatCounter()+ "");
+				
+
 				//unit ist abgeschlossen
 				if (worksetCount == COUNT_WORKINGSETS) {
 					challenger.getUser().addUnit(newUnit);
 					sensorCount++; 
+					worksetCount = 0;
 					
 					
 					if (sensorCount < sensors.size()) {
@@ -107,11 +123,12 @@ public class AttackFragment extends Fragment {
 					
 					latestUnit = challenger.getUser().getLatestUnitByType(challengerSensor.getUnitType());
 					newUnit = generateNewUnit();
-					todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");
+					overAllTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");
 					currentCountTextView.setText("0");
+					
 
 				}
-				
+				//startButton.setEnabled(true);
 				//PAUSE von 60sec oder so
 				
 			}

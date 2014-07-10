@@ -3,71 +3,87 @@
     style="@style/FragmentStyle" >
 
     <TextView
+        android:id="@+id/unittypeTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="Unit"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/setHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/unittypeTextView"
+        android:layout_below="@+id/unittypeTextView"
+        android:layout_marginTop="@dimen/vertical_space"
+        android:text="@string/attack_setheader_textview"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
         android:id="@+id/setTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
-        android:text="Set X"
+        android:layout_alignTop="@+id/setHeaderTextView"
+        android:layout_marginLeft="@dimen/horizontal_space"
+        android:layout_toRightOf="@+id/setHeaderTextView"
+        android:text="1"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/overallCountHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/unittypeTextView"
+        android:layout_below="@+id/setHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space"
+        android:text="@string/attack_overallcountheader_textview"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/overallCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/setTextView"
-        android:layout_below="@+id/setTextView"
-        android:layout_marginTop="64dp"
-        android:text="overall count: XX"
+        android:layout_alignTop="@+id/overallCountHeaderTextView"
+        android:layout_marginLeft="@dimen/horizontal_space"
+        android:layout_toRightOf="@+id/overallCountHeaderTextView"
+        android:text="888"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/currentCountHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/unittypeTextView"
+        android:layout_below="@+id/overallCountHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space"
+        android:text="@string/attack_currentcountheader_textview"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/currentCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/overallCountTextView"
-        android:layout_below="@+id/overallCountTextView"
-        android:layout_marginTop="42dp"
-        android:text="current count: XX"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/waitTimeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/currentCountTextView"
-        android:layout_below="@+id/currentCountTextView"
-        android:layout_marginTop="53dp"
-        android:text="time: 00:00"
+        android:layout_alignTop="@+id/currentCountHeaderTextView"
+        android:layout_marginLeft="@dimen/horizontal_space"
+        android:layout_toRightOf="@+id/currentCountHeaderTextView"
+        android:text="666"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/waitTimeTextView"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="14dp"
-        android:text="start" />
+        android:layout_alignParentLeft="true"
+        android:text="@string/attack_start_button" />
 
     <Button
         android:id="@+id/nextRoundButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/startButton"
-        android:layout_alignBottom="@+id/startButton"
-        android:layout_marginLeft="27dp"
-        android:layout_toRightOf="@+id/currentCountTextView"
-        android:text="next round" />
-
-    <TextView
-        android:id="@+id/todoTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/setTextView"
-        android:layout_alignBottom="@+id/setTextView"
-        android:layout_alignLeft="@+id/nextRoundButton"
-        android:text="Last Unit Count" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/attack_nextround_button" />
 
 </RelativeLayout>
