@@ -23,16 +23,28 @@ import de.uks.challenger.sensor.JumpingJackSensor;
 import de.uks.challenger.sensor.PushUpSensor;
 import de.uks.challenger.sensor.SitUpSensor;
 
+
+
 public class AttackFragment extends Fragment {
+
+	public static final int COUNT_WORKINGSETS = 3;
+	
+	Challenger challenger = Challenger.getInstance();
+	
 	ChallengerSensor challengerSensor;
 	TextView currentCountTextView;
 	TextView todoTextView;
 	Button startButton;
 	Button nextButton;
 	Unit latestUnit;
+	Unit newUnit;
+	
 
 	ArrayList<ChallengerSensor> sensors;
 	int sensorCount = 0;
+	int worksetCount = 0;
+	
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +58,36 @@ public class AttackFragment extends Fragment {
 		this.sensors.add(new SitUpSensor(getActivity().getApplicationContext()));
 		this.sensors.add(new JumpingJackSensor(getActivity().getApplicationContext()));
 
+		int countOfUnits = challenger.getUser().countOfUnits();
+		if (countOfUnits == 0) {
+			//App wird zum ersten mal gestartet
+			this.latestUnit = null;
+			
+		} else {
+			this.latestUnit = challenger.getUser().getLatestUnitByType(sensors.get(sensorCount).getUnitType());		
+		}
+
+		
+		this.newUnit = new Unit();
+		for (int i = 0; i < COUNT_WORKINGSETS; i++) {
+			Workset workset = new Workset();
+			
+			if (this.latestUnit != null) {
+				workset.setTodo(this.latestUnit.getWorkset(i).getCount() + 1);
+			} else {
+				workset.setTodo(0);
+			}
+			
+			newUnit.addWorkset(workset);
+			newUnit.setUnitType(sensors.get(sensorCount).getUnitType());
+		}
+		
+		todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");			
+		
+		
+		
+		
+		
 		startButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -59,6 +101,12 @@ public class AttackFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				int counter = challengerSensor.getRepeatCounter());
+				newUnit.getWorkset(worksetCount).setCount(counter);
+				newUnit.getWorkset(worksetCount).setTodo(counter++);
+				
+				
+				
 				challengerSensor.doNext();
 				if (challengerSensor.getWorksetCounter() == 3) {
 					challengerSensor.pushModel();
@@ -81,18 +129,13 @@ public class AttackFragment extends Fragment {
 		challengerSensor = sensors.get(0);
 
 		challengerSensor.addPropertyChangeListener(ChallengerSensor.PROP_REPEAT, new RepeatListener());
-
-		latestUnit = challengerSensor.getLatestUnit();
-
-		todoTextView.setText(latestUnit.getWorkset(challengerSensor.getWorksetCounter()).getCount() + "");
-
+		
 		return rootView;
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
+import de.uks.challenger.model.Unit.UNIT_TYPE;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -16,15 +17,20 @@ public class PushUpSensor extends ChallengerSensor {
 
 	private Sensor sensorLight;
 	private boolean pushUp;
-
+	
+	
+	
 	public PushUpSensor(Context context) {
 		super(context);
+		this.unitType = Unit.UNIT_TYPE.PUSH_UPS;
 		this.sensorLight = getSensorManager().getDefaultSensor(Sensor.TYPE_LIGHT);
 		this.pushUp = false;
 		this.unit = new Unit();
 		this.unit.setUnitType(Unit.UNIT_TYPE.PUSH_UPS);
 		this.latestUnit = Challenger.getInstance().getUser().getLatestUnitByType(this.unit.getUnitType());
 	}
+	
+
 
 	public SensorEventListener lightListener = new SensorEventListener() {
 		public void onAccuracyChanged(Sensor sensor, int acc) {
