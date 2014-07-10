@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Large Text"
+        android:text="Unit"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_alignTop="@+id/setHeaderTextView"
         android:layout_marginLeft="@dimen/horizontal_space"
         android:layout_toRightOf="@+id/setHeaderTextView"
-        android:text="X"
+        android:text="1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -47,7 +47,7 @@
         android:layout_alignTop="@+id/overallCountHeaderTextView"
         android:layout_marginLeft="@dimen/horizontal_space"
         android:layout_toRightOf="@+id/overallCountHeaderTextView"
-        android:text="XX"
+        android:text="888"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -67,7 +67,7 @@
         android:layout_alignTop="@+id/currentCountHeaderTextView"
         android:layout_marginLeft="@dimen/horizontal_space"
         android:layout_toRightOf="@+id/currentCountHeaderTextView"
-        android:text="XX"
+        android:text="666"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
