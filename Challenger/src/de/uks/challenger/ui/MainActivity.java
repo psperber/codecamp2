@@ -68,19 +68,19 @@ public class MainActivity extends Activity implements
 		Fragment fragment = null;
 		switch (position) {
 		case 0: {
-			fragment = SettingsFragment.newInstance();
-			break;
-		}
-		case 1: {
 			fragment = HistoryFragment.newInstance();
 			break;
 		}
-		case 2: {
+		case 1: {
 			fragment = ProgressFragment.newInstance();
 			break;
 		}
-		case 3: {
+		case 2: {
 			fragment = GraphFragment.newInstance();
+			break;
+		}
+		case 3: {
+			fragment = SettingsFragment.newInstance();
 			break;
 			
 		}
@@ -117,6 +117,10 @@ public class MainActivity extends Activity implements
 			return true;
 		}
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	public void selectItem(int position) {
+		mNavigationDrawerFragment.selectItem(position);
 	}
 
 	// @Override

@@ -8,32 +8,32 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     
-    <string name="setup1_birthday_textview">birthday</string>
-    <string name="setup1_gender_textview">gender</string>
-    <string name="setup1_height_textview">height</string>
-    <string name="setup1_weight_textview">weight</string>
+    <string name="setup1_birthday_textview">Birthday</string>
+    <string name="setup1_gender_textview">Gender</string>
+    <string name="setup1_height_textview">Height</string>
+    <string name="setup1_weight_textview">Weight</string>
     <string name="setup1_next_button">next</string>
     
-    <string name="setup1_error_birthday_empty">birthday is empty</string>
-    <string name="setup1_error_height_empty">height is empty</string>
-    <string name="setup1_error_weight_empty">weight is empty</string>
+    <string name="setup1_error_birthday_empty">Birthday is empty</string>
+    <string name="setup1_error_height_empty">Height is empty</string>
+    <string name="setup1_error_weight_empty">Weight is empty</string>
     
-    <string name="attack_setheader_textview">set:</string>
-    <string name="attack_overallcountheader_textview">overall count:</string>
-    <string name="attack_currentcountheader_textview">current count:</string>
+    <string name="attack_setheader_textview">Set:</string>
+    <string name="attack_overallcountheader_textview">Overall count:</string>
+    <string name="attack_currentcountheader_textview">Current count:</string>
     <string name="attack_start_button">start</string>
     <string name="attack_nextround_button">next round</string>
     
-    <string name="setting_workouttime_textview">worktime</string>
-    <string name="setting_twitter_textview">twitter</string>
+    <string name="setting_workouttime_textview">Worktime</string>
+    <string name="setting_twitter_textview">Twitter</string>
     <string name="setting_twitter_button">login</string>
     <string name="setting_cleardata_button">clear data</string>
     
     <string-array name="title_section">
-        <item>Settings</item>
         <item>History</item>
         <item>Progress</item>
         <item>Graph</item>
+        <item>Settings</item>
         <item>Attack</item>
     </string-array>
 
