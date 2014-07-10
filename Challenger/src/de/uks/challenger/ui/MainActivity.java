@@ -36,6 +36,10 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		
+		// Set up the drawer.
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.drawer_layout));
+		
 		User user = Challenger.getInstance().getUser();
 		if (user == null) {
 			Fragment fragment = SetupFragment.newInstance();
@@ -43,10 +47,6 @@ public class MainActivity extends Activity implements
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();
 		}
-		
-		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
 		
 		
 
