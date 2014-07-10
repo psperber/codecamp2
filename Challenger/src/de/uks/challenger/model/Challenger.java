@@ -4,6 +4,7 @@ package de.uks.challenger.model;
 
 public class Challenger extends ModelElement{
 	public static final String PROP_SET_USER = "prop_set_user";
+	public static final int PROP_COUNT_WORKINGSETS = 3;
 	
 	private static Challenger instance;
 
@@ -23,6 +24,7 @@ public class Challenger extends ModelElement{
 		
 		return instance;
 	}
+	
 
 	public User getUser() {
 		return user;

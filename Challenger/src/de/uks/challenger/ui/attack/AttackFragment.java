@@ -3,6 +3,7 @@ package de.uks.challenger.ui.attack;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -23,16 +24,28 @@ import de.uks.challenger.sensor.JumpingJackSensor;
 import de.uks.challenger.sensor.PushUpSensor;
 import de.uks.challenger.sensor.SitUpSensor;
 
+
+
 public class AttackFragment extends Fragment {
+
+	public static final int COUNT_WORKINGSETS = 3;
+	
+	Challenger challenger = Challenger.getInstance();
+	
 	ChallengerSensor challengerSensor;
 	TextView currentCountTextView;
 	TextView todoTextView;
 	Button startButton;
 	Button nextButton;
 	Unit latestUnit;
+	Unit newUnit;
+	
 
 	ArrayList<ChallengerSensor> sensors;
 	int sensorCount = 0;
+	int worksetCount = 0;
+	
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +58,20 @@ public class AttackFragment extends Fragment {
 		this.sensors.add(new PushUpSensor(getActivity().getApplicationContext()));
 		this.sensors.add(new SitUpSensor(getActivity().getApplicationContext()));
 		this.sensors.add(new JumpingJackSensor(getActivity().getApplicationContext()));
+
+		int countOfUnits = challenger.getUser().countOfUnits();
+		if (countOfUnits == 0) {
+			//App wird zum ersten mal gestartet
+			this.latestUnit = null;
+		} else {
+			this.latestUnit = challenger.getUser().getLatestUnitByType(sensors.get(sensorCount).getUnitType());		
+		}
+
+		this.newUnit = generateNewUnit();
+
+		
+		todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");			
+		
 
 		startButton.setOnClickListener(new OnClickListener() {
 
@@ -59,40 +86,66 @@ public class AttackFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				challengerSensor.doNext();
-				if (challengerSensor.getWorksetCounter() == 3) {
-					challengerSensor.pushModel();
-					sensorCount++;
+				int counter = challengerSensor.getRepeatCounter();
+				newUnit.getWorkset(worksetCount).setCount(counter);
+				newUnit.getWorkset(worksetCount).setTodo(counter++);
+				worksetCount++;
+				//unit ist abgeschlossen
+				if (worksetCount == COUNT_WORKINGSETS) {
+					challenger.getUser().addUnit(newUnit);
+					sensorCount++; 
+					
+					
 					if (sensorCount < sensors.size()) {
 						challengerSensor.stop();
 						challengerSensor = sensors.get(sensorCount);
 						challengerSensor.start();
 					} else {
-						// eier schaukeln
+						// eier schaukeln und rausgehen.... TODO in history fragment
 						Toast.makeText(getActivity(), "Finished Workout", Toast.LENGTH_SHORT).show();
-						;
 					}
+					
+					latestUnit = challenger.getUser().getLatestUnitByType(challengerSensor.getUnitType());
+					newUnit = generateNewUnit();
+					todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");
+					currentCountTextView.setText("0");
 
 				}
-
+				
+				//PAUSE von 60sec oder so
+				
 			}
 		});
 
 		challengerSensor = sensors.get(0);
 
 		challengerSensor.addPropertyChangeListener(ChallengerSensor.PROP_REPEAT, new RepeatListener());
-
-		latestUnit = challengerSensor.getLatestUnit();
-
-		todoTextView.setText(latestUnit.getWorkset(challengerSensor.getWorksetCounter()).getCount() + "");
-
+		
 		return rootView;
+	}
+
+	private Unit generateNewUnit() {
+		Unit generateUnit = new Unit();
+		for (int i = 0; i < COUNT_WORKINGSETS; i++) {
+			Workset workset = new Workset();
+			if (this.latestUnit != null) {
+				workset.setTodo(this.latestUnit.getWorkset(i).getCount() + 1);
+			} else {
+				workset.setTodo(0);
+			}
+			
+			generateUnit.addWorkset(workset);
+			
+		}
+		generateUnit.setUnitType(sensors.get(sensorCount).getUnitType());
+		generateUnit.setCreationDate(new Date());
+		
+		return generateUnit;
 	}
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-
 	}
 
 	/**

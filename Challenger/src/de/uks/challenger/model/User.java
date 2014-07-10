@@ -256,4 +256,8 @@ public class User extends ModelElement {
 		this.workoutTime = workoutTime;
 	}
 
+	public int getAge() {
+		return 25;
+	}
+
 }

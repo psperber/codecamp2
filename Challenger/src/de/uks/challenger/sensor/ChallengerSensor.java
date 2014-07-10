@@ -7,6 +7,7 @@ import java.util.Date;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.Workset;
+import de.uks.challenger.model.Unit.UNIT_TYPE;
 
 import android.content.Context;
 import android.hardware.SensorManager;
@@ -18,6 +19,7 @@ public abstract class ChallengerSensor {
 	public static final String PROP_REPEAT = "prop_repeat";
 	private int repeatCounter = 0;
 	private int worksetCounter = 0;
+	protected UNIT_TYPE unitType;
 
 	protected Unit unit;
 	protected Unit latestUnit;
@@ -28,6 +30,13 @@ public abstract class ChallengerSensor {
 
 	}
 
+	
+	public UNIT_TYPE getUnitType() {
+		return unitType;
+	}
+	
+	
+	
 	public int getWorksetCounter() {
 		return worksetCounter;
 	}
@@ -70,30 +79,15 @@ public abstract class ChallengerSensor {
 		return propertyChange;
 	}
 
-	public int getCounter() {
+	public int getRepeatCounter() {
 		return repeatCounter;
 	}
 
-	public void setCounter(int counter) {
-		this.repeatCounter = counter;
+	public void setRepeatCounter(int repeatCounter) {
+		this.repeatCounter = repeatCounter;
 	}
 
 	public void doNext() {
-		// create the workset instance
-		Workset workset = new Workset();
-		workset.setCount(this.repeatCounter);
-
-		int todo = 0;
-		
-		if (worksetCounter < getLatestUnit().countOfWorksets()) {
-			todo = getLatestUnit().getWorkset(worksetCounter).getCount() + 1;
-		} else {
-			todo = 1;
-		}
-		
-		workset.setTodo(todo);
-		unit.addWorkset(workset);
-
 		// update values
 		this.worksetCounter++;
 		this.repeatCounter = 0;
@@ -105,7 +99,7 @@ public abstract class ChallengerSensor {
 	}
 
 	public void pushModel() {
-		this.worksetCounter = 0;
+		
 		unit.setCreationDate(new Date());
 		Challenger.getInstance().getUser().addUnit(this.unit);
 

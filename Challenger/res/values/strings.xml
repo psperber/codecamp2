@@ -21,6 +21,7 @@
     <string-array name="title_section">
         <item>Settings</item>
         <item>History</item>
+        <item>Progress</item>
         <item>Graph</item>
         <item>Attack</item>
     </string-array>
