@@ -2,7 +2,9 @@ package de.uks.challenger.ui.setup;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import de.uks.challenger.R;
@@ -80,13 +82,15 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 			return;
 		}
 		
-		Date birthday = null;
-		try {
-			birthday = new SimpleDateFormat("dd.MM.yyyy").parse(birthdayString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		int age = Integer.valueOf(birthdayString);
+		String[] birthdaySplit = birthdayString.split("\\.");
+		int day = Integer.valueOf(birthdaySplit[0]);
+		int month = Integer.valueOf(birthdaySplit[1]);
+		int year = Integer.valueOf(birthdaySplit[2]);
+		
+		Calendar calendar = new GregorianCalendar();
+		calendar.set(year, month, day);
+		
+		Date birthday = calendar.getTime();
 		GENDER gender = mGenderSpinner.getSelectedItemPosition() == 0 ? GENDER.MALE
 				: GENDER.FEMALE;
 		int height = Integer.valueOf(heightString);
@@ -99,13 +103,13 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 
 		Progress progress = new Progress();
 		progress.setCreationDate(new Date());
-		progress.setAge(age);
+//		progress.setAge(age);
 		progress.setWeight(weight);
 		user.addProgress(progress);
 
 		Challenger.getInstance().setUser(user);
 
-		Fragment fragment = HistoryFragment.newInstance();
+		Fragment fragment = AttackFragment.newInstance();
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.container, fragment)
 				.commit();
