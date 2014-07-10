@@ -23,13 +23,29 @@ import de.uks.challenger.model.Workset;
 
 public class Source {
 	private static final String TAG = "Challenger.Source";
-	private static final String[] UNIT_COLLUMNS = { DatabaseHelper.UNITS_COLUMN_ID, DatabaseHelper.UNITS_COLUMN_CREATION_DATE, DatabaseHelper.UNITS_COLUMN_UNIT_TYPE };
-	private static final String[] USER_COLLUMNS = { DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER, DatabaseHelper.USER_COLUMN_HEIGHT, DatabaseHelper.USER_COLUMN_RESTING_TIME, DatabaseHelper.USER_COLUMN_BIRTHDAY, DatabaseHelper.USER_COLUMN_WORKOUT_TIME };
-	private static final String[] WORKSET_COLLUMNS = { DatabaseHelper.WORKSETS_COLUMN_ID, DatabaseHelper.WORKSETS_COLUMN_COUNT, DatabaseHelper.WORKSETS_COLUMN_TODO };
-	private static final String[] PROGRESS_COLLUMNS = { DatabaseHelper.PROGRESS_COLUMN_ID, DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE, DatabaseHelper.PROGRESS_COLUMN_AGE, DatabaseHelper.PROGRESS_COLUMN_WEIGHT,
+	private static final String[] UNIT_COLLUMNS = {
+			DatabaseHelper.UNITS_COLUMN_ID,
+			DatabaseHelper.UNITS_COLUMN_CREATION_DATE,
+			DatabaseHelper.UNITS_COLUMN_UNIT_TYPE };
+	private static final String[] USER_COLLUMNS = {
+			DatabaseHelper.USER_COLUMN_ID, DatabaseHelper.USER_COLUMN_GENDER,
+			DatabaseHelper.USER_COLUMN_HEIGHT,
+			DatabaseHelper.USER_COLUMN_RESTING_TIME,
+			DatabaseHelper.USER_COLUMN_BIRTHDAY,
+			DatabaseHelper.USER_COLUMN_WORKOUT_TIME };
+	private static final String[] WORKSET_COLLUMNS = {
+			DatabaseHelper.WORKSETS_COLUMN_ID,
+			DatabaseHelper.WORKSETS_COLUMN_COUNT,
+			DatabaseHelper.WORKSETS_COLUMN_TODO };
+	private static final String[] PROGRESS_COLLUMNS = {
+			DatabaseHelper.PROGRESS_COLUMN_ID,
+			DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE,
+			DatabaseHelper.PROGRESS_COLUMN_AGE,
+			DatabaseHelper.PROGRESS_COLUMN_WEIGHT,
 			DatabaseHelper.PROGRESS_COLUMN_ID_USER };
 
-	private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
@@ -72,7 +88,8 @@ public class Source {
 
 		// format the date
 		if (unit.getCreationDate() != null) {
-			String formattedDate = datetimeFormat.format(unit.getCreationDate());
+			String formattedDate = datetimeFormat
+					.format(unit.getCreationDate());
 			values.put(DatabaseHelper.UNITS_COLUMN_CREATION_DATE, formattedDate);
 		} else {
 			Log.e(TAG, "Can't create unit. No creation date given");
@@ -80,7 +97,8 @@ public class Source {
 		}
 
 		if (unit.getUnitType() != null) {
-			values.put(DatabaseHelper.UNITS_COLUMN_UNIT_TYPE, unit.getUnitType().ordinal());
+			values.put(DatabaseHelper.UNITS_COLUMN_UNIT_TYPE, unit
+					.getUnitType().ordinal());
 		} else {
 			Log.e(TAG, "Can't create unit. No unit type");
 			return null;
@@ -93,12 +111,16 @@ public class Source {
 			return null;
 		}
 
-		long insertId = getDatabase().insert(DatabaseHelper.TABLE_UNITS, null, values);
+		long insertId = getDatabase().insert(DatabaseHelper.TABLE_UNITS, null,
+				values);
 
 		if (insertId >= 0) {
 			// successfull insertion
 
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, DatabaseHelper.UNITS_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS,
+					UNIT_COLLUMNS,
+					DatabaseHelper.UNITS_COLUMN_ID + " = " + insertId, null,
+					null, null, null);
 
 			Unit fetchedUnit = cursorToUnit(cursor);
 			cursor.close();
@@ -114,7 +136,8 @@ public class Source {
 				} else {
 					// error while creating workset, delete inserted elements
 					deleteUnit(fetchedUnit);
-					Log.e(TAG, "Error while creating unit. Could not create workset. Delete");
+					Log.e(TAG,
+							"Error while creating unit. Could not create workset. Delete");
 					return null;
 				}
 			}
@@ -135,7 +158,10 @@ public class Source {
 	public List<Unit> getUnitsFromUser(User user) {
 		List<Unit> units = new ArrayList<Unit>();
 
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, DatabaseHelper.UNITS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS,
+				UNIT_COLLUMNS,
+				DatabaseHelper.UNITS_COLUMN_ID_USER + " = " + user.getId(),
+				null, null, null, null);
 
 		while (!cursor.isAfterLast()) {
 			Unit unit = cursorToUnit(cursor);
@@ -155,11 +181,14 @@ public class Source {
 		cursor.close();
 		return units;
 	}
-	
-	public List<Progress> getProgressDataFromUser(User user){
+
+	public List<Progress> getProgressDataFromUser(User user) {
 		List<Progress> progressData = new ArrayList<Progress>();
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS, PROGRESS_COLLUMNS, DatabaseHelper.PROGRESS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
-		
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS,
+				PROGRESS_COLLUMNS,
+				DatabaseHelper.PROGRESS_COLUMN_ID_USER + " = " + user.getId(),
+				null, null, null, null);
+
 		while (!cursor.isAfterLast()) {
 			Progress progress = cursorToProgress(cursor);
 			if (progress != null) {
@@ -170,9 +199,9 @@ public class Source {
 		}
 		// make sure to close the cursor
 		cursor.close();
-		
+
 		return progressData;
-		
+
 	}
 
 	/**
@@ -183,7 +212,8 @@ public class Source {
 	public List<Unit> getAllUnits() {
 		List<Unit> units = new ArrayList<Unit>();
 
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS, UNIT_COLLUMNS, null, null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS,
+				UNIT_COLLUMNS, null, null, null, null, null);
 
 		while (!cursor.isAfterLast()) {
 			Unit unit = cursorToUnit(cursor);
@@ -227,19 +257,23 @@ public class Source {
 	 */
 	public void deleteUnit(Unit unit) {
 		// delete the unit
-		getDatabase().delete(DatabaseHelper.TABLE_UNITS, DatabaseHelper.UNITS_COLUMN_ID + " = " + unit.getId(), null);
+		getDatabase().delete(DatabaseHelper.TABLE_UNITS,
+				DatabaseHelper.UNITS_COLUMN_ID + " = " + unit.getId(), null);
 
 		// delete the worksets from the unit
 		deleteWorksetsFromUnit(unit);
 
 	}
-	
+
 	/**
 	 * Deletes the given progress data
+	 * 
 	 * @param progress
 	 */
-	public void deleteProgress(Progress progress){
-		getDatabase().delete(DatabaseHelper.TABLE_PROGRESS, DatabaseHelper.PROGRESS_COLUMN_ID + " = " + progress.getId(), null);
+	public void deleteProgress(Progress progress) {
+		getDatabase().delete(DatabaseHelper.TABLE_PROGRESS,
+				DatabaseHelper.PROGRESS_COLUMN_ID + " = " + progress.getId(),
+				null);
 	}
 
 	/**
@@ -248,7 +282,9 @@ public class Source {
 	 * @param unit
 	 */
 	private void deleteWorksetsFromUnit(Unit unit) {
-		getDatabase().delete(DatabaseHelper.TABLE_WORKSETS, DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(), null);
+		getDatabase().delete(DatabaseHelper.TABLE_WORKSETS,
+				DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(),
+				null);
 	}
 
 	/**
@@ -302,7 +338,8 @@ public class Source {
 
 		// format the date
 		if (user.getGender() != null) {
-			values.put(DatabaseHelper.USER_COLUMN_GENDER, user.getGender().ordinal());
+			values.put(DatabaseHelper.USER_COLUMN_GENDER, user.getGender()
+					.ordinal());
 		} else {
 			Log.e(TAG, "Can't create user. No gender given");
 			return null;
@@ -314,25 +351,31 @@ public class Source {
 			Log.e(TAG, "Can't create user. No height given");
 			return null;
 		}
-		
-		if(user.getBirthday() != null){
-			values.put(DatabaseHelper.USER_COLUMN_BIRTHDAY, datetimeFormat.format(user.getBirthday()));
-		}else{
+
+		if (user.getBirthday() != null) {
+			values.put(DatabaseHelper.USER_COLUMN_BIRTHDAY,
+					datetimeFormat.format(user.getBirthday()));
+		} else {
 			Log.e(TAG, "Can't create user. No birthday given");
 			return null;
 		}
-		
-		if(user.getWorkoutTime() != null){
-			values.put(DatabaseHelper.USER_COLUMN_WORKOUT_TIME, datetimeFormat.format(user.getWorkoutTime()));
-		}else{
+
+		if (user.getWorkoutTime() != null) {
+			values.put(DatabaseHelper.USER_COLUMN_WORKOUT_TIME,
+					datetimeFormat.format(user.getWorkoutTime()));
+		} else {
 			Log.e(TAG, "Can't create user. No workout time given");
 			return null;
 		}
 
-		long insertId = getDatabase().insert(DatabaseHelper.TABLE_USER, null, values);
+		long insertId = getDatabase().insert(DatabaseHelper.TABLE_USER, null,
+				values);
 		if (insertId >= 0) {
 			// successfull insertion
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER, USER_COLLUMNS, DatabaseHelper.USER_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER,
+					USER_COLLUMNS,
+					DatabaseHelper.USER_COLUMN_ID + " = " + insertId, null,
+					null, null, null);
 
 			User fetchedUser = cursorToUser(cursor);
 			cursor.close();
@@ -344,7 +387,8 @@ public class Source {
 				Unit createdUnit = createUnit(unit, fetchedUser);
 				if (createdUnit == null) {
 					// something bad happened, delete
-					Log.e(TAG, "Error while creating user. Could not create unit. Delete");
+					Log.e(TAG,
+							"Error while creating user. Could not create unit. Delete");
 					deleteUser();
 					return null;
 				} else {
@@ -353,13 +397,15 @@ public class Source {
 			}
 
 			// create progress data
-			for (Iterator<Progress> it = user.getProgressIterator(); it.hasNext();) {
+			for (Iterator<Progress> it = user.getProgressIterator(); it
+					.hasNext();) {
 				Progress progress = it.next();
 
 				Progress createdProgress = createProgress(progress, fetchedUser);
 				if (createdProgress == null) {
 					// something bad happened, delete
-					Log.e(TAG, "Error while creating user. Could not create progress. Delete");
+					Log.e(TAG,
+							"Error while creating user. Could not create progress. Delete");
 					deleteUser();
 					return null;
 				} else {
@@ -389,7 +435,8 @@ public class Source {
 
 		// validate
 		if (progress.getCreationDate() != null) {
-			values.put(DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE, datetimeFormat.format(progress.getCreationDate()));
+			values.put(DatabaseHelper.PROGRESS_COLUMN_CREATION_DATE,
+					datetimeFormat.format(progress.getCreationDate()));
 		} else {
 			Log.e(TAG, "Can't create progress. No creation date given");
 			return null;
@@ -403,7 +450,8 @@ public class Source {
 		}
 
 		if (!new Double(0.).equals(progress.getWeight())) {
-			values.put(DatabaseHelper.PROGRESS_COLUMN_WEIGHT, progress.getWeight());
+			values.put(DatabaseHelper.PROGRESS_COLUMN_WEIGHT,
+					progress.getWeight());
 		} else {
 			Log.e(TAG, "Can't create progress. No weight given");
 			return null;
@@ -417,10 +465,14 @@ public class Source {
 		}
 
 		// everything fine here, persist
-		long insertId = getDatabase().insert(DatabaseHelper.TABLE_PROGRESS, null, values);
+		long insertId = getDatabase().insert(DatabaseHelper.TABLE_PROGRESS,
+				null, values);
 		if (insertId >= 0) {
 			// successfull insertion
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS, PROGRESS_COLLUMNS, DatabaseHelper.PROGRESS_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS,
+					PROGRESS_COLLUMNS,
+					DatabaseHelper.PROGRESS_COLUMN_ID + " = " + insertId, null,
+					null, null, null);
 
 			Progress fetchedProgress = cursorToProgress(cursor);
 			cursor.close();
@@ -452,22 +504,20 @@ public class Source {
 
 			user.setHeight(cursor.getInt(2));
 			user.setRestingTime(cursor.getInt(3));
-			
+
 			try {
 				user.setBirthday(datetimeFormat.parse(cursor.getString(4)));
 			} catch (ParseException e) {
-				//should never happen
+				// should never happen
 				e.printStackTrace();
 			}
-			
+
 			try {
 				user.setBirthday(datetimeFormat.parse(cursor.getString(5)));
 			} catch (ParseException e) {
-				//should never happen
+				// should never happen
 				e.printStackTrace();
 			}
-			
-			
 
 			return user;
 		} else {
@@ -481,7 +531,8 @@ public class Source {
 	 * @return
 	 */
 	public User getUser() {
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER, USER_COLLUMNS, null, null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER,
+				USER_COLLUMNS, null, null, null, null, null);
 
 		User fetchedUser = cursorToUser(cursor);
 		cursor.close();
@@ -531,7 +582,10 @@ public class Source {
 	public List<Workset> getWorksets(Unit unit) {
 		List<Workset> worksets = new ArrayList<Workset>();
 
-		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS, WORKSET_COLLUMNS, DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(), null, null, null, null);
+		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS,
+				WORKSET_COLLUMNS,
+				DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(),
+				null, null, null, null);
 
 		while (!cursor.isAfterLast()) {
 			Workset workset = cursorToWorkSet(cursor);
@@ -567,17 +621,16 @@ public class Source {
 			return null;
 		}
 
-		if (workSet.getTodo() != 0) {
-			values.put(DatabaseHelper.WORKSETS_COLUMN_TODO, workSet.getTodo());
-		} else {
-			Log.e(TAG, "Can't create workset. No todo given");
-			return null;
-		}
+		values.put(DatabaseHelper.WORKSETS_COLUMN_TODO, workSet.getTodo());
 
-		long insertId = getDatabase().insert(DatabaseHelper.TABLE_WORKSETS, null, values);
+		long insertId = getDatabase().insert(DatabaseHelper.TABLE_WORKSETS,
+				null, values);
 		if (insertId >= 0) {
 			// successfull insertion
-			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS, WORKSET_COLLUMNS, DatabaseHelper.WORKSETS_COLUMN_ID + " = " + insertId, null, null, null, null);
+			Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_WORKSETS,
+					WORKSET_COLLUMNS,
+					DatabaseHelper.WORKSETS_COLUMN_ID + " = " + insertId, null,
+					null, null, null);
 
 			Workset fetchedWorkset = cursorToWorkSet(cursor);
 			cursor.close();
