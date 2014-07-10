@@ -21,7 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Setup1Fragment extends Fragment implements View.OnClickListener {
-	EditText mAgeEditText;
+	EditText mBirthdayEditText;
 	Spinner mGenderSpinner;
 	EditText mHeightEditText;
 	EditText mWeightEditText;
@@ -32,9 +32,9 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_setup1, container,
 				false);
-		
 
-		mAgeEditText = (EditText) rootView.findViewById(R.id.ageEditText);
+		mBirthdayEditText = (EditText) rootView
+				.findViewById(R.id.birthdayEditText);
 		mGenderSpinner = (Spinner) rootView.findViewById(R.id.genderSpinner);
 		mHeightEditText = (EditText) rootView.findViewById(R.id.heightEditText);
 		mWeightEditText = (EditText) rootView.findViewById(R.id.weightEditText);
@@ -52,28 +52,30 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		String ageString = mAgeEditText.getText().toString();
-		if ("".equals(ageString)) {
-			Toast.makeText(getActivity(), "AGE IS EMPTY", Toast.LENGTH_SHORT)
-					.show();
+		String birthdayString = mBirthdayEditText.getText().toString();
+		if ("".equals(birthdayString)) {
+			Toast.makeText(getActivity(), R.string.setup1_error_birthday_empty,
+					Toast.LENGTH_SHORT).show();
 			return;
+		} else {
+			System.out.println("birthdayString " + birthdayString);
 		}
 
 		String heightString = mHeightEditText.getText().toString();
 		if ("".equals(heightString)) {
-			Toast.makeText(getActivity(), "HEIGHT IS EMPTY", Toast.LENGTH_SHORT)
+			Toast.makeText(getActivity(), R.string.setup1_error_height_empty, Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
 
 		String weightString = mWeightEditText.getText().toString();
 		if ("".equals(weightString)) {
-			Toast.makeText(getActivity(), "WEIGHT IS EMPTY", Toast.LENGTH_SHORT)
+			Toast.makeText(getActivity(), R.string.setup1_error_weight_empty, Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
 
-		int age = Integer.valueOf(ageString);
+		int age = Integer.valueOf(birthdayString);
 		GENDER gender = mGenderSpinner.getSelectedItemPosition() == 0 ? GENDER.MALE
 				: GENDER.FEMALE;
 		int height = Integer.valueOf(heightString);
