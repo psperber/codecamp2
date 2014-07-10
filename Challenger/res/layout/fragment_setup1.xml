@@ -15,7 +15,7 @@
         android:id="@+id/birthdayEditText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/birthdayTextView"
+        android:layout_alignTop="@+id/birthdayTextView"
         android:layout_marginLeft="@dimen/horizontal_space"
         android:layout_toRightOf="@+id/birthdayTextView"
         android:ems="10"
