@@ -54,19 +54,6 @@ public class PushUpSensor extends ChallengerSensor {
 	public void start() {
 		getSensorManager().registerListener(lightListener, sensorLight, SensorManager.SENSOR_DELAY_NORMAL);
 
-		// Test by philipp, da kein helligkeitssensor
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				int oldValue = getCounter();
-				setCounter(oldValue + 1);
-				getPropertyChangeSupport().firePropertyChange(PROP_REPEAT, oldValue, getCounter());
-
-			}
-		}, 0, 1000);
-		//Endtest
 	}
 
 	@Override
