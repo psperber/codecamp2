@@ -3,6 +3,7 @@ package de.uks.challenger.ui.attack;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -62,32 +63,16 @@ public class AttackFragment extends Fragment {
 		if (countOfUnits == 0) {
 			//App wird zum ersten mal gestartet
 			this.latestUnit = null;
-			
 		} else {
 			this.latestUnit = challenger.getUser().getLatestUnitByType(sensors.get(sensorCount).getUnitType());		
 		}
 
-		
-		this.newUnit = new Unit();
-		for (int i = 0; i < COUNT_WORKINGSETS; i++) {
-			Workset workset = new Workset();
-			
-			if (this.latestUnit != null) {
-				workset.setTodo(this.latestUnit.getWorkset(i).getCount() + 1);
-			} else {
-				workset.setTodo(0);
-			}
-			
-			newUnit.addWorkset(workset);
-			newUnit.setUnitType(sensors.get(sensorCount).getUnitType());
-		}
+		this.newUnit = generateNewUnit();
+
 		
 		todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");			
 		
-		
-		
-		
-		
+
 		startButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -101,28 +86,34 @@ public class AttackFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				int counter = challengerSensor.getRepeatCounter());
+				int counter = challengerSensor.getRepeatCounter();
 				newUnit.getWorkset(worksetCount).setCount(counter);
 				newUnit.getWorkset(worksetCount).setTodo(counter++);
-				
-				
-				
-				challengerSensor.doNext();
-				if (challengerSensor.getWorksetCounter() == 3) {
-					challengerSensor.pushModel();
-					sensorCount++;
+				worksetCount++;
+				//unit ist abgeschlossen
+				if (worksetCount == COUNT_WORKINGSETS) {
+					challenger.getUser().addUnit(newUnit);
+					sensorCount++; 
+					
+					
 					if (sensorCount < sensors.size()) {
 						challengerSensor.stop();
 						challengerSensor = sensors.get(sensorCount);
 						challengerSensor.start();
 					} else {
-						// eier schaukeln
+						// eier schaukeln und rausgehen.... TODO in history fragment
 						Toast.makeText(getActivity(), "Finished Workout", Toast.LENGTH_SHORT).show();
-						;
 					}
+					
+					latestUnit = challenger.getUser().getLatestUnitByType(challengerSensor.getUnitType());
+					newUnit = generateNewUnit();
+					todoTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");
+					currentCountTextView.setText("0");
 
 				}
-
+				
+				//PAUSE von 60sec oder so
+				
 			}
 		});
 
@@ -131,6 +122,25 @@ public class AttackFragment extends Fragment {
 		challengerSensor.addPropertyChangeListener(ChallengerSensor.PROP_REPEAT, new RepeatListener());
 		
 		return rootView;
+	}
+
+	private Unit generateNewUnit() {
+		Unit generateUnit = new Unit();
+		for (int i = 0; i < COUNT_WORKINGSETS; i++) {
+			Workset workset = new Workset();
+			if (this.latestUnit != null) {
+				workset.setTodo(this.latestUnit.getWorkset(i).getCount() + 1);
+			} else {
+				workset.setTodo(0);
+			}
+			
+			generateUnit.addWorkset(workset);
+			
+		}
+		generateUnit.setUnitType(sensors.get(sensorCount).getUnitType());
+		generateUnit.setCreationDate(new Date());
+		
+		return generateUnit;
 	}
 
 	@Override
