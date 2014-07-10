@@ -7,16 +7,29 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+    
+    <string name="setup1_birthday_textview">birthday</string>
+    <string name="setup1_gender_textview">gender</string>
+    <string name="setup1_height_textview">height</string>
+    <string name="setup1_weight_textview">weight</string>
+    <string name="setup1_next_button">next</string>
+    
+    <string name="setup1_error_birthday_empty">birthday is empty</string>
+    <string name="setup1_error_height_empty">height is empty</string>
+    <string name="setup1_error_weight_empty">weight is empty</string>
+
     <string-array name="title_section">
-        <item >Settings</item>
-        <item >History</item>
-        <item >Graph</item>
-        <item >Attack</item>    
+        <item>Settings</item>
+        <item>History</item>
+        <item>Graph</item>
+        <item>Attack</item>
     </string-array>
+
     <string name="title_setup">Setup</string>
+
     <string-array name="gender">
-        <item >male</item>
-        <item >female</item>
+        <item>male</item>
+        <item>female</item>
     </string-array>
 
 </resources>

@@ -1,6 +1,9 @@
 package de.uks.challenger.ui.setup;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import de.uks.challenger.R;
 import de.uks.challenger.R.id;
@@ -8,6 +11,8 @@ import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Progress;
 import de.uks.challenger.model.User;
 import de.uks.challenger.model.User.GENDER;
+import de.uks.challenger.ui.attack.AttackFragment;
+import de.uks.challenger.ui.history.HistoryFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -21,7 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Setup1Fragment extends Fragment implements View.OnClickListener {
-	EditText mAgeEditText;
+	EditText mBirthdayEditText;
 	Spinner mGenderSpinner;
 	EditText mHeightEditText;
 	EditText mWeightEditText;
@@ -32,9 +37,9 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_setup1, container,
 				false);
-		
 
-		mAgeEditText = (EditText) rootView.findViewById(R.id.ageEditText);
+		mBirthdayEditText = (EditText) rootView
+				.findViewById(R.id.birthdayEditText);
 		mGenderSpinner = (Spinner) rootView.findViewById(R.id.genderSpinner);
 		mHeightEditText = (EditText) rootView.findViewById(R.id.heightEditText);
 		mWeightEditText = (EditText) rootView.findViewById(R.id.weightEditText);
@@ -52,28 +57,36 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		String ageString = mAgeEditText.getText().toString();
-		if ("".equals(ageString)) {
-			Toast.makeText(getActivity(), "AGE IS EMPTY", Toast.LENGTH_SHORT)
-					.show();
+		String birthdayString = mBirthdayEditText.getText().toString();
+		if ("".equals(birthdayString)) {
+			Toast.makeText(getActivity(), R.string.setup1_error_birthday_empty,
+					Toast.LENGTH_SHORT).show();
 			return;
+		} else {
+			System.out.println("birthdayString " + birthdayString);
 		}
 
 		String heightString = mHeightEditText.getText().toString();
 		if ("".equals(heightString)) {
-			Toast.makeText(getActivity(), "HEIGHT IS EMPTY", Toast.LENGTH_SHORT)
+			Toast.makeText(getActivity(), R.string.setup1_error_height_empty, Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
 
 		String weightString = mWeightEditText.getText().toString();
 		if ("".equals(weightString)) {
-			Toast.makeText(getActivity(), "WEIGHT IS EMPTY", Toast.LENGTH_SHORT)
+			Toast.makeText(getActivity(), R.string.setup1_error_weight_empty, Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
-
-		int age = Integer.valueOf(ageString);
+		
+		Date birthday = null;
+		try {
+			birthday = new SimpleDateFormat("dd.MM.yyyy").parse(birthdayString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int age = Integer.valueOf(birthdayString);
 		GENDER gender = mGenderSpinner.getSelectedItemPosition() == 0 ? GENDER.MALE
 				: GENDER.FEMALE;
 		int height = Integer.valueOf(heightString);
@@ -82,6 +95,7 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 		User user = new User();
 		user.setGender(gender);
 		user.setHeight(height);
+		user.setBirthday(birthday);
 
 		Progress progress = new Progress();
 		progress.setCreationDate(new Date());
@@ -91,7 +105,7 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 
 		Challenger.getInstance().setUser(user);
 
-		Fragment fragment = Setup2Fragment.newInstance();
+		Fragment fragment = HistoryFragment.newInstance();
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.container, fragment)
 				.commit();
