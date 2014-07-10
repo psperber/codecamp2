@@ -122,6 +122,7 @@ public class Source {
 					DatabaseHelper.UNITS_COLUMN_ID + " = " + insertId, null,
 					null, null, null);
 
+			cursor.moveToFirst();
 			Unit fetchedUnit = cursorToUnit(cursor);
 			cursor.close();
 
@@ -163,6 +164,7 @@ public class Source {
 				DatabaseHelper.UNITS_COLUMN_ID_USER + " = " + user.getId(),
 				null, null, null, null);
 
+		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Unit unit = cursorToUnit(cursor);
 			if (unit != null) {
@@ -189,6 +191,7 @@ public class Source {
 				DatabaseHelper.PROGRESS_COLUMN_ID_USER + " = " + user.getId(),
 				null, null, null, null);
 
+		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Progress progress = cursorToProgress(cursor);
 			if (progress != null) {
@@ -215,6 +218,7 @@ public class Source {
 		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_UNITS,
 				UNIT_COLLUMNS, null, null, null, null, null);
 
+		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Unit unit = cursorToUnit(cursor);
 			if (unit != null) {
@@ -294,7 +298,7 @@ public class Source {
 	 * @return
 	 */
 	private Unit cursorToUnit(Cursor cursor) {
-		if (cursor.moveToFirst()) {
+		if (!cursor.isAfterLast()) {
 			Unit unit = new Unit();
 			unit.setId(cursor.getLong(0));
 
@@ -377,6 +381,7 @@ public class Source {
 					DatabaseHelper.USER_COLUMN_ID + " = " + insertId, null,
 					null, null, null);
 
+			cursor.moveToFirst();
 			User fetchedUser = cursorToUser(cursor);
 			cursor.close();
 
@@ -474,6 +479,7 @@ public class Source {
 					DatabaseHelper.PROGRESS_COLUMN_ID + " = " + insertId, null,
 					null, null, null);
 
+			cursor.moveToFirst();
 			Progress fetchedProgress = cursorToProgress(cursor);
 			cursor.close();
 
@@ -492,7 +498,7 @@ public class Source {
 	 */
 	private User cursorToUser(Cursor cursor) {
 
-		if (cursor.moveToFirst()) {
+		if (!cursor.isAfterLast()) {
 			User user = new User();
 			user.setId(cursor.getLong(0));
 
@@ -513,7 +519,7 @@ public class Source {
 			}
 
 			try {
-				user.setBirthday(datetimeFormat.parse(cursor.getString(5)));
+				user.setWorkoutTime(datetimeFormat.parse(cursor.getString(5)));
 			} catch (ParseException e) {
 				// should never happen
 				e.printStackTrace();
@@ -534,6 +540,7 @@ public class Source {
 		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_USER,
 				USER_COLLUMNS, null, null, null, null, null);
 
+		cursor.moveToFirst();
 		User fetchedUser = cursorToUser(cursor);
 		cursor.close();
 
@@ -587,7 +594,9 @@ public class Source {
 				DatabaseHelper.WORKSETS_COLUMN_ID_UNIT + " = " + unit.getId(),
 				null, null, null, null);
 
+		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
+			System.out.println("test");
 			Workset workset = cursorToWorkSet(cursor);
 			if (workset != null) {
 				worksets.add(workset);
@@ -631,7 +640,8 @@ public class Source {
 					WORKSET_COLLUMNS,
 					DatabaseHelper.WORKSETS_COLUMN_ID + " = " + insertId, null,
 					null, null, null);
-
+			
+			cursor.moveToFirst();
 			Workset fetchedWorkset = cursorToWorkSet(cursor);
 			cursor.close();
 
@@ -649,7 +659,7 @@ public class Source {
 	 * @return
 	 */
 	private Workset cursorToWorkSet(Cursor cursor) {
-		if (cursor.moveToFirst()) {
+		if (!cursor.isAfterLast()) {
 			Workset workSet = new Workset();
 			workSet.setId(cursor.getLong(0));
 			workSet.setCount(cursor.getInt(1));
@@ -668,7 +678,7 @@ public class Source {
 	 * @return
 	 */
 	private Progress cursorToProgress(Cursor cursor) {
-		if (cursor.moveToFirst()) {
+		if (!cursor.isAfterLast()) {
 			Progress progress = new Progress();
 			progress.setId(cursor.getLong(0));
 
