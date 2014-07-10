@@ -1,7 +1,7 @@
 package de.uks.challenger.model;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,6 +43,11 @@ public class User extends ModelElement {
 	 * The user prefered resting time in ms beetween worksets 
 	 */
 	private int restingTime;
+	
+	/**
+	 * Birthday of user
+	 */
+	private Date birthday;
 
 	
 	/**
@@ -228,6 +233,14 @@ public class User extends ModelElement {
 		} else {
 			return false;
 		}
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 
 }
