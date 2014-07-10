@@ -12,41 +12,11 @@
         android:text="Set X"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/overallCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/setTextView"
-        android:layout_below="@+id/setTextView"
-        android:layout_marginTop="64dp"
-        android:text="overall count: XX"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/currentCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/overallCountTextView"
-        android:layout_below="@+id/overallCountTextView"
-        android:layout_marginTop="42dp"
-        android:text="current count: XX"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/waitTimeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/currentCountTextView"
-        android:layout_below="@+id/currentCountTextView"
-        android:layout_marginTop="53dp"
-        android:text="time: 00:00"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/waitTimeTextView"
+        android:layout_alignLeft="@+id/currentCountHeaderTextView"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="14dp"
         android:text="start" />
@@ -58,17 +28,8 @@
         android:layout_alignBaseline="@+id/startButton"
         android:layout_alignBottom="@+id/startButton"
         android:layout_marginLeft="27dp"
-        android:layout_toRightOf="@+id/currentCountTextView"
+        android:layout_toRightOf="@+id/currentCountHeaderTextView"
         android:text="next round" />
-
-    <TextView
-        android:id="@+id/todoTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/setTextView"
-        android:layout_alignBottom="@+id/setTextView"
-        android:layout_alignLeft="@+id/nextRoundButton"
-        android:text="Last Unit Count" />
 
     <TextView
         android:id="@+id/unittypeTextView"
@@ -77,6 +38,46 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/overallCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/overallCountHeaderTextView"
+        android:layout_alignBottom="@+id/overallCountHeaderTextView"
+        android:layout_centerHorizontal="true"
+        android:text="XX"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/overallCountHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/setTextView"
+        android:layout_below="@+id/setTextView"
+        android:layout_marginTop="28dp"
+        android:text="overall count:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/currentCountHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/overallCountHeaderTextView"
+        android:layout_below="@+id/overallCountTextView"
+        android:layout_marginTop="47dp"
+        android:text="current count:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/currentCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/currentCountHeaderTextView"
+        android:layout_alignBottom="@+id/currentCountHeaderTextView"
+        android:layout_toRightOf="@+id/currentCountHeaderTextView"
+        android:text="XX"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
