@@ -17,6 +17,12 @@
     <string name="setup1_error_birthday_empty">birthday is empty</string>
     <string name="setup1_error_height_empty">height is empty</string>
     <string name="setup1_error_weight_empty">weight is empty</string>
+    
+    <string name="attack_setheader_textview">set:</string>
+    <string name="attack_overallcountheader_textview">overall count:</string>
+    <string name="attack_currentcountheader_textview">current count:</string>
+    <string name="attack_start_button">start</string>
+    <string name="attack_nextround_button">next round</string>
 
     <string-array name="title_section">
         <item>Settings</item>
