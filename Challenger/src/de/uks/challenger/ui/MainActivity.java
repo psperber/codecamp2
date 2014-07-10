@@ -16,7 +16,7 @@ import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
 import de.uks.challenger.ui.progress.ProgressFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
-import de.uks.challenger.ui.setup.Setup1Fragment;
+import de.uks.challenger.ui.setup.SetupFragment;
 
 public class MainActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements
 		if (user == null) {
 			mTitle = getString(R.string.title_setup);
 			restoreActionBar();
-			Fragment fragment = Setup1Fragment.newInstance();
+			Fragment fragment = SetupFragment.newInstance();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();

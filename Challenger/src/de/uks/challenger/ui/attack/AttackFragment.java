@@ -25,7 +25,7 @@ import de.uks.challenger.sensor.JumpingJackSensor;
 import de.uks.challenger.sensor.PushUpSensor;
 import de.uks.challenger.sensor.SitUpSensor;
 import de.uks.challenger.ui.history.HistoryFragment;
-import de.uks.challenger.ui.setup.Setup1Fragment;
+import de.uks.challenger.ui.setup.SetupFragment;
 
 
 

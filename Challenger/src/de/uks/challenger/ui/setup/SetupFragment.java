@@ -27,7 +27,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class Setup1Fragment extends Fragment implements View.OnClickListener {
+public class SetupFragment extends Fragment implements View.OnClickListener {
 	EditText mBirthdayEditText;
 	Spinner mGenderSpinner;
 	EditText mHeightEditText;
@@ -37,7 +37,7 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_setup1, container,
+		View rootView = inflater.inflate(R.layout.fragment_setup, container,
 				false);
 
 		mBirthdayEditText = (EditText) rootView
@@ -123,7 +123,7 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 	 * Returns a new instance of this fragment for the given section number.
 	 */
 	public static Fragment newInstance() {
-		Setup1Fragment fragment = new Setup1Fragment();
+		SetupFragment fragment = new SetupFragment();
 		Bundle args = new Bundle();
 		// args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 		fragment.setArguments(args);

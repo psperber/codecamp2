@@ -1,7 +1,7 @@
 package de.uks.challenger.ui.attack;
 
 import de.uks.challenger.R;
-import de.uks.challenger.ui.setup.Setup1Fragment;
+import de.uks.challenger.ui.setup.SetupFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
