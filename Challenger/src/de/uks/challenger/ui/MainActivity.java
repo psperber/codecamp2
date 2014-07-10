@@ -9,10 +9,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
+import de.uks.challenger.model.Progress;
 import de.uks.challenger.model.User;
 import de.uks.challenger.ui.attack.AttackFragment;
 import de.uks.challenger.ui.graph.GraphFragment;
 import de.uks.challenger.ui.history.HistoryFragment;
+import de.uks.challenger.ui.progress.ProgressFragment;
 import de.uks.challenger.ui.settings.SettingsFragment;
 import de.uks.challenger.ui.setup.Setup1Fragment;
 
@@ -74,11 +76,15 @@ public class MainActivity extends Activity implements
 			break;
 		}
 		case 2: {
+			fragment = ProgressFragment.newInstance();
+			break;
+		}
+		case 3: {
 			fragment = GraphFragment.newInstance();
 			break;
 			
 		}
-		case 3: {
+		case 4: {
 			fragment = AttackFragment.newInstance();
 			break;
 		}

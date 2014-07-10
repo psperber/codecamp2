@@ -64,8 +64,6 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 			Toast.makeText(getActivity(), R.string.setup1_error_birthday_empty,
 					Toast.LENGTH_SHORT).show();
 			return;
-		} else {
-			System.out.println("birthdayString " + birthdayString);
 		}
 
 		String heightString = mHeightEditText.getText().toString();
@@ -87,23 +85,29 @@ public class Setup1Fragment extends Fragment implements View.OnClickListener {
 		int month = Integer.valueOf(birthdaySplit[1]);
 		int year = Integer.valueOf(birthdaySplit[2]);
 		
-		Calendar calendar = new GregorianCalendar();
-		calendar.set(year, month, day);
-		
-		Date birthday = calendar.getTime();
+		Calendar birthdayCalendar = new GregorianCalendar();
+		birthdayCalendar.set(year, month, day);
+		Date birthday = birthdayCalendar.getTime();
 		GENDER gender = mGenderSpinner.getSelectedItemPosition() == 0 ? GENDER.MALE
 				: GENDER.FEMALE;
 		int height = Integer.valueOf(heightString);
 		double weight = Double.valueOf(weightString);
 
+		Calendar workoutTimeCalendar = new GregorianCalendar();
+		workoutTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, 18);
+		workoutTimeCalendar.set(GregorianCalendar.MINUTE, 0);
+		workoutTimeCalendar.set(GregorianCalendar.SECOND, 0);
+		Date workoutTimeDate = workoutTimeCalendar.getTime();
+		
 		User user = new User();
 		user.setGender(gender);
 		user.setHeight(height);
 		user.setBirthday(birthday);
+		user.setWorkoutTime(workoutTimeDate);
 
 		Progress progress = new Progress();
 		progress.setCreationDate(new Date());
-//		progress.setAge(age);
+		progress.setAge(user.getAge());
 		progress.setWeight(weight);
 		user.addProgress(progress);
 
