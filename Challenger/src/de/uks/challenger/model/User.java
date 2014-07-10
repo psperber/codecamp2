@@ -12,6 +12,7 @@ public class User extends ModelElement {
 	public static final String PROP_REMOVE_PROGRESS = "prop_remove_progress";
 	public static final String PROP_ADD_UNIT = "prop_add_unit";
 	public static final String PROP_REMOVE_UNIT = "prop_remove_unit";
+	public static final String PROP_SET_WORKOUT_TIME = "prop_set_workout_time";
 
 	public enum GENDER {
 		MALE, FEMALE;
@@ -249,6 +250,9 @@ public class User extends ModelElement {
 	}
 	
 	public void setWorkoutTime(Date workoutTime){
+		Date oldValue = this.workoutTime;
+		getPropertyChangeSupport().firePropertyChange(PROP_SET_WORKOUT_TIME, oldValue, workoutTime);
+		
 		this.workoutTime = workoutTime;
 	}
 
