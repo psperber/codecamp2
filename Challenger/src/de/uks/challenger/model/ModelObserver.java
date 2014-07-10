@@ -60,7 +60,7 @@ public class ModelObserver {
 		user.addPropertyChangeListener(User.PROP_ADD_UNIT, new AddUnitListener());
 		user.addPropertyChangeListener(User.PROP_REMOVE_UNIT, new RemoveUnitListener());
 		user.addPropertyChangeListener(User.PROP_REMOVE_UNIT, new RemoveProgressListener());
-		
+
 	}
 
 	private class SetUserListener implements PropertyChangeListener {
@@ -85,9 +85,13 @@ public class ModelObserver {
 
 			source.open();
 			User createdUser = source.createUser(user);
-
-			// we need to set the id of the user in the model
-			user.setId(createdUser.getId());
+			if (createdUser != null) {
+				// we need to set the id of the user in the model
+				user.setId(createdUser.getId());
+			}else {
+				// TODO What to do here?
+				Log.w(TAG, "User could not be persisted...");
+			}
 			source.close();
 
 			// if user was set, we need tinitModel();o start the observation of
@@ -125,47 +129,46 @@ public class ModelObserver {
 
 			source.open();
 			Unit createdUnit = source.createUnit(unit, Challenger.getInstance().getUser());
-			if(createdUnit != null){
-				unit.setId(createdUnit.getId());	
-			}else{
-				//TODO What to do here?
+			if (createdUnit != null) {
+				unit.setId(createdUnit.getId());
+			} else {
+				// TODO What to do here?
 				Log.w(TAG, "Unit could not be persisted...");
 			}
-			
+
 			source.close();
 
 		}
 	}
-	
-	private class RemoveUnitListener implements PropertyChangeListener{
+
+	private class RemoveUnitListener implements PropertyChangeListener {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent event) {
 			Unit unit = (Unit) event.getNewValue();
-			
+
 			Source source = new Source(context);
 			source.open();
 			source.deleteUnit(unit);
 			source.close();
-			
+
 		}
-		
+
 	}
-	
-	private class RemoveProgressListener implements PropertyChangeListener{
+
+	private class RemoveProgressListener implements PropertyChangeListener {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent event) {
 			Progress progress = (Progress) event.getNewValue();
-			
+
 			Source source = new Source(context);
 			source.open();
 			source.deleteProgress(progress);
 			source.close();
-			
-			
+
 		}
-		
+
 	}
 
 }

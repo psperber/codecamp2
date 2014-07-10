@@ -48,6 +48,7 @@ public class User extends ModelElement {
 	 * Birthday of user
 	 */
 	private Date birthday;
+	private Date workoutTime;
 
 	
 	/**
@@ -241,6 +242,14 @@ public class User extends ModelElement {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+	
+	public Date getWorkoutTime(){
+		return this.workoutTime;
+	}
+	
+	public void setWorkoutTime(Date workoutTime){
+		this.workoutTime = workoutTime;
 	}
 
 }

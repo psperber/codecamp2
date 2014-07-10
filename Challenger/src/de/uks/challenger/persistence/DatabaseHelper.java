@@ -42,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String USER_COLUMN_HEIGHT = "height";
 	public static final String USER_COLUMN_RESTING_TIME = "resting_time";
 	public static final String USER_COLUMN_BIRTHDAY = "birthday";
+	public static final String USER_COLUMN_WORKOUT_TIME = "workout_time";
 
 	private static final String DATABASE_NAME = "challenger.db";
 	private static final int DATABASE_VERSION = 14;
@@ -53,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_PROGRESS_CREATE = "create table " + TABLE_PROGRESS + "(" + PROGRESS_COLUMN_ID + " integer primary key autoincrement, " + PROGRESS_COLUMN_CREATION_DATE + " datetime not null, " + PROGRESS_COLUMN_AGE
 			+ " integer not null,  " + PROGRESS_COLUMN_WEIGHT + " double not null, " + PROGRESS_COLUMN_ID_USER + " integer);";
 	private static final String DATABASE_USER_CREATE = "create table " + TABLE_USER + "(" + USER_COLUMN_ID + " integer primary key autoincrement, " + USER_COLUMN_GENDER + " integer not null, " + USER_COLUMN_HEIGHT + " integer not null, "
-			+ USER_COLUMN_RESTING_TIME + " integer, " + USER_COLUMN_BIRTHDAY + " datetime not null);";
+			+ USER_COLUMN_RESTING_TIME + " integer, " + USER_COLUMN_BIRTHDAY + " datetime not null, " + USER_COLUMN_WORKOUT_TIME + " datetime not null);";
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
