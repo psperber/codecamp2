@@ -7,6 +7,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import de.uks.challenger.sensor.ChallengerSensor;
 import de.uks.challenger.sensor.JumpingJackSensor;
 import de.uks.challenger.sensor.PushUpSensor;
 import de.uks.challenger.sensor.SitUpSensor;
+import de.uks.challenger.ui.history.HistoryFragment;
+import de.uks.challenger.ui.setup.Setup1Fragment;
 
 
 
@@ -76,7 +79,7 @@ public class AttackFragment extends Fragment {
 
 		
 		overAllTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");	
-		setXTextView.setText(worksetCount + "");	
+		setXTextView.setText(worksetCount+1 + "");	
 		unitTypeTextView.setText(newUnit.getUnitType().toString());
 		
 		
@@ -99,7 +102,7 @@ public class AttackFragment extends Fragment {
 				newUnit.getWorkset(worksetCount).setCount(counter);
 				newUnit.getWorkset(worksetCount).setTodo(counter++);
 				worksetCount++;
-				setXTextView.setText(worksetCount + "");
+				setXTextView.setText(worksetCount +1+ "");
 				unitTypeTextView.setText(newUnit.getUnitType().toString());
 				challengerSensor.setRepeatCounter(0);
 				currentCountTextView.setText(challengerSensor.getRepeatCounter()+ "");
@@ -115,14 +118,21 @@ public class AttackFragment extends Fragment {
 					if (sensorCount < sensors.size()) {
 						challengerSensor.stop();
 						challengerSensor = sensors.get(sensorCount);
+						challengerSensor.addPropertyChangeListener(ChallengerSensor.PROP_REPEAT, new RepeatListener());
 						challengerSensor.start();
 					} else {
-						// eier schaukeln und rausgehen.... TODO in history fragment
-						Toast.makeText(getActivity(), "Finished Workout", Toast.LENGTH_SHORT).show();
+						Fragment fragment = HistoryFragment.newInstance();
+						FragmentManager fragmentManager = getFragmentManager();
+						fragmentManager.beginTransaction()
+								.replace(R.id.container, fragment).commit();
+						return;
+					
 					}
 					
 					latestUnit = challenger.getUser().getLatestUnitByType(challengerSensor.getUnitType());
 					newUnit = generateNewUnit();
+					unitTypeTextView.setText(newUnit.getUnitType().toString());
+					setXTextView.setText(worksetCount+1 + "");
 					overAllTextView.setText(newUnit.getWorkset(worksetCount).getTodo() + "");
 					currentCountTextView.setText("0");
 					

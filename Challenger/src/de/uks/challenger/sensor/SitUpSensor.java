@@ -27,12 +27,14 @@ public class SitUpSensor extends ChallengerSensor {
 		public void onSensorChanged(SensorEvent event) {
 
 			float z = event.values[2];
+			
+			//System.out.println("z: "+ z + " " + sitUp);
 
 			if (!sitUp && z <= -9) {
 				sitUp = true;
 			}
 
-			if (sitUp && z >= -7) {
+			if (sitUp && z >= 6) {
 				sitUp = false;
 				int oldValue = getRepeatCounter();
 				setRepeatCounter(oldValue + 1);
