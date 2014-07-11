@@ -125,9 +125,6 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 			workoutTimeCalendar.set(GregorianCalendar.SECOND, 0);
 			Date workoutTimeDate = workoutTimeCalendar.getTime();
 
-			
-		
-			
 			User user = new User();
 			user.setGender(gender);
 			user.setHeight(height);
@@ -146,24 +143,13 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();
-			
-			
-			
-		
 		}
-		
-	
 	}
-
-
-		
-
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
 		mBirthdayEditText.setText(dayOfMonth + "." + monthOfYear + "." + year);
-
 	}
 
 	/**

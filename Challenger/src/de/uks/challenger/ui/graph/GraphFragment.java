@@ -26,64 +26,58 @@ import de.uks.challenger.model.User;
 public class GraphFragment extends Fragment {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
-		View rootView = inflater.inflate(R.layout.fragment_graph, container, false);
-		
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View rootView = inflater.inflate(R.layout.fragment_graph, container,
+				false);
+
 		User user = Challenger.getInstance().getUser();
-		if(user.countOfProgress() != 0) {
-			
-			Iterator<Progress> iter = user.getProgressIterator();
+		if (user.countOfProgress() != 0) {
 			GraphData[] data = new GraphData[user.countOfProgress()];
-			int i = 0;
-			for (Iterator<Progress> it = iter; it.hasNext();) {
-				
-				Progress prog = it.next();
-				
+			// for (int i = 0; i < user.countOfProgress(); i++) {
+			for (int i = user.countOfProgress() - 1, dataIndex = 0; i >= 0; i--, dataIndex++) {
+				Progress prog = user.getProgress(i);
+
 				double weight = prog.getWeight();
 				Date creationDate = prog.getCreationDate();
-				
-				data[i] = new GraphData(creationDate.getTime(), weight);
-				
-				i++;
-			}
-			
-				 
-	        
-	        
-	    	GraphView graphView = new LineGraphView( getActivity(), "Weight processing...");
-	    	
-	    	graphView.setCustomLabelFormatter(new CustomLabelFormatter() {
-	    		DateFormat dateFormat = new SimpleDateFormat("dd.MM.");
-	    		
-	            @Override
-	            public String formatLabel(double value, boolean isValueX) {
-	            	
-	                if (isValueX) {
-	                    Date d = new Date((long) (value));
-	                    
-						return (dateFormat.format(d));
-	                }
-	                return "" + (int) value;
-	            }
-	        });
-	    	
-	    	
-	    	GraphViewSeries exampleSeries = new GraphViewSeries(data);
-	    	graphView.addSeries(exampleSeries);
-	    	
-	    	//graphView.setViewPort(2, 40);
-	    	graphView.setScrollable(true);
-	    	
-	    	// optional - activate scaling / zooming
-	    	graphView.setScalable(true);
 
-	    	 
-	    	LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graphLayout);
-	    	layout.addView(graphView);
+				data[dataIndex] = new GraphData(creationDate.getTime(), weight);
+			}
+
+			GraphView graphView = new LineGraphView(getActivity(),
+					getString(R.string.graph_title));
+
+			graphView.setCustomLabelFormatter(new CustomLabelFormatter() {
+				DateFormat dateFormat = new SimpleDateFormat("dd.MM.");
+
+				@Override
+				public String formatLabel(double value, boolean isValueX) {
+
+					if (isValueX) {
+						Date d = new Date((long) (value));
+
+						return (dateFormat.format(d));
+					}
+					return "" + (int) value;
+				}
+			});
+
+			GraphViewSeries exampleSeries = new GraphViewSeries(data);
+			graphView.addSeries(exampleSeries);
+
+			// graphView.setViewPort(2, 40);
+			graphView.setScrollable(true);
+
+			// optional - activate scaling / zooming
+			graphView.setScalable(true);
+
+			LinearLayout layout = (LinearLayout) rootView
+					.findViewById(R.id.graphLayout);
+			layout.addView(graphView);
 
 		}
-		
+
 		return rootView;
 	}
 

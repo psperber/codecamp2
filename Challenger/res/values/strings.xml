@@ -21,8 +21,16 @@
     <string name="attack_setheader_textview">Set:</string>
     <string name="attack_overallcountheader_textview">Overall count:</string>
     <string name="attack_currentcountheader_textview">Current count:</string>
-    <string name="attack_start_button">Start</string>
-    <string name="attack_nextround_button">Next Round</string>
+    <string name="attack_start_button">start</string>
+    <string name="attack_nextround_button">next round</string>
+    <string name="attack_pause_message">Time to cooldown</string>
+    
+    <string name="graph_title">Weight processing...</string>
+    
+    <string name="progress_dialog_title">Add Progress</string>
+    <string name="progress_dialog_message">Enter new weight</string>
+    <string name="progress_dialog_okay">Okay</string>
+    <string name="progress_dialog_cancel">Cancel</string>
     
     <string name="setting_workouttime_textview">Worktime</string>
     <string name="setting_twitter_textview">Twitter</string>
