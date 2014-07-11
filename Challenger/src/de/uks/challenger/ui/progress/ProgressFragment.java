@@ -1,5 +1,7 @@
 package de.uks.challenger.ui.progress;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Progress;
+import de.uks.challenger.model.User;
 
 public class ProgressFragment extends Fragment implements View.OnClickListener {
 	private ListView mProgressListView;
@@ -50,25 +53,37 @@ public class ProgressFragment extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		final EditText txtUrl = new EditText(getActivity());
-		txtUrl.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-		// Set the default text to a link of the Queen
-		txtUrl.setHint("http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg");
+		final EditText weightEditText = new EditText(getActivity());
+		weightEditText.setInputType(InputType.TYPE_CLASS_NUMBER
+				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
 		new AlertDialog.Builder(getActivity())
-				.setTitle("Moustachify Link")
-				.setMessage("Paste in the link of an image to moustachify!")
-				.setView(txtUrl)
-				.setPositiveButton("Moustachify",
+				.setTitle(R.string.progress_dialog_title)
+				.setMessage(R.string.progress_dialog_message)
+				.setView(weightEditText)
+				.setPositiveButton(R.string.progress_dialog_okay,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
-								String text = txtUrl.getText().toString();
-								System.out.println(text);
+								String weightString = weightEditText.getText()
+										.toString();
+								if (!"".equals(weightString)) {
+									double weight = Double
+											.valueOf(weightString);
+
+									User user = Challenger.getInstance()
+											.getUser();
+									Progress progress = new Progress();
+									progress.setCreationDate(new Date());
+									progress.setAge(user.getAge());
+									progress.setWeight(weight);
+									user.addProgress(progress);
+									
+									mProgressListView.invalidateViews();
+								}
 							}
 						})
-				.setNegativeButton("Cancel",
+				.setNegativeButton(R.string.progress_dialog_cancel,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {

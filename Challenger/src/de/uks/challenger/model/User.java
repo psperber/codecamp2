@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.uks.challenger.model.Unit.UNIT_TYPE;
@@ -61,7 +62,7 @@ public class User extends ModelElement {
 	 */
 	private List<Unit> getUnits() {
 		if (units == null) {
-			units = new ArrayList<Unit>();
+			units = new LinkedList<Unit>();
 		}
 
 		return units;
@@ -158,6 +159,7 @@ public class User extends ModelElement {
 			Progress tmpProgress = getProgress(i);
 			if (progress.getCreationDate().after(tmpProgress.getCreationDate())) {
 				index = i;
+				break;
 			}
 		}
 		getProgress().add(index, progress);
