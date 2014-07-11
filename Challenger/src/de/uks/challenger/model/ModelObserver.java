@@ -70,8 +70,13 @@ public class ModelObserver {
 			// get the setted user
 			User user = (User) event.getNewValue();
 			User oldUser = (User) event.getOldValue();
+			Source source = new Source(context);
+
+			source.open();
+			
 			if (user == null) {
-				Log.i(TAG, "No need to persist user, because user is null");
+				source.deleteUser();
+				Log.i(TAG, "Set user to null, delete from database");				
 				return;
 			}
 
@@ -81,9 +86,7 @@ public class ModelObserver {
 			}
 
 			// write the user to the database
-			Source source = new Source(context);
-
-			source.open();
+			
 			User createdUser = source.createUser(user);
 			if (createdUser != null) {
 				// we need to set the id of the user in the model
