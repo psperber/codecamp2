@@ -103,7 +103,10 @@ public class SetupFragment extends Fragment implements View.OnClickListener {
 		user.setGender(gender);
 		user.setHeight(height);
 		user.setBirthday(birthday);
+		
 		user.setWorkoutTime(workoutTimeDate);
+		
+
 
 		Progress progress = new Progress();
 		progress.setCreationDate(new Date());

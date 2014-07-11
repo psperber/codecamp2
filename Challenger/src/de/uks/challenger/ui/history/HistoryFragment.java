@@ -28,15 +28,12 @@ public class HistoryFragment extends Fragment {
 	private ListView mHistoryListView;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_history, container,
-				false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_history, container, false);
 
 		mHistoryListView = (ListView) rootView.findViewById(R.id.historyList);
 		mHistoryListView.setAdapter(new HistoryAdapter());
-		mHistoryListView
-				.setOnItemClickListener(new HistoryOnItemClickListener());
+		mHistoryListView.setOnItemClickListener(new HistoryOnItemClickListener());
 
 		return rootView;
 	}
@@ -46,7 +43,7 @@ public class HistoryFragment extends Fragment {
 		super.onAttach(activity);
 
 	}
-	
+
 	/**
 	 * Returns a new instance of this fragment for the given section number.
 	 */
@@ -84,8 +81,7 @@ public class HistoryFragment extends Fragment {
 			// reuse views
 			if (rowView == null) {
 				LayoutInflater inflater = getActivity().getLayoutInflater();
-				rowView = inflater.inflate(android.R.layout.simple_list_item_1,
-						null);
+				rowView = inflater.inflate(android.R.layout.simple_list_item_1, null);
 				// configure view holder
 				// ViewHolder viewHolder = new ViewHolder();
 				// viewHolder.text = (TextView)
@@ -96,29 +92,19 @@ public class HistoryFragment extends Fragment {
 			}
 
 			// fill data
-			TextView text1 = (TextView) rowView
-					.findViewById(android.R.id.text1);
+			TextView text1 = (TextView) rowView.findViewById(android.R.id.text1);
 			text1.setText(getItem(position).getCreationDate().toString());
 
 			return rowView;
 		}
 	}
 
-	private final class HistoryOnItemClickListener implements
-			OnItemClickListener {
+	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT)
-					.show();
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
 
-			Intent notificationIntent = new Intent(getActivity(),
-					MainActivity.class);
-			int YOUR_PI_REQ_CODE = 1337;
-			PendingIntent contentIntent = PendingIntent.getActivity(
-					getActivity(), YOUR_PI_REQ_CODE , notificationIntent,
-					PendingIntent.FLAG_CANCEL_CURRENT);
-
+		
 		}
 	}
 }

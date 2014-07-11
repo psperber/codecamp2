@@ -1,7 +1,5 @@
 package de.uks.challenger.application;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,6 +66,8 @@ public class ChallengerService extends Service {
 
 				if (hourMatches && minMatches && secondMatches) {
 					Intent notificationIntent = new Intent(ChallengerService.this, MainActivity.class);
+					notificationIntent.putExtra(getString(R.string.extra_name_attack), true);
+					
 					PendingIntent contentIntent = PendingIntent.getActivity(ChallengerService.this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 					NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -75,12 +75,12 @@ public class ChallengerService extends Service {
 					Resources res = getResources();
 					Notification.Builder builder = new Notification.Builder(ChallengerService.this);
 
-					builder.setContentIntent(contentIntent).setSmallIcon(R.drawable.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher)).setTicker("your_ticker").setWhen(System.currentTimeMillis()).setAutoCancel(true)
-							.setContentTitle("your_notif_title").setContentText("your_notif_text");
+					builder.setContentIntent(contentIntent).setSmallIcon(R.drawable.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher)).setTicker(getString(R.string.notification_title))
+							.setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(getString(R.string.notification_title)).setContentText(getString(R.string.notification_text));
 					Notification n = builder.build();
+					n.flags = Notification.FLAG_NO_CLEAR;
 
-					int YOUR_NOTIF_ID = 2303;
-					nm.notify(YOUR_NOTIF_ID, n);
+					nm.notify(ChallengerApplication.NOTIFICATION_ID, n);
 				}
 
 			}

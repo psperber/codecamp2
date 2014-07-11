@@ -60,6 +60,7 @@ public class ModelObserver {
 		user.addPropertyChangeListener(User.PROP_ADD_UNIT, new AddUnitListener());
 		user.addPropertyChangeListener(User.PROP_REMOVE_UNIT, new RemoveUnitListener());
 		user.addPropertyChangeListener(User.PROP_REMOVE_UNIT, new RemoveProgressListener());
+		user.addPropertyChangeListener(User.PROP_UPDATE_USER, new UpdateUserListener());
 
 	}
 
@@ -172,6 +173,27 @@ public class ModelObserver {
 
 		}
 
+	}
+	
+	private class UpdateUserListener implements PropertyChangeListener {
+
+		@Override
+		public void propertyChange(PropertyChangeEvent event) {
+			User user = Challenger.getInstance().getUser();
+			
+			if(user.getId() == 0){
+				//no need to update here. user didn't exist and will be created later
+				Log.w(TAG, "No need to update here. user didn't exist and will be created later");
+				return;
+			}
+			
+			Source source = new Source(context);
+			source.open();
+			source.updateUser(user);
+			source.close();
+			
+		}
+		
 	}
 
 }

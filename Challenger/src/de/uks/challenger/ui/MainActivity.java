@@ -1,15 +1,19 @@
 package de.uks.challenger.ui;
 
+import java.util.Date;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import de.uks.challenger.R;
+import de.uks.challenger.application.ChallengerApplication;
 import de.uks.challenger.model.Challenger;
-import de.uks.challenger.model.Progress;
 import de.uks.challenger.model.User;
 import de.uks.challenger.ui.attack.AttackFragment;
 import de.uks.challenger.ui.graph.GraphFragment;
@@ -35,9 +39,12 @@ public class MainActivity extends Activity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
+		
+		
 		setContentView(R.layout.activity_main);
+		
+		
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -55,6 +62,21 @@ public class MainActivity extends Activity implements
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();
 		}
+		
+		//check if this activity was started by the service
+		boolean startAttack = getIntent().getBooleanExtra(getString(R.string.extra_name_attack), false);
+		if(startAttack){
+			restoreActionBar();
+			Fragment fragment = AttackFragment.newInstance();
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, fragment).commit();
+			
+			//delete the notification
+			NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			nm.cancel(ChallengerApplication.NOTIFICATION_ID);
+		}
+		
 		
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));

@@ -29,6 +29,11 @@
     <string name="setting_twitter_button">login</string>
     <string name="setting_cleardata_button">clear data</string>
     
+    <string name="notification_title">It\'s time to win!</string>
+    <string name="notification_text">Time for your workout</string>
+    
+    <string name="extra_name_attack">start_attack</string>
+    
     <string-array name="title_section">
         <item>History</item>
         <item>Progress</item>

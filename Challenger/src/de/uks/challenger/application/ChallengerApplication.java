@@ -1,5 +1,7 @@
 package de.uks.challenger.application;
 
+import java.util.Date;
+
 import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
@@ -16,6 +18,7 @@ import de.uks.challenger.persistence.Source;
  */
 public class ChallengerApplication extends Application {
 	private static final String TAG = "Challenger.Application";
+	public static final int NOTIFICATION_ID = 1337;
 	private ModelObserver modelObserver;
 
 	@Override
@@ -28,6 +31,11 @@ public class ChallengerApplication extends Application {
 		// observe model
 		modelObserver = new ModelObserver(getApplicationContext());
 		modelObserver.observeModel(Challenger.getInstance());
+
+		// test by philipp
+		if (Challenger.getInstance().getUser() != null) {
+			Challenger.getInstance().getUser().setWorkoutTime(new Date(System.currentTimeMillis() + 5000));
+		}
 
 		// start notification service
 		Intent service = new Intent(getApplicationContext(), ChallengerService.class);
