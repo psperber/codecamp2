@@ -1,7 +1,6 @@
 package de.uks.challenger.ui.history;
 
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
-import de.uks.challenger.model.Unit.UNIT_TYPE;
 import de.uks.challenger.model.User;
 import de.uks.challenger.model.Workset;
 import de.uks.challenger.social.Tweet;
@@ -27,7 +25,7 @@ import de.uks.challenger.social.Tweet;
 /**
  * Displays the history of workout units
  * 
- * @author Comtec
+ * @author 
  *
  */
 public class HistoryFragment extends Fragment {
@@ -96,16 +94,7 @@ public class HistoryFragment extends Fragment {
 			if (rowView == null) {
 				LayoutInflater inflater = getActivity().getLayoutInflater();
 				rowView = inflater.inflate(R.layout.history_row, null);
-				// configure view holder
-				// ViewHolder viewHolder = new ViewHolder();
-				// viewHolder.text = (TextView)
-				// rowView.findViewById(R.id.TextView01);
-				// viewHolder.image = (ImageView) rowView
-				// .findViewById(R.id.ImageView01);
-				// rowView.setTag(viewHolder);
 			}
-
-			// fill data
 
 			Unit unit = getItem(position);
 
@@ -141,7 +130,6 @@ public class HistoryFragment extends Fragment {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();´
 			Unit unit = (Unit) mHistoryListView.getAdapter().getItem(position);
 			int count = 0;
 			for (int i = 0; i < unit.getWorkSets().size(); i++) {
@@ -155,7 +143,7 @@ public class HistoryFragment extends Fragment {
 		}
 	}
 	
-	// Asynchroner Task zum twittern
+	// Async Task for twitter
 		private class TaskSend extends AsyncTask<Void, Void, String> {
 			@Override
 			protected void onPostExecute(String result) {

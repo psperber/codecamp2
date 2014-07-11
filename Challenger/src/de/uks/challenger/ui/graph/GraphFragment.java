@@ -3,7 +3,6 @@ package de.uks.challenger.ui.graph;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.Fragment;

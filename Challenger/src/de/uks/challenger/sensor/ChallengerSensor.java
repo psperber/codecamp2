@@ -6,13 +6,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Date;
 
-import de.uks.challenger.model.Challenger;
-import de.uks.challenger.model.Unit;
-import de.uks.challenger.model.Workset;
-import de.uks.challenger.model.Unit.UNIT_TYPE;
-
 import android.content.Context;
 import android.hardware.SensorManager;
+import de.uks.challenger.model.Challenger;
+import de.uks.challenger.model.Unit;
+import de.uks.challenger.model.Unit.UNIT_TYPE;
 
 public abstract class ChallengerSensor {
 

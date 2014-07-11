@@ -135,7 +135,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 	public static Fragment newInstance() {
 		SettingsFragment fragment = new SettingsFragment();
 		Bundle args = new Bundle();
-		// args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -148,7 +147,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 	
 	
 	private class TaskURL extends AsyncTask<Void, Void, String> {
-
 		private String link;
 
 		@Override
@@ -165,10 +163,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 		}
 	}
 	
+	
 	private class TaskSaveLogin extends AsyncTask<Void, Void, Void> {
-		
-
-
 		@Override
 		protected void onPostExecute(Void result) {
 			if (success) {
@@ -201,8 +197,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 		}
 	}
 	
+	
 	private void printErrorToast() {
-
 		getActivity().runOnUiThread(new Runnable() {
 
 			@Override

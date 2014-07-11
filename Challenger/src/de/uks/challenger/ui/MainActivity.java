@@ -1,7 +1,5 @@
 package de.uks.challenger.ui;
 
-import java.util.Date;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,7 +9,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
-import android.view.MenuItem;
 import de.uks.challenger.R;
 import de.uks.challenger.application.ChallengerApplication;
 import de.uks.challenger.model.Challenger;

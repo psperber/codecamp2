@@ -28,7 +28,7 @@ import de.uks.challenger.ui.MainActivity;
 
 public class AttackFragment extends Fragment {
 	// in seconds
-	private static final int PAUSETIME = 0;// 60;
+	private static final int PAUSETIME = 60;// 60;
 	public static final int COUNT_WORKINGSETS = 3;
 
 	Challenger challenger = Challenger.getInstance();
@@ -73,7 +73,7 @@ public class AttackFragment extends Fragment {
 
 		int countOfUnits = challenger.getUser().countOfUnits();
 		if (countOfUnits == 0) {
-			// App wird zum ersten mal gestartet
+			// first app run
 			this.latestUnit = null;
 		} else {
 			this.latestUnit = challenger.getUser().getLatestUnitByType(
@@ -112,7 +112,7 @@ public class AttackFragment extends Fragment {
 				currentCountTextView.setText(challengerSensor
 						.getRepeatCounter() + "");
 
-				// unit ist abgeschlossen
+				// unit finished
 				if (worksetCount == COUNT_WORKINGSETS) {
 					challenger.getUser().addUnit(newUnit);
 					sensorCount++;
@@ -199,6 +199,7 @@ public class AttackFragment extends Fragment {
 		challengerSensor.stop();
 	}
 
+	//refresh the ui with new fired count value from a sensor
 	private class RepeatListener implements PropertyChangeListener {
 
 		@Override
@@ -217,9 +218,9 @@ public class AttackFragment extends Fragment {
 
 	}
 
+	//pause between workingsets and units
 	private class PauseTask extends AsyncTask<Void, Void, Void> {
 		ProgressDialog asycDialog;
-		String typeStatus;
 
 		@Override
 		protected void onPreExecute() {

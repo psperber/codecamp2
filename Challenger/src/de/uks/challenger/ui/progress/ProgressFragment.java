@@ -115,7 +115,7 @@ public class ProgressFragment extends Fragment implements View.OnClickListener {
 	/**
 	 * Controls the display of the weightprogress
 	 * 
-	 * @author Comtec
+	 * @author 
 	 *
 	 */
 	private class ProgressAdapter extends BaseAdapter {
@@ -134,7 +134,6 @@ public class ProgressFragment extends Fragment implements View.OnClickListener {
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 

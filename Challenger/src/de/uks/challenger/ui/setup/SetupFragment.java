@@ -1,21 +1,11 @@
 package de.uks.challenger.ui.setup;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
-import de.uks.challenger.R;
-import de.uks.challenger.R.id;
-import de.uks.challenger.model.Challenger;
-import de.uks.challenger.model.Progress;
-import de.uks.challenger.model.User;
-import de.uks.challenger.model.User.GENDER;
-import de.uks.challenger.ui.attack.AttackFragment;
-import de.uks.challenger.ui.history.HistoryFragment;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -27,7 +17,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.app.DatePickerDialog;
+import de.uks.challenger.R;
+import de.uks.challenger.model.Challenger;
+import de.uks.challenger.model.Progress;
+import de.uks.challenger.model.User;
+import de.uks.challenger.model.User.GENDER;
+import de.uks.challenger.ui.attack.AttackFragment;
 
 public class SetupFragment extends Fragment implements View.OnClickListener,
 		DatePickerDialog.OnDateSetListener {
