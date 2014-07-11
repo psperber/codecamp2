@@ -28,8 +28,16 @@ import de.uks.challenger.model.Unit.UNIT_TYPE;
 import de.uks.challenger.model.Workset;
 import de.uks.challenger.ui.MainActivity;
 
+/**
+ * Displays the history of the workout units
+ * 
+ * @author Comtec
+ *
+ */
 public class HistoryFragment extends Fragment {
 	private ListView mHistoryListView;
+	Tweet tweet = Tweet.getInstance();
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +66,13 @@ public class HistoryFragment extends Fragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-
+	
+	/**
+	 * Controls the List
+	 * 
+	 * @author Comtec
+	 *
+	 */
 	private class HistoryAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
@@ -85,8 +99,7 @@ public class HistoryFragment extends Fragment {
 			// reuse views
 			if (rowView == null) {
 				LayoutInflater inflater = getActivity().getLayoutInflater();
-				rowView = inflater.inflate(R.layout.history_row, null);
-
+				rowView = inflater.inflate(android.R.layout.simple_list_item_1, null);
 				// configure view holder
 				// ViewHolder viewHolder = new ViewHolder();
 				// viewHolder.text = (TextView)
@@ -133,9 +146,20 @@ public class HistoryFragment extends Fragment {
 
 	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			// Toast.makeText(getActivity(), "SELECTED",
-			// Toast.LENGTH_SHORT).show();
+
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
+			String m = "dies ist ein test #wm14";
+			TaskSend tasksend = new TaskSend(m);
+			tasksend.execute();
+	
+		}
+	}
+	
+	// Asynchroner Task zum twittern
+		private class TaskSend extends AsyncTask<Void, Void, String> {
+			private String text;
 
 		}
 	}

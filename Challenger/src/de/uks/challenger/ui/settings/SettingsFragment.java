@@ -4,29 +4,40 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import de.uks.challenger.R;
-import de.uks.challenger.R.layout;
-import de.uks.challenger.model.Challenger;
-import de.uks.challenger.model.User;
-import de.uks.challenger.ui.attack.AttackFragment;
-import de.uks.challenger.ui.setup.SetupFragment;
+import twitter4j.auth.AccessToken;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.app.TimePickerDialog;
+import android.widget.Toast;
+import de.uks.challenger.R;
+import de.uks.challenger.model.Challenger;
+import de.uks.challenger.model.User;
+import de.uks.challenger.social.Tweet;
+import de.uks.challenger.ui.setup.SetupFragment;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener,
 		TimePickerDialog.OnTimeSetListener {
 	EditText mWorkoutTimeEditText;
 	Button mClearDataButton;
+	
+	private Tweet tweet = Tweet.getInstance();
+	
+	Button twitterButton;
+	Button twitterSaveButton;
+	EditText twitterEditText;
+	Challenger challenger = Challenger.getInstance();
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +59,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 
 		mClearDataButton = (Button) rootView.findViewById(R.id.clearDataButton);
 		mClearDataButton.setOnClickListener(this);
+		
+		twitterButton  = (Button) rootView.findViewById(R.id.twitterButton);
+		twitterButton.setOnClickListener(this);
 
+		twitterSaveButton  = (Button) rootView.findViewById(R.id.twitterSaveButton);
+		twitterSaveButton.setOnClickListener(this);
+		
+		twitterEditText = (EditText) rootView
+				.findViewById(R.id.twitterEditText);
+		
 		return rootView;
 	}
 
@@ -85,6 +105,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 			TimePickerDialog dialog = new TimePickerDialog(getActivity(), this,
 					hourOfDay, minute, true);
 			dialog.show();
+		} else if (v.equals(twitterButton)) {
+			newPin();
+		} else if (v.equals(twitterSaveButton)) {
+			// Save Twitter
+			String pin = twitterEditText.getText().toString();
+			if (pin.length() > 0) {
+				TaskSaveLogin taskSaveLogin = new TaskSaveLogin(pin);
+				taskSaveLogin.execute();
+			}
+			
+			
 		}
 	}
 
@@ -108,4 +139,68 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 		fragment.setArguments(args);
 		return fragment;
 	}
+	
+	
+	public void newPin() {
+		TaskURL taskURL = new TaskURL();
+		taskURL.execute();
+	}
+	
+	
+	private class TaskURL extends AsyncTask<Void, Void, String> {
+
+		private String link;
+
+		@Override
+		protected String doInBackground(Void... params) {
+			link = tweet.newConfig();
+			return link;
+		}
+
+		@Override
+		protected void onPostExecute(String link) {
+			Uri uri = Uri.parse(link);
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(intent);
+		}
+	}
+	
+	private class TaskSaveLogin extends AsyncTask<Void, Void, Void> {
+
+		private String pin;
+
+		public TaskSaveLogin(String pin) {
+			this.pin = pin;
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			AccessToken accessToken = tweet.getLogin(pin);
+
+			if (accessToken == null) {
+				printErrorToast();
+			} else {
+				// Save Login
+				User user = challenger.getUser();
+				user.setSavedAccessToken(accessToken.getToken());
+				user.setSavedAccessTokenSecret(accessToken.getTokenSecret());
+			}
+			return null;
+		}
+	}
+	
+	private void printErrorToast() {
+
+		getActivity().runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				Toast.makeText(
+						getActivity().getApplicationContext(),
+						"Fehlerhafter Login, bitte in den Einstellungen korrigieren!",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+	
 }

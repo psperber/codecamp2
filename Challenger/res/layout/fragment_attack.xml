@@ -3,18 +3,34 @@
     style="@style/FragmentStyle" >
 
     <TextView
-        android:id="@+id/unittypeTextView"
-        android:layout_width="fill_parent"
+        android:id="@+id/attackHeaderTextView"
+        android:text="@string/attack_header_textview"
+        style="@style/HeadlineStyle" />
+
+    <TextView
+        android:id="@+id/unittypeHeaderTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="Unit"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/attackHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space"
+        android:text="@string/attack_unitheader_textview"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/unittypeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/unittypeHeaderTextView"
+        android:layout_marginLeft="@dimen/horizontal_space"
+        android:layout_toRightOf="@+id/unittypeHeaderTextView"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/setHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/unittypeTextView"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/unittypeTextView"
         android:layout_marginTop="@dimen/vertical_space"
         android:text="@string/attack_setheader_textview"
@@ -34,7 +50,7 @@
         android:id="@+id/overallCountHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/unittypeTextView"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/setHeaderTextView"
         android:layout_marginTop="@dimen/vertical_space"
         android:text="@string/attack_overallcountheader_textview"
@@ -47,14 +63,14 @@
         android:layout_alignTop="@+id/overallCountHeaderTextView"
         android:layout_marginLeft="@dimen/horizontal_space"
         android:layout_toRightOf="@+id/overallCountHeaderTextView"
-        android:text="888"
+        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/currentCountHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/unittypeTextView"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/overallCountHeaderTextView"
         android:layout_marginTop="@dimen/vertical_space"
         android:text="@string/attack_currentcountheader_textview"
@@ -67,7 +83,7 @@
         android:layout_alignTop="@+id/currentCountHeaderTextView"
         android:layout_marginLeft="@dimen/horizontal_space"
         android:layout_toRightOf="@+id/currentCountHeaderTextView"
-        android:text="666"
+        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button

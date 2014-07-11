@@ -2,10 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FragmentStyle" >
 
+    <TextView
+        android:id="@+id/graphHeaderTextView"
+        android:text="@string/graph_header_textview"
+        style="@style/HeadlineStyle" />
+
     <LinearLayout
         android:id="@+id/graphLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/graphHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space"
         android:orientation="vertical" >
     </LinearLayout>
 

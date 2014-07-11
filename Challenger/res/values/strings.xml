@@ -7,47 +7,49 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_add_progress">Add progress</string>
-    
+    <string name="setup1_header_textview">Setup</string>
     <string name="setup1_birthday_textview">Birthday</string>
     <string name="setup1_gender_textview">Gender</string>
     <string name="setup1_height_textview">Height</string>
     <string name="setup1_weight_textview">Weight</string>
-    <string name="setup1_next_button">Next</string>
-    
+    <string name="setup1_next_button">next</string>
     <string name="setup1_error_birthday_empty">Birthday is empty</string>
     <string name="setup1_error_height_empty">Height is empty</string>
     <string name="setup1_error_weight_empty">Weight is empty</string>
-    
+    <string name="attack_header_textview">Attack</string>
+    <string name="attack_unitheader_textview">Unit:</string>
     <string name="attack_setheader_textview">Set:</string>
     <string name="attack_overallcountheader_textview">Overall count:</string>
     <string name="attack_currentcountheader_textview">Current count:</string>
     <string name="attack_start_button">start</string>
     <string name="attack_nextround_button">next round</string>
     <string name="attack_pause_message">Time to cooldown</string>
-    
+    <string name="graph_header_textview">Your progess</string>
     <string name="graph_title">Weight processing...</string>
-    
+    <string name="progress_header_textview">Your progress</string>
     <string name="progress_dialog_title">Add Progress</string>
     <string name="progress_dialog_message">Enter new weight</string>
     <string name="progress_dialog_okay">Okay</string>
     <string name="progress_dialog_cancel">Cancel</string>
-    
+    <string name="history_header_textview">Your workouts</string>
+    <string name="setting_header_textview">Settings</string>
     <string name="setting_workouttime_textview">Worktime</string>
     <string name="setting_twitter_textview">Twitter</string>
-    <string name="setting_twitter_button">Login</string>
-    <string name="setting_cleardata_button">Clear Data</string>
+    <string name="setting_cleardata_button">clear data</string>
+    
+    <string name="setting_twitter_button">Generate Login</string>
+    <string name="setting_twitter_save_button">Save Twitter Data</string>
     
     <string name="notification_title">It\'s time to win!</string>
     <string name="notification_text">Time for your workout</string>
-    
     <string name="extra_name_attack">start_attack</string>
-    
+
     <string-array name="title_section">
         <item>History</item>
         <item>Progress</item>
         <item>Graph</item>
         <item>Settings</item>
-        <item>Attack</item>
+<!--         <item>Attack</item> -->
     </string-array>
     <string-array name="gender">
         <item>male</item>

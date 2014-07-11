@@ -3,10 +3,16 @@
     style="@style/FragmentStyle" >
 
     <TextView
+        android:id="@+id/setupHeaderTextView"
+        style="@style/HeadlineStyle"
+        android:text="@string/setup1_header_textview" />
+
+    <TextView
         android:id="@+id/birthdayTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/setupHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space"
         android:text="@string/setup1_birthday_textview"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:width="@dimen/setup1_textview_width" />

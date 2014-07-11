@@ -26,6 +26,7 @@ import de.uks.challenger.sensor.ChallengerSensor;
 import de.uks.challenger.sensor.JumpingJackSensor;
 import de.uks.challenger.sensor.PushUpSensor;
 import de.uks.challenger.sensor.SitUpSensor;
+import de.uks.challenger.ui.MainActivity;
 import de.uks.challenger.ui.history.HistoryFragment;
 
 public class AttackFragment extends Fragment {
@@ -126,10 +127,8 @@ public class AttackFragment extends Fragment {
 								new RepeatListener());
 						challengerSensor.start();
 					} else {
-						Fragment fragment = HistoryFragment.newInstance();
-						FragmentManager fragmentManager = getFragmentManager();
-						fragmentManager.beginTransaction()
-								.replace(R.id.container, fragment).commit();
+						MainActivity activity = (MainActivity) getActivity();
+						activity.selectItem(0);
 						return;
 
 					}
@@ -137,7 +136,8 @@ public class AttackFragment extends Fragment {
 					latestUnit = challenger.getUser().getLatestUnitByType(
 							challengerSensor.getUnitType());
 					newUnit = generateNewUnit();
-					unitTypeTextView.setText(formatUnitType(newUnit.getUnitType()));
+					unitTypeTextView.setText(formatUnitType(newUnit
+							.getUnitType()));
 					setXTextView.setText(worksetCount + 1 + "");
 					overAllTextView.setText(newUnit.getWorkset(worksetCount)
 							.getTodo() + "");
@@ -248,13 +248,13 @@ public class AttackFragment extends Fragment {
 		}
 
 	}
-	
-	private String formatUnitType(UNIT_TYPE type){
-		if(UNIT_TYPE.PUSH_UPS.equals(type)){
+
+	private String formatUnitType(UNIT_TYPE type) {
+		if (UNIT_TYPE.PUSH_UPS.equals(type)) {
 			return "Push Ups";
-		}else if(UNIT_TYPE.JUMPING_JACK.equals(type)){
+		} else if (UNIT_TYPE.JUMPING_JACK.equals(type)) {
 			return "Jumping Jack";
-		}else{
+		} else {
 			return "Sit Ups";
 		}
 	}
