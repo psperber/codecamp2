@@ -36,13 +36,15 @@ public class GraphFragment extends Fragment {
 		if (user.countOfProgress() != 0) {
 			GraphData[] data = new GraphData[user.countOfProgress()];
 			// for (int i = 0; i < user.countOfProgress(); i++) {
-			for (int i = user.countOfProgress() - 1, dataIndex = 0; i >= 0; i--, dataIndex++) {
+			int dataIndex = 0;
+			for (int i = user.countOfProgress() - 1; i >= 0; i--) {
 				Progress prog = user.getProgress(i);
 
 				double weight = prog.getWeight();
 				Date creationDate = prog.getCreationDate();
 
 				data[dataIndex] = new GraphData(creationDate.getTime(), weight);
+				dataIndex++;
 			}
 
 			GraphView graphView = new LineGraphView(getActivity(),
