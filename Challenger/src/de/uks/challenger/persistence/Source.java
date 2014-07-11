@@ -162,7 +162,8 @@ public class Source {
 	public List<Progress> getProgressDataFromUser(User user) {
 		List<Progress> progressData = new ArrayList<Progress>();
 		Cursor cursor = getDatabase().query(DatabaseHelper.TABLE_PROGRESS, PROGRESS_COLLUMNS, DatabaseHelper.PROGRESS_COLUMN_ID_USER + " = " + user.getId(), null, null, null, null);
-
+		
+ 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Progress progress = cursorToProgress(cursor);
@@ -468,7 +469,7 @@ public class Source {
 			cursor.moveToFirst();
 			Progress fetchedProgress = cursorToProgress(cursor);
 			cursor.close();
-
+			Log.e(TAG, "Successfully created progress.");
 			return fetchedProgress;
 		} else {
 			Log.e(TAG, "Coul'd not insert progress to database.");
@@ -540,6 +541,13 @@ public class Source {
 		}
 
 		// TODO get progress from user
+		List<Progress> allProgress = getProgressDataFromUser(fetchedUser);
+		for(Progress progress : allProgress){
+			fetchedUser.addProgress(progress);
+		}
+		
+		
+		
 
 		return fetchedUser;
 	}
@@ -578,7 +586,6 @@ public class Source {
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			System.out.println("test");
 			Workset workset = cursorToWorkSet(cursor);
 			if (workset != null) {
 				worksets.add(workset);

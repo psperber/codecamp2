@@ -42,19 +42,18 @@ public class User extends ModelElement {
 	 * Gender of the user
 	 */
 	private GENDER gender;
-	
+
 	/**
-	 * The user prefered resting time in ms beetween worksets 
+	 * The user prefered resting time in ms beetween worksets
 	 */
 	private int restingTime;
-	
+
 	/**
 	 * Birthday of user
 	 */
 	private Date birthday;
 	private Date workoutTime;
 
-	
 	/**
 	 * Returns the history of units
 	 * 
@@ -85,14 +84,12 @@ public class User extends ModelElement {
 	}
 
 	public boolean addUnit(Unit unit) {
-		getPropertyChangeSupport()
-				.firePropertyChange(PROP_ADD_UNIT, null, unit);
+		getPropertyChangeSupport().firePropertyChange(PROP_ADD_UNIT, null, unit);
 		return getUnits().add(unit);
 	}
 
 	public boolean removeUnit(Unit unit) {
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null,
-				unit);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null, unit);
 		return getUnits().remove(unit);
 	}
 
@@ -102,8 +99,7 @@ public class User extends ModelElement {
 
 	public Unit removeUnit(int index) {
 		Unit unit = getUnits().remove(index);
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null,
-				unit);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_UNIT, null, unit);
 
 		return unit;
 	}
@@ -122,7 +118,7 @@ public class User extends ModelElement {
 
 	public Unit getLatestUnitByType(UNIT_TYPE type) {
 		if (getUnits().size() > 0) {
-			for (int i = countOfUnits()-1; i >= 0; --i) {
+			for (int i = countOfUnits() - 1; i >= 0; --i) {
 				Unit unit = getUnit(i);
 				if (unit.getUnitType().equals(type)) {
 					return unit;
@@ -164,13 +160,11 @@ public class User extends ModelElement {
 		}
 		getProgress().add(index, progress);
 
-		getPropertyChangeSupport().firePropertyChange(PROP_ADD_PROGRESS, null,
-				progress);
+		getPropertyChangeSupport().firePropertyChange(PROP_ADD_PROGRESS, null, progress);
 	}
 
 	public boolean removeProgress(Progress progress) {
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS,
-				null, progress);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS, null, progress);
 		return getProgress().remove(progress);
 	}
 
@@ -180,8 +174,7 @@ public class User extends ModelElement {
 
 	public Progress removeProgress(int index) {
 		Progress progress = getProgress().remove(index);
-		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS,
-				null, progress);
+		getPropertyChangeSupport().firePropertyChange(PROP_REMOVE_PROGRESS, null, progress);
 		return progress;
 	}
 
@@ -212,10 +205,10 @@ public class User extends ModelElement {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public int getRestingTime() {
-		if(restingTime == 0){
-			//set one minute as default resting time
+		if (restingTime == 0) {
+			// set one minute as default resting time
 			restingTime = 60 * 1000;
 		}
 		return restingTime;
@@ -224,7 +217,6 @@ public class User extends ModelElement {
 	public void setRestingTime(int restingTime) {
 		this.restingTime = restingTime;
 	}
-
 
 	@Override
 	public boolean equals(Object o) {
@@ -248,12 +240,12 @@ public class User extends ModelElement {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	
-	public Date getWorkoutTime(){
+
+	public Date getWorkoutTime() {
 		return this.workoutTime;
 	}
-	
-	public void setWorkoutTime(Date workoutTime){
+
+	public void setWorkoutTime(Date workoutTime) {
 		Calendar c = new GregorianCalendar();
 		c.setTime(workoutTime);
 		c.set(Calendar.SECOND, 0);
@@ -261,7 +253,7 @@ public class User extends ModelElement {
 
 		Date oldValue = this.workoutTime;
 		getPropertyChangeSupport().firePropertyChange(PROP_UPDATE_USER, oldValue, workoutTime);
-		
+
 		this.workoutTime = workoutTime;
 	}
 

@@ -110,6 +110,7 @@ public class ModelObserver {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent event) {
+			System.out.println("AHHHHHHHHHHHHHHH");
 			Progress progress = (Progress) event.getNewValue();
 
 			Source source = new Source(context);

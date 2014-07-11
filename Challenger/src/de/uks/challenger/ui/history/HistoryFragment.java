@@ -1,5 +1,7 @@
 package de.uks.challenger.ui.history;
 
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.Notification;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
+import de.uks.challenger.model.Unit.UNIT_TYPE;
+import de.uks.challenger.model.Workset;
 import de.uks.challenger.ui.MainActivity;
 
 public class HistoryFragment extends Fragment {
@@ -81,7 +85,8 @@ public class HistoryFragment extends Fragment {
 			// reuse views
 			if (rowView == null) {
 				LayoutInflater inflater = getActivity().getLayoutInflater();
-				rowView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+				rowView = inflater.inflate(R.layout.history_row, null);
+
 				// configure view holder
 				// ViewHolder viewHolder = new ViewHolder();
 				// viewHolder.text = (TextView)
@@ -92,19 +97,45 @@ public class HistoryFragment extends Fragment {
 			}
 
 			// fill data
-			TextView text1 = (TextView) rowView.findViewById(android.R.id.text1);
-			text1.setText(getItem(position).getCreationDate().toString());
+
+			Unit unit = getItem(position);
+
+			TextView tv = (TextView) rowView.findViewById(R.id.tvUnitType);
+			tv.setText(formatUnitType(unit.getUnitType()));
+
+			tv = (TextView) rowView.findViewById(R.id.tvWeight);
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyy HH:mm");
+			tv.setText(format.format(unit.getCreationDate()));
+			
+			tv = (TextView) rowView.findViewById(R.id.tvWorksets);
+			String text = "";
+			for(int i = 0; i < unit.countOfWorksets(); ++i){
+				Workset w = unit.getWorkset(i);
+				text = text + "Set " + (i + 1) + ": " + w.getCount() + " (" + w.getTodo() + ") ";
+			}
+			
+			tv.setText(text);
 
 			return rowView;
 		}
 	}
 
+	private String formatUnitType(UNIT_TYPE type) {
+		if (UNIT_TYPE.PUSH_UPS.equals(type)) {
+			return "Push Ups";
+		} else if (UNIT_TYPE.JUMPING_JACK.equals(type)) {
+			return "Jumping Jack";
+		} else {
+			return "Sit Ups";
+		}
+	}
+
 	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
-
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			// Toast.makeText(getActivity(), "SELECTED",
+			// Toast.LENGTH_SHORT).show();
 
 		}
 	}

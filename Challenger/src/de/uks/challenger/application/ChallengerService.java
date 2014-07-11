@@ -60,8 +60,6 @@ public class ChallengerService extends Service {
 				int workoutMin = workoutTime.get(GregorianCalendar.MINUTE);
 				int workoutSec = workoutTime.get(GregorianCalendar.SECOND);
 
-				System.out.println("current: " + currentHour + ":" + currentMin + ":" + currentSec);
-				System.out.println("workout: " + workoutHour+ ":" + workoutMin + ":" + workoutSec);
 				
 				boolean hourMatches = currentHour == workoutHour;
 				boolean minMatches = currentMin == workoutMin;
