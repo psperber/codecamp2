@@ -32,23 +32,16 @@ public class GraphFragment extends Fragment {
 				false);
 
 		User user = Challenger.getInstance().getUser();
+		
+		//exist data?
 		if (user.countOfProgress() != 0) {
-			GraphData[] data = new GraphData[user.countOfProgress()];
-			// for (int i = 0; i < user.countOfProgress(); i++) {
-			int dataIndex = 0;
-			for (int i = user.countOfProgress() - 1; i >= 0; i--) {
-				Progress prog = user.getProgress(i);
 
-				double weight = prog.getWeight();
-				Date creationDate = prog.getCreationDate();
-
-				data[dataIndex] = new GraphData(creationDate.getTime(), weight);
-				dataIndex++;
-			}
-
+			//create GraphView
 			GraphView graphView = new LineGraphView(getActivity(),
 					getString(R.string.graph_title));
 
+			
+			//format x-axe to date dd.MM.
 			graphView.setCustomLabelFormatter(new CustomLabelFormatter() {
 				DateFormat dateFormat = new SimpleDateFormat("dd.MM.");
 
@@ -64,15 +57,31 @@ public class GraphFragment extends Fragment {
 				}
 			});
 
+			
+			//data
+			//---------------------------------------------------------------------
+			GraphData[] data = new GraphData[user.countOfProgress()];
+			
+			//read weight data from model
+			//convert to graph data
+			int dataIndex = 0;
+			for (int i = user.countOfProgress() - 1; i >= 0; i--) {
+				Progress prog = user.getProgress(i);
+
+				double weight = prog.getWeight();
+				Date creationDate = prog.getCreationDate();
+
+				data[dataIndex] = new GraphData(creationDate.getTime(), weight);
+				dataIndex++;
+			}
+			
+			//prepare graph data
 			GraphViewSeries exampleSeries = new GraphViewSeries(data);
+			
+			//inject graph data to graphview
 			graphView.addSeries(exampleSeries);
 
-			// graphView.setViewPort(2, 40);
-			graphView.setScrollable(true);
-
-			// optional - activate scaling / zooming
-			graphView.setScalable(true);
-
+			
 			LinearLayout layout = (LinearLayout) rootView
 					.findViewById(R.id.graphLayout);
 			layout.addView(graphView);

@@ -2,6 +2,10 @@ package de.uks.challenger.ui.graph;
 
 import com.jjoe64.graphview.GraphViewDataInterface;
 
+/**
+ * Data pair for graph view
+ *
+ */
 public class GraphData implements GraphViewDataInterface {
     private double x,y;
     
