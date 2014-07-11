@@ -54,9 +54,9 @@ public class User extends ModelElement {
 	private Date birthday;
 	private Date workoutTime;
 
-	private String SavedAccessToken;
-	private String SavedAccessTokenSecret;
-
+	private String SavedAccessToken = "";
+	private String SavedAccessTokenSecret = "";
+	
 	/**
 	 * Returns the history of units
 	 * 

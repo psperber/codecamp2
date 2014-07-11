@@ -85,7 +85,7 @@ public class HistoryFragment extends Fragment {
 			// reuse views
 			if (rowView == null) {
 				LayoutInflater inflater = getActivity().getLayoutInflater();
-				rowView = inflater.inflate(android.R.layout.simple_list_item_1, null);
+				rowView = inflater.inflate(R.layout.history_row, null);
 				// configure view holder
 				// ViewHolder viewHolder = new ViewHolder();
 				// viewHolder.text = (TextView)
@@ -135,7 +135,6 @@ public class HistoryFragment extends Fragment {
 			String m = "Did " + count + " " + unit.getUnitType().toString();
 			TaskSend tasksend = new TaskSend(m);
 			tasksend.execute();
-			Toast.makeText(getActivity(), "Twitterd", Toast.LENGTH_SHORT).show();
 	
 		}
 	}
@@ -162,6 +161,7 @@ public class HistoryFragment extends Fragment {
 				} else {
 					try {
 						tweet.tweet(text, savedAccessToken, savedAccessTokenSecret);
+						Toast.makeText(getActivity(), "Twitterd", Toast.LENGTH_SHORT).show();
 					} catch (Exception e) {
 						printTwitterError();
 					}
