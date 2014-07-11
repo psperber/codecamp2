@@ -4,15 +4,8 @@
 
     <TextView
         android:id="@+id/attackHeaderTextView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
         android:text="@string/attack_header_textview"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/headline"
-        android:textSize="@dimen/headline_textsize" />
+        style="@style/HeadlineStyle" />
 
     <TextView
         android:id="@+id/unittypeHeaderTextView"
