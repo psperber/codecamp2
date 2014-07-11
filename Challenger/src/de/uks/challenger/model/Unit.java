@@ -8,6 +8,7 @@ import java.util.List;
 public class Unit extends ModelElement {
 	public enum UNIT_TYPE {
 		PUSH_UPS, SIT_UPS, JUMPING_JACK;
+		
 	}
 
 	private long id;

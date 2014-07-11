@@ -60,6 +60,9 @@ public class ChallengerService extends Service {
 				int workoutMin = workoutTime.get(GregorianCalendar.MINUTE);
 				int workoutSec = workoutTime.get(GregorianCalendar.SECOND);
 
+				System.out.println("current: " + currentHour + ":" + currentMin + ":" + currentSec);
+				System.out.println("workout: " + workoutHour+ ":" + workoutMin + ":" + workoutSec);
+				
 				boolean hourMatches = currentHour == workoutHour;
 				boolean minMatches = currentMin == workoutMin;
 				boolean secondMatches = (currentSec >= workoutSec) && (currentSec <= workoutSec + 6);
@@ -75,7 +78,7 @@ public class ChallengerService extends Service {
 					Resources res = getResources();
 					Notification.Builder builder = new Notification.Builder(ChallengerService.this);
 
-					builder.setContentIntent(contentIntent).setSmallIcon(R.drawable.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher)).setTicker(getString(R.string.notification_title))
+					builder.setContentIntent(contentIntent).setSmallIcon(R.drawable.logo).setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.logo)).setTicker(getString(R.string.notification_title))
 							.setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(getString(R.string.notification_title)).setContentText(getString(R.string.notification_text));
 					Notification n = builder.build();
 					n.flags = Notification.FLAG_NO_CLEAR;

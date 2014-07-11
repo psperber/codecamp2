@@ -20,6 +20,7 @@ import android.widget.TextView;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
+import de.uks.challenger.model.Unit.UNIT_TYPE;
 import de.uks.challenger.model.Workset;
 import de.uks.challenger.sensor.ChallengerSensor;
 import de.uks.challenger.sensor.JumpingJackSensor;
@@ -85,7 +86,7 @@ public class AttackFragment extends Fragment {
 		overAllTextView
 				.setText(newUnit.getWorkset(worksetCount).getTodo() + "");
 		setXTextView.setText(worksetCount + 1 + "");
-		unitTypeTextView.setText(newUnit.getUnitType().toString());
+		unitTypeTextView.setText(formatUnitType(newUnit.getUnitType()));
 
 		startButton.setOnClickListener(new OnClickListener() {
 
@@ -106,7 +107,7 @@ public class AttackFragment extends Fragment {
 				newUnit.getWorkset(worksetCount).setTodo(counter++);
 				worksetCount++;
 				setXTextView.setText(worksetCount + 1 + "");
-				unitTypeTextView.setText(newUnit.getUnitType().toString());
+				unitTypeTextView.setText(formatUnitType(newUnit.getUnitType()));
 				challengerSensor.setRepeatCounter(0);
 				currentCountTextView.setText(challengerSensor
 						.getRepeatCounter() + "");
@@ -136,7 +137,7 @@ public class AttackFragment extends Fragment {
 					latestUnit = challenger.getUser().getLatestUnitByType(
 							challengerSensor.getUnitType());
 					newUnit = generateNewUnit();
-					unitTypeTextView.setText(newUnit.getUnitType().toString());
+					unitTypeTextView.setText(formatUnitType(newUnit.getUnitType()));
 					setXTextView.setText(worksetCount + 1 + "");
 					overAllTextView.setText(newUnit.getWorkset(worksetCount)
 							.getTodo() + "");
@@ -246,5 +247,15 @@ public class AttackFragment extends Fragment {
 			super.onPostExecute(result);
 		}
 
+	}
+	
+	private String formatUnitType(UNIT_TYPE type){
+		if(UNIT_TYPE.PUSH_UPS.equals(type)){
+			return "Push Ups";
+		}else if(UNIT_TYPE.JUMPING_JACK.equals(type)){
+			return "Jumping Jack";
+		}else{
+			return "Sit Ups";
+		}
 	}
 }
