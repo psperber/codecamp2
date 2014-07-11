@@ -166,9 +166,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 	}
 	
 	private class TaskSaveLogin extends AsyncTask<Void, Void, Void> {
+		
+
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (success) {
+				Toast.makeText(getActivity().getApplicationContext(), "Twitter gespeichert", Toast.LENGTH_SHORT).show();
+			}
+			super.onPostExecute(result);
+		}
 
 		private String pin;
-
+		private boolean success = false;
+		
 		public TaskSaveLogin(String pin) {
 			this.pin = pin;
 		}
@@ -184,6 +195,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 				User user = challenger.getUser();
 				user.setSavedAccessToken(accessToken.getToken());
 				user.setSavedAccessTokenSecret(accessToken.getTokenSecret());
+				success = true;
 			}
 			return null;
 		}

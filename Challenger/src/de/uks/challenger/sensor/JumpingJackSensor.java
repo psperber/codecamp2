@@ -7,12 +7,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
-import android.widget.Toast;
+
 
 public class JumpingJackSensor extends ChallengerSensor {
 
 	private Sensor sensorAcc;
-	private boolean sitUp;
+
 	
 	
 	 float appliedAcceleration = 0;
@@ -33,7 +33,7 @@ public class JumpingJackSensor extends ChallengerSensor {
 		super(context);
 		this.unitType = Unit.UNIT_TYPE.JUMPING_JACK;
 		this.sensorAcc = getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		this.sitUp = false;
+
 	}
 
 	public SensorEventListener accListener = new SensorEventListener() {

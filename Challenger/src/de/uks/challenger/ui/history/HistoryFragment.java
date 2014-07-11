@@ -141,8 +141,17 @@ public class HistoryFragment extends Fragment {
 	
 	// Asynchroner Task zum twittern
 		private class TaskSend extends AsyncTask<Void, Void, String> {
-			private String text;
+			@Override
+			protected void onPostExecute(String result) {
+				if (success) {
+					Toast.makeText(getActivity(), "Twitterd", Toast.LENGTH_SHORT).show();					
+				}
+				super.onPostExecute(result);
+			}
 
+			private String text;
+			private boolean success = false;
+			
 			public TaskSend(String text) {
 				this.text = text;
 			}
@@ -161,9 +170,10 @@ public class HistoryFragment extends Fragment {
 				} else {
 					try {
 						tweet.tweet(text, savedAccessToken, savedAccessTokenSecret);
-						Toast.makeText(getActivity(), "Twitterd", Toast.LENGTH_SHORT).show();
+						success = true;
 					} catch (Exception e) {
 						printTwitterError();
+						e.printStackTrace();
 					}
 				}
 				return null;

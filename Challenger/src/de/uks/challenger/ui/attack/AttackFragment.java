@@ -65,6 +65,7 @@ public class AttackFragment extends Fragment {
 				.findViewById(R.id.unittypeTextView);
 		this.startButton = (Button) rootView.findViewById(R.id.startButton);
 		this.nextButton = (Button) rootView.findViewById(R.id.nextRoundButton);
+		this.nextButton.setEnabled(false);
 		this.sensors = new ArrayList<ChallengerSensor>();
 		this.sensors
 				.add(new PushUpSensor(getActivity().getApplicationContext()));
@@ -95,6 +96,7 @@ public class AttackFragment extends Fragment {
 			public void onClick(View v) {
 				challengerSensor.start();
 				startButton.setEnabled(false);
+				nextButton.setEnabled(true);
 
 			}
 		});
@@ -120,7 +122,9 @@ public class AttackFragment extends Fragment {
 					worksetCount = 0;
 
 					if (sensorCount < sensors.size()) {
+						
 						challengerSensor.stop();
+						new PauseTask().execute();
 						challengerSensor = sensors.get(sensorCount);
 						challengerSensor.addPropertyChangeListener(
 								ChallengerSensor.PROP_REPEAT,
@@ -142,10 +146,9 @@ public class AttackFragment extends Fragment {
 							.getTodo() + "");
 					currentCountTextView.setText("0");
 
+				} else {
+					new PauseTask().execute();
 				}
-				// startButton.setEnabled(true);
-				new PauseTask().execute();
-				// PAUSE von 60sec oder so
 
 			}
 		});

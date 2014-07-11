@@ -39,7 +39,7 @@ public class Tweet {
 			AccessToken oathAccessToken = new AccessToken(accessToken,
 					accessTokenSecret);
 			twitter.setOAuthAccessToken(oathAccessToken);
-			twitter.updateStatus(message + new Date().toString() + " #fit #WM14");
+			twitter.updateStatus(message + " " + new Date().toString() + " #fit #WM14");
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
