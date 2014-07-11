@@ -7,7 +7,6 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,18 +19,16 @@ import android.widget.TextView;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
-import de.uks.challenger.model.Unit.UNIT_TYPE;
 import de.uks.challenger.model.Workset;
 import de.uks.challenger.sensor.ChallengerSensor;
 import de.uks.challenger.sensor.JumpingJackSensor;
 import de.uks.challenger.sensor.PushUpSensor;
 import de.uks.challenger.sensor.SitUpSensor;
 import de.uks.challenger.ui.MainActivity;
-import de.uks.challenger.ui.history.HistoryFragment;
 
 public class AttackFragment extends Fragment {
 	// in seconds
-	private static final int PAUSETIME = 3;// 60;
+	private static final int PAUSETIME = 0;// 60;
 	public static final int COUNT_WORKINGSETS = 3;
 
 	Challenger challenger = Challenger.getInstance();
@@ -195,12 +192,19 @@ public class AttackFragment extends Fragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
+	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		challengerSensor.stop();
+	}
 
 	private class RepeatListener implements PropertyChangeListener {
 
 		@Override
 		public void propertyChange(final PropertyChangeEvent event) {
-			getActivity().runOnUiThread(new Runnable() {
+			Activity activity = getActivity();
+			activity.runOnUiThread(new Runnable() {
 
 				@Override
 				public void run() {

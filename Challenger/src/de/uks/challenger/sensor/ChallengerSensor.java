@@ -1,3 +1,5 @@
+//Super class for sensors
+
 package de.uks.challenger.sensor;
 
 import java.beans.PropertyChangeListener;

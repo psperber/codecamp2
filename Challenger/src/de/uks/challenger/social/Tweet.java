@@ -13,7 +13,7 @@ public class Tweet {
 	// Singleton
 	private static Tweet instance = null;
 
-	// Keys identifizieren die App bei Twitter
+	// Keys identify this app at twitter
 	private final String CONSUMER_KEY = "19jOHaRgD6442wii0KsgLkXjG";
 	private final String CONSUMER_KEY_SECRET = "h844otd1VkJzFKeXgmjCHy5ZYSAdi5LIuEqoflBI95x9ZWGq8f";
 	private Twitter twitter;
@@ -32,7 +32,7 @@ public class Tweet {
 
 	}
 
-	// Tweet absenden
+	// send a tweet
 	public void tweet(String message, String accessToken,
 			String accessTokenSecret) {
 		try {
@@ -45,15 +45,14 @@ public class Tweet {
 		}
 	}
 
-	// Gibt URL zum Authentifizieren zurueck
+	// returns URL
 	public String newConfig() {
 		String link = "";
 		link = requestToken.getAuthorizationURL();
 		return link;
 	}
 
-	// Gibt Accesstoken zum Eindeutigen authentifizieren zurueck, wird spaeter
-	// fuer einloggen benutzt
+	// returns accesstoken 
 	public AccessToken getLogin(String pin) {
 		try {
 			AccessToken accessToken = null;
@@ -71,7 +70,7 @@ public class Tweet {
 
 	}
 
-	// Neuer Twitterverbindung muss asynchron erstellt werden
+	// New Twitterconnection has to be async
 	private class TwitterTask extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {

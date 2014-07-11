@@ -1,3 +1,5 @@
+//Sensor for Push Ups
+
 package de.uks.challenger.sensor;
 
 import android.content.Context;
@@ -32,8 +34,6 @@ public class PushUpSensor extends ChallengerSensor {
 
 			float x = event.values[0];
 
-			// System.out.println("lux: " + (int)x);
-
 			if ((int) x <= 15 && !PushUpSensor.this.pushUp) {
 				int oldValue = getRepeatCounter();
 				setRepeatCounter(oldValue + 1);
@@ -44,27 +44,12 @@ public class PushUpSensor extends ChallengerSensor {
 			if ((int) x > 15 && PushUpSensor.this.pushUp) {
 				PushUpSensor.this.pushUp = false;
 			}
-
 		}
 	};
 
 	@Override
 	public void start() {
 		getSensorManager().registerListener(lightListener, sensorLight, SensorManager.SENSOR_DELAY_NORMAL);
-
-		// Test by philipp, da kein helligkeitssensor
-		/*Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				int oldValue = getCounter();
-				setCounter(oldValue + 1);
-				getPropertyChangeSupport().firePropertyChange(PROP_REPEAT, oldValue, getCounter());
-
-			}
-		}, 0, 1000);*/
-		//Endtest
 	}
 
 	@Override

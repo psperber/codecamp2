@@ -1,3 +1,6 @@
+//Sensor for Sit Ups
+
+
 package de.uks.challenger.sensor;
 
 import de.uks.challenger.model.Unit;
@@ -28,8 +31,6 @@ public class SitUpSensor extends ChallengerSensor {
 
 			float z = event.values[2];
 			
-			//System.out.println("z: "+ z + " " + sitUp);
-
 			if (!sitUp && z <= -9) {
 				sitUp = true;
 			}
