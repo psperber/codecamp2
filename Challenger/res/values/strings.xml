@@ -32,6 +32,7 @@
     <string name="progress_dialog_okay">Okay</string>
     <string name="progress_dialog_cancel">Cancel</string>
     <string name="history_header_textview">Your workouts</string>
+    <string name="setting_header_textview">Settings</string>
     <string name="setting_workouttime_textview">Worktime</string>
     <string name="setting_twitter_textview">Twitter</string>
     <string name="setting_cleardata_button">clear data</string>
