@@ -42,22 +42,21 @@ public class User extends ModelElement {
 	 * Gender of the user
 	 */
 	private GENDER gender;
-	
+
 	/**
-	 * The user prefered resting time in ms beetween worksets 
+	 * The user prefered resting time in ms beetween worksets
 	 */
 	private int restingTime;
-	
+
 	/**
 	 * Birthday of user
 	 */
 	private Date birthday;
 	private Date workoutTime;
 
-	
 	private String SavedAccessToken;
 	private String SavedAccessTokenSecret;
-	
+
 	/**
 	 * Returns the history of units
 	 * 
@@ -125,7 +124,7 @@ public class User extends ModelElement {
 
 	public Unit getLatestUnitByType(UNIT_TYPE type) {
 		if (getUnits().size() > 0) {
-			for (int i = countOfUnits()-1; i >= 0; --i) {
+			for (int i = countOfUnits() - 1; i >= 0; --i) {
 				Unit unit = getUnit(i);
 				if (unit.getUnitType().equals(type)) {
 					return unit;
@@ -215,10 +214,10 @@ public class User extends ModelElement {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public int getRestingTime() {
-		if(restingTime == 0){
-			//set one minute as default resting time
+		if (restingTime == 0) {
+			// set one minute as default resting time
 			restingTime = 60 * 1000;
 		}
 		return restingTime;
@@ -227,7 +226,6 @@ public class User extends ModelElement {
 	public void setRestingTime(int restingTime) {
 		this.restingTime = restingTime;
 	}
-
 
 	@Override
 	public boolean equals(Object o) {
@@ -251,43 +249,53 @@ public class User extends ModelElement {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	
-	public Date getWorkoutTime(){
+
+	public Date getWorkoutTime() {
 		return this.workoutTime;
 	}
-	
-	public void setWorkoutTime(Date workoutTime){
+
+	public void setWorkoutTime(Date workoutTime) {
 		Calendar c = new GregorianCalendar();
 		c.setTime(workoutTime);
 		c.set(Calendar.SECOND, 0);
 		workoutTime = c.getTime();
 
 		Date oldValue = this.workoutTime;
-		getPropertyChangeSupport().firePropertyChange(PROP_UPDATE_USER, oldValue, workoutTime);
-		
+		getPropertyChangeSupport().firePropertyChange(PROP_UPDATE_USER,
+				oldValue, workoutTime);
+
 		this.workoutTime = workoutTime;
 	}
 
 	public int getAge() {
-		return 25;
+		final Calendar calend = new GregorianCalendar();
+		calend.set(Calendar.HOUR_OF_DAY, 0);
+		calend.set(Calendar.MINUTE, 0);
+		calend.set(Calendar.SECOND, 0);
+		calend.set(Calendar.MILLISECOND, 0);
+
+		calend.setTimeInMillis(new Date().getTime() - getBirthday().getTime());
+
+		int age = 0;
+		age = calend.get(Calendar.YEAR) - 1970;
+//		age += (float) calend.get(Calendar.MONTH) / (float) 12;
+		return age;
 	}
-	
+
 	public String getSavedAccessToken() {
 		return SavedAccessToken;
 	}
-	
+
 	public void setSavedAccessToken(String savedAccessToken) {
 		SavedAccessToken = savedAccessToken;
 	}
-	
+
 	public String getSavedAccessTokenSecret() {
 		return SavedAccessTokenSecret;
 	}
-	
+
 	public void setSavedAccessTokenSecret(String savedAccessTokenSecret) {
 		SavedAccessTokenSecret = savedAccessTokenSecret;
 	}
-	
-	
 
 }
