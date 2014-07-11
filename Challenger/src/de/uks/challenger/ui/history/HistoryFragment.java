@@ -21,6 +21,12 @@ import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.User;
 import de.uks.challenger.social.Tweet;
 
+/**
+ * Displays the history of the workout units
+ * 
+ * @author Comtec
+ *
+ */
 public class HistoryFragment extends Fragment {
 	private ListView mHistoryListView;
 	Tweet tweet = Tweet.getInstance();
@@ -53,7 +59,13 @@ public class HistoryFragment extends Fragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-
+	
+	/**
+	 * Controls the List
+	 * 
+	 * @author Comtec
+	 *
+	 */
 	private class HistoryAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
@@ -97,7 +109,13 @@ public class HistoryFragment extends Fragment {
 			return rowView;
 		}
 	}
-
+	
+	/**
+	 * On Clicklistener
+	 * 
+	 * @author Comtec
+	 *
+	 */
 	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
 

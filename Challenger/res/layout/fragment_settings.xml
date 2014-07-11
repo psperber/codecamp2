@@ -43,11 +43,10 @@
 
     <EditText
         android:id="@+id/twitterEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/workouttimeTextView"
         android:layout_below="@+id/twitterTextView"
-        android:layout_toLeftOf="@+id/twitterButton"
         android:ems="10"
         android:inputType="number" />
 
@@ -63,15 +62,15 @@
         android:id="@+id/twitterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/clearDataButton"
-        android:layout_below="@+id/twitterTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/twitterEditText"
         android:text="@string/setting_twitter_button" />
 
     <Button
         android:id="@+id/twitterSaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/twitterButton"
+        android:layout_alignLeft="@+id/twitterButton"
         android:layout_below="@+id/twitterButton"
         android:text="@string/setting_twitter_save_button" />
 
