@@ -61,4 +61,12 @@
         android:layout_below="@+id/twitterTextView"
         android:text="@string/setting_twitter_button" />
 
+    <Button
+        android:id="@+id/twitterSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/twitterButton"
+        android:layout_below="@+id/twitterButton"
+        android:text="@string/setting_twitter_save_button" />
+
 </RelativeLayout>
