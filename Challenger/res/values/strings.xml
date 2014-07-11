@@ -12,7 +12,7 @@
     <string name="setup1_gender_textview">Gender</string>
     <string name="setup1_height_textview">Height</string>
     <string name="setup1_weight_textview">Weight</string>
-    <string name="setup1_next_button">next</string>
+    <string name="setup1_next_button">Next</string>
     
     <string name="setup1_error_birthday_empty">Birthday is empty</string>
     <string name="setup1_error_height_empty">Height is empty</string>
@@ -21,13 +21,13 @@
     <string name="attack_setheader_textview">Set:</string>
     <string name="attack_overallcountheader_textview">Overall count:</string>
     <string name="attack_currentcountheader_textview">Current count:</string>
-    <string name="attack_start_button">start</string>
-    <string name="attack_nextround_button">next round</string>
+    <string name="attack_start_button">Start</string>
+    <string name="attack_nextround_button">Next Round</string>
     
     <string name="setting_workouttime_textview">Worktime</string>
     <string name="setting_twitter_textview">Twitter</string>
-    <string name="setting_twitter_button">login</string>
-    <string name="setting_cleardata_button">clear data</string>
+    <string name="setting_twitter_button">Login</string>
+    <string name="setting_cleardata_button">Clear Data</string>
     
     <string name="notification_title">It\'s time to win!</string>
     <string name="notification_text">Time for your workout</string>
