@@ -24,6 +24,12 @@ import de.uks.challenger.model.User;
 import de.uks.challenger.model.User.GENDER;
 import de.uks.challenger.ui.attack.AttackFragment;
 
+/**
+ * Sets the new user up
+ * 
+ * @author Comtec
+ *
+ */
 public class SetupFragment extends Fragment implements View.OnClickListener,
 		DatePickerDialog.OnDateSetListener {
 	EditText mBirthdayEditText;
@@ -41,6 +47,7 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 		mBirthdayEditText = (EditText) rootView
 				.findViewById(R.id.birthdayEditText);
 		mBirthdayEditText.setOnClickListener(this);
+		// init the birthday edittext
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR) - 1;
 		int month = c.get(Calendar.MONTH);
@@ -60,7 +67,14 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 		super.onAttach(activity);
 
 	}
-
+	
+	/**
+	 * update birthdayEditText
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 */
 	private void updateBirthdayEditText(int year, int month, int day) {
 		String msg = day < 10 ? "0" : "";
 		msg += day + ".";
@@ -73,6 +87,7 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 	@Override
 	public void onClick(View v) {
 		if (v.equals(mBirthdayEditText)) {
+			// open datepicker if birthdayedittext is clicked
 			String birthdayString = mBirthdayEditText.getText().toString();
 			String[] birthdaySplit = birthdayString.split("\\.");
 			int day = Integer.valueOf(birthdaySplit[0]);
@@ -84,6 +99,7 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 			dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 365);
 			dialog.show();
 		} else if (v.equals(mNextButton)) {
+			// check if fields are filled
 			String heightString = mHeightEditText.getText().toString();
 			if ("".equals(heightString)) {
 				Toast.makeText(getActivity(),
@@ -99,7 +115,8 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 						.show();
 				return;
 			}
-
+			
+			// string to date for birthday
 			String birthdayString = mBirthdayEditText.getText().toString();
 			String[] birthdaySplit = birthdayString.split("\\.");
 			int day = Integer.valueOf(birthdaySplit[0]);
@@ -113,19 +130,22 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 					: GENDER.FEMALE;
 			int height = Integer.valueOf(heightString);
 			double weight = Double.valueOf(weightString);
-
+			
+			// default workouttime is 18:00
 			Calendar workoutTimeCalendar = new GregorianCalendar();
 			workoutTimeCalendar.set(GregorianCalendar.HOUR_OF_DAY, 18);
 			workoutTimeCalendar.set(GregorianCalendar.MINUTE, 0);
 			workoutTimeCalendar.set(GregorianCalendar.SECOND, 0);
 			Date workoutTimeDate = workoutTimeCalendar.getTime();
-
+			
+			// setup new user
 			User user = new User();
 			user.setGender(gender);
 			user.setHeight(height);
 			user.setBirthday(birthday);
 			user.setWorkoutTime(workoutTimeDate);
-
+			
+			// add first progress
 			Progress progress = new Progress();
 			progress.setCreationDate(new Date());
 			progress.setAge(user.getAge());
@@ -133,7 +153,8 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 			user.addProgress(progress);
 
 			Challenger.getInstance().setUser(user);
-
+			
+			// start attackfragment for first values
 			Fragment fragment = AttackFragment.newInstance();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
