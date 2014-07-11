@@ -8,5 +8,6 @@
     <dimen name="vertical_space">25dp</dimen>
     <dimen name="horizontal_space">5dp</dimen>
     <dimen name="setup1_textview_width">100dp</dimen>
+    <dimen name="headline_textsize">40dp</dimen>
 
 </resources>

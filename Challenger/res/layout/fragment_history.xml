@@ -1,10 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FragmentStyle" >
-    
+
+    <TextView
+        android:id="@+id/historyHeaderTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:text="@string/history_header_textview"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/headline"
+        android:textSize="@dimen/headline_textsize" />
+
     <ListView
         android:id="@+id/historyList"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/historyHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space" >
     </ListView>
+
 </RelativeLayout>

@@ -2,11 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FragmentStyle" >
 
+    <TextView
+        android:id="@+id/progressHeaderTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:text="@string/progress_header_textview"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/headline"
+        android:textSize="@dimen/headline_textsize" />
+
     <ListView
         android:id="@+id/progressList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/addNewProgressButton" >
+        android:layout_above="@+id/addNewProgressButton"
+        android:layout_below="@+id/progressHeaderTextView"
+        android:layout_marginTop="@dimen/vertical_space" >
     </ListView>
 
     <Button
