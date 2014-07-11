@@ -47,7 +47,7 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 				.findViewById(R.id.birthdayEditText);
 		mBirthdayEditText.setOnClickListener(this);
 		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
+		int year = c.get(Calendar.YEAR) - 1;
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		updateBirthdayEditText(year, month, day);
@@ -86,7 +86,7 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 
 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), this,
 					year, month, day);
-			dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+			dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 365);
 			dialog.show();
 		} else if (v.equals(mNextButton)) {
 			String heightString = mHeightEditText.getText().toString();
