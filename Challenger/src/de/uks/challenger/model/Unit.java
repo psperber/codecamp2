@@ -7,8 +7,17 @@ import java.util.List;
 
 public class Unit extends ModelElement {
 	public enum UNIT_TYPE {
-		PUSH_UPS, SIT_UPS, JUMPING_JACK;
+		PUSH_UPS("Push Up"), SIT_UPS("Sit Up"), JUMPING_JACK("Jumping Jack");
+		private String s;
 		
+		private UNIT_TYPE(String s) {
+			this.s = s;
+		}
+		
+		@Override
+		public String toString() {
+			return s;
+		}
 	}
 
 	private long id;
@@ -32,7 +41,7 @@ public class Unit extends ModelElement {
 	 * Unit type of the unit
 	 */
 	private UNIT_TYPE unitType;
-
+	
 	public int getRestingTime() {
 		return restingTime;
 	}
@@ -41,7 +50,7 @@ public class Unit extends ModelElement {
 		this.restingTime = restingTime;
 	}
 
-	private List<Workset> getWorkSets() {
+	public List<Workset> getWorkSets() {
 		if (workSets == null) {
 			workSets = new ArrayList<Workset>();
 		}

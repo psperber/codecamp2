@@ -1,16 +1,13 @@
 package de.uks.challenger.ui.history;
 
+
+
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +22,10 @@ import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
 import de.uks.challenger.model.Unit.UNIT_TYPE;
+import de.uks.challenger.model.User;
 import de.uks.challenger.model.Workset;
-import de.uks.challenger.ui.MainActivity;
+import de.uks.challenger.social.Tweet;
 
-/**
- * Displays the history of the workout units
- * 
- * @author Comtec
- *
- */
 public class HistoryFragment extends Fragment {
 	private ListView mHistoryListView;
 	Tweet tweet = Tweet.getInstance();
@@ -66,13 +58,7 @@ public class HistoryFragment extends Fragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-	
-	/**
-	 * Controls the List
-	 * 
-	 * @author Comtec
-	 *
-	 */
+
 	private class HistoryAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
@@ -114,7 +100,7 @@ public class HistoryFragment extends Fragment {
 			Unit unit = getItem(position);
 
 			TextView tv = (TextView) rowView.findViewById(R.id.tvUnitType);
-			tv.setText(formatUnitType(unit.getUnitType()));
+			tv.setText(unit.getUnitType().toString());
 
 			tv = (TextView) rowView.findViewById(R.id.tvWeight);
 			
@@ -134,25 +120,22 @@ public class HistoryFragment extends Fragment {
 		}
 	}
 
-	private String formatUnitType(UNIT_TYPE type) {
-		if (UNIT_TYPE.PUSH_UPS.equals(type)) {
-			return "Push Ups";
-		} else if (UNIT_TYPE.JUMPING_JACK.equals(type)) {
-			return "Jumping Jack";
-		} else {
-			return "Sit Ups";
-		}
-	}
-
 	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
-			String m = "dies ist ein test #wm14";
+//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();´
+			Unit unit = (Unit) mHistoryListView.getAdapter().getItem(position);
+			int count = 0;
+			for (int i = 0; i < unit.getWorkSets().size(); i++) {
+				count +=  unit.getWorkSets().get(i).getCount();
+				
+			}
+			String m = "Did " + count + " " + unit.getUnitType().toString();
 			TaskSend tasksend = new TaskSend(m);
 			tasksend.execute();
+			Toast.makeText(getActivity(), "Twitterd", Toast.LENGTH_SHORT).show();
 	
 		}
 	}
@@ -161,6 +144,39 @@ public class HistoryFragment extends Fragment {
 		private class TaskSend extends AsyncTask<Void, Void, String> {
 			private String text;
 
+			public TaskSend(String text) {
+				this.text = text;
+			}
+
+			@Override
+			protected String doInBackground(Void... params) {
+				
+				Challenger challenger = Challenger.getInstance();
+				User user = challenger.getUser();
+				String savedAccessToken = user.getSavedAccessToken();
+				String savedAccessTokenSecret = user.getSavedAccessTokenSecret();
+			
+				if (savedAccessToken.length() == 0 || savedAccessTokenSecret.length() == 0) {
+					printTwitterError();
+
+				} else {
+					try {
+						tweet.tweet(text, savedAccessToken, savedAccessTokenSecret);
+					} catch (Exception e) {
+						printTwitterError();
+					}
+				}
+				return null;
+			}
 		}
-	}
+
+		// Prints Twitter Error on UI
+		private void printTwitterError() {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(getActivity().getApplicationContext(), "Fehlerhafter Login, bitte in den Einstellungen korrigieren", Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
 }
