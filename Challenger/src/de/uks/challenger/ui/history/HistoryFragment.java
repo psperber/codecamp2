@@ -1,14 +1,10 @@
 package de.uks.challenger.ui.history;
 
+
+
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +18,13 @@ import android.widget.Toast;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Unit;
-import de.uks.challenger.ui.MainActivity;
+import de.uks.challenger.model.User;
+import de.uks.challenger.social.Tweet;
 
 public class HistoryFragment extends Fragment {
 	private ListView mHistoryListView;
+	Tweet tweet = Tweet.getInstance();
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,7 +104,50 @@ public class HistoryFragment extends Fragment {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 //			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
-
+			String m = "dies ist ein test #wm14";
+			TaskSend tasksend = new TaskSend(m);
+			tasksend.execute();
+	
 		}
 	}
+	
+	// Asynchroner Task zum twittern
+		private class TaskSend extends AsyncTask<Void, Void, String> {
+			private String text;
+
+			public TaskSend(String text) {
+				this.text = text;
+			}
+
+			@Override
+			protected String doInBackground(Void... params) {
+				
+				Challenger challenger = Challenger.getInstance();
+				User user = challenger.getUser();
+				String savedAccessToken = user.getSavedAccessToken();
+				String savedAccessTokenSecret = user.getSavedAccessTokenSecret();
+			
+				if (savedAccessToken.length() == 0 || savedAccessTokenSecret.length() == 0) {
+					printTwitterError();
+
+				} else {
+					try {
+						tweet.tweet(text, savedAccessToken, savedAccessTokenSecret);
+					} catch (Exception e) {
+						printTwitterError();
+					}
+				}
+				return null;
+			}
+		}
+
+		// Prints Twitter Error on UI
+		private void printTwitterError() {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(getActivity().getApplicationContext(), "Fehlerhafter Login, bitte in den Einstellungen korrigieren", Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
 }

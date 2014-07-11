@@ -55,6 +55,9 @@ public class User extends ModelElement {
 	private Date workoutTime;
 
 	
+	private String SavedAccessToken;
+	private String SavedAccessTokenSecret;
+	
 	/**
 	 * Returns the history of units
 	 * 
@@ -268,5 +271,23 @@ public class User extends ModelElement {
 	public int getAge() {
 		return 25;
 	}
+	
+	public String getSavedAccessToken() {
+		return SavedAccessToken;
+	}
+	
+	public void setSavedAccessToken(String savedAccessToken) {
+		SavedAccessToken = savedAccessToken;
+	}
+	
+	public String getSavedAccessTokenSecret() {
+		return SavedAccessTokenSecret;
+	}
+	
+	public void setSavedAccessTokenSecret(String savedAccessTokenSecret) {
+		SavedAccessTokenSecret = savedAccessTokenSecret;
+	}
+	
+	
 
 }

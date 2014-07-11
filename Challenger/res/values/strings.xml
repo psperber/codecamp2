@@ -36,6 +36,11 @@
     <string name="setting_twitter_textview">Twitter</string>
     <string name="setting_twitter_button">login</string>
     <string name="setting_cleardata_button">clear data</string>
+    
+    <string name="setting_twitter_button">Generate Login</string>
+    <string name="setting_twitter_save_button">Save Twitter Data</string>
+    <string name="setting_cleardata_button">Clear Data</string>
+    
     <string name="notification_title">It\'s time to win!</string>
     <string name="notification_text">Time for your workout</string>
     <string name="extra_name_attack">start_attack</string>
