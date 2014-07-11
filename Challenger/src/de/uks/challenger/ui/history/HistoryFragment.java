@@ -1,7 +1,5 @@
 package de.uks.challenger.ui.history;
 
-
-
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
@@ -26,6 +24,12 @@ import de.uks.challenger.model.User;
 import de.uks.challenger.model.Workset;
 import de.uks.challenger.social.Tweet;
 
+/**
+ * Displays the history of workout units
+ * 
+ * @author Comtec
+ *
+ */
 public class HistoryFragment extends Fragment {
 	private ListView mHistoryListView;
 	Tweet tweet = Tweet.getInstance();
@@ -58,7 +62,13 @@ public class HistoryFragment extends Fragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-
+	
+	/**
+	 * Adapter controls the display of the workout units
+	 * 
+	 * @author Comtec
+	 *
+	 */
 	private class HistoryAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
@@ -119,7 +129,13 @@ public class HistoryFragment extends Fragment {
 			return rowView;
 		}
 	}
-
+	
+	/**
+	 * Handels the click on an item and tweet the solution
+	 * 
+	 * @author Comtec
+	 *
+	 */
 	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
 

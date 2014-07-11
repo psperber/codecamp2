@@ -35,11 +35,7 @@ public class MainActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		
 		setContentView(R.layout.activity_main);
-		
-		
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -48,6 +44,7 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
+		// if user is null, setup is needed
 		User user = Challenger.getInstance().getUser();
 		if (user == null) {
 			Fragment fragment = SetupFragment.newInstance();
@@ -55,27 +52,24 @@ public class MainActivity extends Activity implements
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();
 		}
-		
-		//check if this activity was started by the service
-		boolean startAttack = getIntent().getBooleanExtra(getString(R.string.extra_name_attack), false);
-		if(startAttack){
+
+		// check if this activity was started by the service
+		boolean startAttack = getIntent().getBooleanExtra(
+				getString(R.string.extra_name_attack), false);
+		if (startAttack) {
 			restoreActionBar();
 			Fragment fragment = AttackFragment.newInstance();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, fragment).commit();
-			
-			//delete the notification
+
+			// delete the notification
 			NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			nm.cancel(ChallengerApplication.NOTIFICATION_ID);
 		}
-		
-		
+
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-		
-		
-
 	}
 
 	@Override
@@ -124,7 +118,7 @@ public class MainActivity extends Activity implements
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
-			
+
 			getMenuInflater().inflate(R.menu.main, menu);
 			restoreActionBar();
 			return true;
@@ -136,16 +130,16 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment.selectItem(position);
 	}
 
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		// Handle action bar item clicks here. The action bar will
-//		// automatically handle clicks on the Home/Up button, so long
-//		// as you specify a parent activity in AndroidManifest.xml.
-//		int id = item.getItemId();
-//		if (id == R.id.action_add_progress) {
-//			System.out.println("ADD PROGRESS");
-//			return true;
-//		}
-//		return super.onOptionsItemSelected(item);
-//	}
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// // Handle action bar item clicks here. The action bar will
+	// // automatically handle clicks on the Home/Up button, so long
+	// // as you specify a parent activity in AndroidManifest.xml.
+	// int id = item.getItemId();
+	// if (id == R.id.action_add_progress) {
+	// System.out.println("ADD PROGRESS");
+	// return true;
+	// }
+	// return super.onOptionsItemSelected(item);
+	// }
 }
