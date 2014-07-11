@@ -101,10 +101,11 @@ public class HistoryFragment extends Fragment {
 
 	private final class HistoryOnItemClickListener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
 
-		
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
+
 		}
 	}
 }

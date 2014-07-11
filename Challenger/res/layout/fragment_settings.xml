@@ -18,6 +18,8 @@
         android:layout_alignTop="@+id/workouttimeTextView"
         android:layout_toRightOf="@+id/workouttimeTextView"
         android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:inputType="time" >
 
         <requestFocus />

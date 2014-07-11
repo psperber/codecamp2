@@ -1,7 +1,9 @@
 package de.uks.challenger.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -250,6 +252,11 @@ public class User extends ModelElement {
 	}
 	
 	public void setWorkoutTime(Date workoutTime){
+		Calendar c = new GregorianCalendar();
+		c.setTime(workoutTime);
+		c.set(Calendar.SECOND, 0);
+		workoutTime = c.getTime();
+
 		Date oldValue = this.workoutTime;
 		getPropertyChangeSupport().firePropertyChange(PROP_UPDATE_USER, oldValue, workoutTime);
 		

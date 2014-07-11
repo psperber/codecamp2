@@ -1,43 +1,43 @@
 package de.uks.challenger.ui.progress;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.uks.challenger.R;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.Progress;
-import de.uks.challenger.model.Unit;
-import de.uks.challenger.ui.MainActivity;
 
-public class ProgressFragment extends Fragment {
+public class ProgressFragment extends Fragment implements View.OnClickListener {
 	private ListView mProgressListView;
+	private Button mAddProgressButton;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_history, container,
+		View rootView = inflater.inflate(R.layout.fragment_progress, container,
 				false);
 
-		mProgressListView = (ListView) rootView.findViewById(R.id.historyList);
-		mProgressListView.setAdapter(new HistoryAdapter());
+		mProgressListView = (ListView) rootView.findViewById(R.id.progressList);
+		mProgressListView.setAdapter(new ProgressAdapter());
 		mProgressListView
-				.setOnItemClickListener(new HistoryOnItemClickListener());
+				.setOnItemClickListener(new ProgressOnItemClickListener());
+
+		mAddProgressButton = (Button) rootView
+				.findViewById(R.id.addNewProgressButton);
+		mAddProgressButton.setOnClickListener(this);
 
 		return rootView;
 	}
@@ -47,7 +47,35 @@ public class ProgressFragment extends Fragment {
 		super.onAttach(activity);
 
 	}
-	
+
+	@Override
+	public void onClick(View v) {
+		final EditText txtUrl = new EditText(getActivity());
+		txtUrl.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+		// Set the default text to a link of the Queen
+		txtUrl.setHint("http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg");
+
+		new AlertDialog.Builder(getActivity())
+				.setTitle("Moustachify Link")
+				.setMessage("Paste in the link of an image to moustachify!")
+				.setView(txtUrl)
+				.setPositiveButton("Moustachify",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								String text = txtUrl.getText().toString();
+								System.out.println(text);
+							}
+						})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+							}
+						}).show();
+	}
+
 	/**
 	 * Returns a new instance of this fragment for the given section number.
 	 */
@@ -59,7 +87,7 @@ public class ProgressFragment extends Fragment {
 		return fragment;
 	}
 
-	private class HistoryAdapter extends BaseAdapter {
+	private class ProgressAdapter extends BaseAdapter {
 		@Override
 		public int getCount() {
 			if (Challenger.getInstance().getUser() == null) {
@@ -98,14 +126,13 @@ public class ProgressFragment extends Fragment {
 		}
 	}
 
-	private final class HistoryOnItemClickListener implements
+	private final class ProgressOnItemClickListener implements
 			OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT)
-					.show();
-
+			// Toast.makeText(getActivity(), "SELECTED",
+			// Toast.LENGTH_SHORT).show();
 		}
 	}
 }

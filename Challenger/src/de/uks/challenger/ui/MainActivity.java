@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import de.uks.challenger.R;
 import de.uks.challenger.application.ChallengerApplication;
 import de.uks.challenger.model.Challenger;
@@ -31,16 +32,10 @@ public class MainActivity extends Activity implements
 	 */
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
-	private CharSequence mTitle;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		
 		setContentView(R.layout.activity_main);
 		
@@ -48,15 +43,13 @@ public class MainActivity extends Activity implements
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
-		String[] titles = getResources().getStringArray(R.array.title_section);
-		mTitle = titles[0];
 
 		// Set up the drawer.
-		
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.drawer_layout));
+
 		User user = Challenger.getInstance().getUser();
 		if (user == null) {
-			mTitle = getString(R.string.title_setup);
-			restoreActionBar();
 			Fragment fragment = SetupFragment.newInstance();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
@@ -104,16 +97,13 @@ public class MainActivity extends Activity implements
 		case 3: {
 			fragment = SettingsFragment.newInstance();
 			break;
-			
+
 		}
 		case 4: {
 			fragment = AttackFragment.newInstance();
 			break;
 		}
 		}
-
-		String[] titles = getResources().getStringArray(R.array.title_section);
-		mTitle = titles[position];
 
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getFragmentManager();
@@ -125,7 +115,7 @@ public class MainActivity extends Activity implements
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
+		actionBar.setTitle(R.string.app_name);
 	}
 
 	@Override
@@ -134,6 +124,7 @@ public class MainActivity extends Activity implements
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
+			
 			getMenuInflater().inflate(R.menu.main, menu);
 			restoreActionBar();
 			return true;
@@ -145,15 +136,16 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment.selectItem(position);
 	}
 
-	// @Override
-	// public boolean onOptionsItemSelected(MenuItem item) {
-	// // Handle action bar item clicks here. The action bar will
-	// // automatically handle clicks on the Home/Up button, so long
-	// // as you specify a parent activity in AndroidManifest.xml.
-	// int id = item.getItemId();
-	// if (id == R.id.action_settings) {
-	// return true;
-	// }
-	// return super.onOptionsItemSelected(item);
-	// }
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		// Handle action bar item clicks here. The action bar will
+//		// automatically handle clicks on the Home/Up button, so long
+//		// as you specify a parent activity in AndroidManifest.xml.
+//		int id = item.getItemId();
+//		if (id == R.id.action_add_progress) {
+//			System.out.println("ADD PROGRESS");
+//			return true;
+//		}
+//		return super.onOptionsItemSelected(item);
+//	}
 }
