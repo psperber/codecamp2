@@ -24,9 +24,9 @@
     <string name="attack_start_button">start</string>
     <string name="attack_nextround_button">next round</string>
     <string name="attack_pause_message">Time to cooldown</string>
-    <string name="graph_header_textview">Your progess</string>
+    <string name="graph_header_textview">Your Progress</string>
     <string name="graph_title">Weight processing...</string>
-    <string name="progress_header_textview">Your progress</string>
+    <string name="progress_header_textview">Your Progress</string>
     <string name="progress_dialog_title">Add Progress</string>
     <string name="progress_dialog_message">Enter new weight</string>
     <string name="progress_dialog_okay">Okay</string>

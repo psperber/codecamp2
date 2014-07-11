@@ -111,7 +111,7 @@ public class HistoryFragment extends Fragment {
 			String text = "";
 			for(int i = 0; i < unit.countOfWorksets(); ++i){
 				Workset w = unit.getWorkset(i);
-				text = text + "Set " + (i + 1) + ": " + w.getCount() + " (" + w.getTodo() + ") ";
+				text = text + "Set " + (i + 1) + ": " + w.getCount() + " (" + w.getTodo() + ")\t";
 			}
 			
 			tv.setText(text);

@@ -124,7 +124,7 @@ public class ProgressFragment extends Fragment implements View.OnClickListener {
 			tv.setText(format.format(progress.getCreationDate()));
 
 			tv = (TextView) rowView.findViewById(R.id.tvWeight);
-			tv.setText("Age: " + progress.getAge() + " Weight: " + progress.getWeight());
+			tv.setText("Age: " + progress.getAge() + "\nWeight: " + progress.getWeight());
 
 			return rowView;
 		}
