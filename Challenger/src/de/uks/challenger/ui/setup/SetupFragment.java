@@ -50,7 +50,7 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DAY_OF_MONTH);
-		mBirthdayEditText.setText(day + "." + month + "." + year);
+		updateBirthdayEditText(year, month, day);
 		mGenderSpinner = (Spinner) rootView.findViewById(R.id.genderSpinner);
 		mHeightEditText = (EditText) rootView.findViewById(R.id.heightEditText);
 		mWeightEditText = (EditText) rootView.findViewById(R.id.weightEditText);
@@ -64,6 +64,15 @@ public class SetupFragment extends Fragment implements View.OnClickListener,
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
+	}
+
+	private void updateBirthdayEditText(int year, int month, int day) {
+		String msg = day < 10 ? "0" : "";
+		msg += day + ".";
+		msg += month < 10 ? "0" : "";
+		msg += month + ".";
+		msg += year;
+		mBirthdayEditText.setText(msg);
 	}
 
 	@Override

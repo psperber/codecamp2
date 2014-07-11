@@ -109,15 +109,7 @@ public class HistoryFragment extends Fragment {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT)
-					.show();
-
-			Intent notificationIntent = new Intent(getActivity(),
-					MainActivity.class);
-			int YOUR_PI_REQ_CODE = 1337;
-			PendingIntent contentIntent = PendingIntent.getActivity(
-					getActivity(), YOUR_PI_REQ_CODE , notificationIntent,
-					PendingIntent.FLAG_CANCEL_CURRENT);
+//			Toast.makeText(getActivity(), "SELECTED", Toast.LENGTH_SHORT).show();
 
 		}
 	}

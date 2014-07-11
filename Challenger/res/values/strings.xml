@@ -6,7 +6,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
+    <string name="action_add_progress">Add progress</string>
     
     <string name="setup1_birthday_textview">Birthday</string>
     <string name="setup1_gender_textview">Gender</string>
@@ -36,9 +36,6 @@
         <item>Settings</item>
         <item>Attack</item>
     </string-array>
-
-    <string name="title_setup">Setup</string>
-
     <string-array name="gender">
         <item>male</item>
         <item>female</item>

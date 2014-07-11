@@ -8,13 +8,17 @@ import de.uks.challenger.R;
 import de.uks.challenger.R.layout;
 import de.uks.challenger.model.Challenger;
 import de.uks.challenger.model.User;
+import de.uks.challenger.ui.attack.AttackFragment;
+import de.uks.challenger.ui.setup.SetupFragment;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.app.TimePickerDialog;
@@ -22,6 +26,7 @@ import android.app.TimePickerDialog;
 public class SettingsFragment extends Fragment implements View.OnClickListener,
 		TimePickerDialog.OnTimeSetListener {
 	EditText mWorkoutTimeEditText;
+	Button mClearDataButton;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +44,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 		c.setTime(workoutTime);
 		int hourOfDay = c.get(Calendar.HOUR_OF_DAY);
 		int minute = c.get(Calendar.MINUTE);
-		mWorkoutTimeEditText.setText(hourOfDay + ":" + minute);
+		updateWorkoutTimeEditText(hourOfDay, minute);
+
+		mClearDataButton = (Button) rootView.findViewById(R.id.clearDataButton);
+		mClearDataButton.setOnClickListener(this);
 
 		return rootView;
 	}
@@ -50,16 +58,34 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 
 	}
 
+	private void updateWorkoutTimeEditText(int hourOfDay, int minute) {
+		String msg = hourOfDay < 10 ? "0" : "";
+		msg += hourOfDay + ":";
+		msg += minute < 10 ? "0" : "";
+		msg += minute;
+		mWorkoutTimeEditText.setText(msg);
+	}
+
 	@Override
 	public void onClick(View v) {
-		String mWorkoutTimeString = mWorkoutTimeEditText.getText().toString();
-		String[] mWorkoutTimeSplit = mWorkoutTimeString.split(":");
-		int hourOfDay = Integer.valueOf(mWorkoutTimeSplit[0]);
-		int minute = Integer.valueOf(mWorkoutTimeSplit[1]);
+		if (v.equals(mClearDataButton)) {
+			Challenger.getInstance().setUser(null);
 
-		TimePickerDialog dialog = new TimePickerDialog(getActivity(), this,
-				hourOfDay, minute, true);
-		dialog.show();
+			Fragment fragment = SetupFragment.newInstance();
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, fragment).commit();
+		} else if (v.equals(mWorkoutTimeEditText)) {
+			String mWorkoutTimeString = mWorkoutTimeEditText.getText()
+					.toString();
+			String[] mWorkoutTimeSplit = mWorkoutTimeString.split(":");
+			int hourOfDay = Integer.valueOf(mWorkoutTimeSplit[0]);
+			int minute = Integer.valueOf(mWorkoutTimeSplit[1]);
+
+			TimePickerDialog dialog = new TimePickerDialog(getActivity(), this,
+					hourOfDay, minute, true);
+			dialog.show();
+		}
 	}
 
 	@Override
@@ -69,7 +95,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,
 		c.set(Calendar.HOUR_OF_DAY, hourOfDay);
 		c.set(Calendar.MINUTE, minute);
 		user.setWorkoutTime(c.getTime());
-		mWorkoutTimeEditText.setText(hourOfDay + ":" + minute);
+		updateWorkoutTimeEditText(hourOfDay, minute);
 	}
 
 	/**
